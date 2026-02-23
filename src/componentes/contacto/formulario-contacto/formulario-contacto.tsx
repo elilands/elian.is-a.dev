@@ -102,7 +102,7 @@ export default function FormularioContacto({ alCerrar }: PropsFormulario) {
           <a href="https://www.linkedin.com/in/elianisadev/" target="_blank" rel="noopener noreferrer" className={estilos['enlace-externo']}>
             <Linkedin size={40} strokeWidth={1} /> LinkedIn
           </a>
-          <a href="https://github.com/ellyaisaurus" target="_blank" rel="noopener noreferrer" className={estilos['enlace-externo']}>
+          <a href="https://github.com/elilands" target="_blank" rel="noopener noreferrer" className={estilos['enlace-externo']}>
             <Github size={40} strokeWidth={1} /> GitHub
           </a>
         </div>
