@@ -171,11 +171,14 @@
   font-weight: var(--weight-light);
   line-height: var(--leading-relaxed);
   color: var(--s-text-2);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .ribbon {
   overflow: hidden;
   mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  min-width: 0;
 }
 
 .ribbonTrack {
@@ -183,6 +186,7 @@
   width: max-content;
   gap: var(--space-3);
   animation: ribbonRun 26s linear infinite;
+  will-change: transform;
 }
 
 .ribbonItem {
@@ -287,6 +291,9 @@
   font-weight: var(--weight-light);
   line-height: var(--leading-relaxed);
   color: var(--s-text-2);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .lensCard {
@@ -385,6 +392,8 @@
 
 .bloomBody {
   max-width: 60ch;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .categoryIntro {
@@ -400,6 +409,8 @@
   letter-spacing: -0.04em;
   line-height: 1.02;
   color: var(--s-text);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .categoryGrid {
@@ -541,6 +552,15 @@
     padding-block: clamp(3rem, 8vw, 4rem);
   }
 
+  .headerRow,
+  .heroBlock,
+  .heroCopy,
+  .heroAside,
+  .gridWrap,
+  .categoryGrid {
+    min-width: 0;
+  }
+
   .headerRow {
     gap: var(--space-4);
     margin-bottom: 1.25rem;
@@ -570,6 +590,9 @@
   .lead {
     font-size: 0.88rem;
     line-height: 1.65;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .ribbon {
@@ -606,6 +629,9 @@
   .lensBody {
     font-size: 0.8rem;
     line-height: 1.6;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .lensBody {
@@ -638,6 +664,7 @@
   .categoryIntroTitle {
     font-size: 1.5rem;
     max-width: 15ch;
+    overflow-wrap: break-word;
   }
 
   .categoryGrid {
@@ -682,6 +709,16 @@
 @media (min-width: 375px) and (max-width: 424px) {
   .skills {
     padding-block: clamp(3.5rem, 9vw, 4.5rem);
+  }
+
+  .headerRow,
+  .heroBlock,
+  .heroCopy,
+  .heroAside,
+  .gridWrap,
+  .categoryGrid,
+  .ribbon {
+    min-width: 0;
   }
 
   .headerRow {
@@ -804,6 +841,16 @@
 @media (min-width: 425px) and (max-width: 768px) {
   .skills {
     padding-block: clamp(3.5rem, 10vw, 5rem);
+  }
+
+  .headerRow,
+  .heroBlock,
+  .heroCopy,
+  .heroAside,
+  .gridWrap,
+  .categoryGrid,
+  .ribbon {
+    min-width: 0;
   }
 
   .headerRow {

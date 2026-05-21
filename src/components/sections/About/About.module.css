@@ -313,6 +313,9 @@
   font-weight: var(--weight-light);
   line-height: var(--leading-relaxed);
   color: var(--a-text-2);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .valuesList {
@@ -350,7 +353,9 @@
 
 .valueText {
   color: var(--a-text-2);
-  max-width: 46ch;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .profileList {
@@ -398,6 +403,15 @@
     padding-inline: var(--grid-gutter);
   }
 
+  .aboutHeader,
+  .statementBlock,
+  .ruleMid,
+  .aboutGrid,
+  .aboutCopy,
+  .aboutAside {
+    min-width: 0;
+  }
+
   .aboutHeader {
     gap: var(--space-4);
     margin-bottom: 1.25rem;
@@ -424,6 +438,9 @@
   .aboutBio {
     font-size: 0.9rem;
     line-height: 1.65;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .signalLabel {
@@ -444,6 +461,9 @@
 
   .signalValue {
     font-size: 0.85rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .skillChip {
@@ -462,6 +482,9 @@
 
   .evidenceDetail {
     font-size: 0.85rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .valueItem {
@@ -486,6 +509,9 @@
 
   .profileValue {
     font-size: 0.8rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 }
 
@@ -494,6 +520,15 @@
 @media (min-width: 375px) and (max-width: 424px) {
   .about {
     padding-block: clamp(3.5rem, 9vw, 4.5rem);
+  }
+
+  .aboutHeader,
+  .statementBlock,
+  .ruleMid,
+  .aboutGrid,
+  .aboutCopy,
+  .aboutAside {
+    min-width: 0;
   }
 
   .aboutHeader {
@@ -522,6 +557,9 @@
   .aboutBio {
     font-size: 0.92rem;
     line-height: 1.68;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .signalLabel {
@@ -542,6 +580,9 @@
 
   .signalValue {
     font-size: 0.88rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .skillChip {
@@ -560,6 +601,9 @@
 
   .evidenceDetail {
     font-size: 0.88rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   .valueItem {
@@ -576,6 +620,13 @@
     grid-template-columns: 1fr;
     gap: 0.3rem;
     padding: 0.7rem 0;
+  }
+
+  .profileValue,
+  .valueText {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 }
 

@@ -181,39 +181,54 @@ export default function Navbar() {
     setMenuOpen(true);
     document.body.style.overflow = "hidden";
 
-    const drawerLinks = drawerRef.current?.querySelectorAll("a");
+    // Defer animations until after the DOM updates so refs are populated.
+    requestAnimationFrame(() => {
+      const overlay = overlayRef.current;
+      const drawer = drawerRef.current;
+      const drawerLinks = drawer?.querySelectorAll("a");
 
-    gsap.set(overlayRef.current, { opacity: 0 });
-    gsap.set(drawerRef.current,  { x: "100%" });
-    if (drawerLinks) gsap.set(drawerLinks, { x: 24, opacity: 0 });
+      if (overlay) gsap.set(overlay, { opacity: 0 });
+      if (drawer)  gsap.set(drawer,  { x: "100%" });
+      if (drawerLinks) gsap.set(drawerLinks, { x: 24, opacity: 0 });
 
-    gsap.to(overlayRef.current, { opacity: 1, duration: 0.35, ease: "power2.out" });
-    gsap.to(drawerRef.current,  { x: "0%",   duration: 0.55, ease: "power4.out", force3D: true });
+      if (overlay) gsap.to(overlay, { opacity: 1, duration: 0.35, ease: "power2.out" });
+      if (drawer)  gsap.to(drawer,  { x: "0%", duration: 0.55, ease: "power4.out", force3D: true });
 
-    if (drawerLinks) {
-      gsap.to(drawerLinks, {
-        x: 0, opacity: 1,
-        duration: 0.55,
-        stagger:  0.07,
-        ease:     "power3.out",
-        delay:    0.18,
-        force3D:  true,
-      });
-    }
+      if (drawerLinks) {
+        gsap.to(drawerLinks, {
+          x: 0, opacity: 1,
+          duration: 0.55,
+          stagger:  0.07,
+          ease:     "power3.out",
+          delay:    0.18,
+          force3D:  true,
+        });
+      }
+    });
   }, []);
 
   const closeMenu = useCallback(() => {
-    gsap.to(overlayRef.current, { opacity: 0, duration: 0.28, ease: "power2.in" });
-    gsap.to(drawerRef.current,  {
-      x:        "100%",
-      duration: 0.42,
-      ease:     "power4.in",
-      force3D:  true,
-      onComplete: () => {
-        setMenuOpen(false);
-        document.body.style.overflow = "";
-      },
-    });
+    const overlay = overlayRef.current;
+    const drawer = drawerRef.current;
+
+    if (overlay) gsap.to(overlay, { opacity: 0, duration: 0.28, ease: "power2.in" });
+
+    if (drawer) {
+      gsap.to(drawer,  {
+        x:        "100%",
+        duration: 0.42,
+        ease:     "power4.in",
+        force3D:  true,
+        onComplete: () => {
+          setMenuOpen(false);
+          document.body.style.overflow = "";
+        },
+      });
+    } else {
+      // Fallback: ensure state is reset even if ref is missing
+      setMenuOpen(false);
+      document.body.style.overflow = "";
+    }
   }, []);
 
   /* ── Handler unificado para links ──────────────────────────────── */
