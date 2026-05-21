@@ -49,6 +49,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -56,6 +61,14 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     siteName: siteName,
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: `${siteName} — Full-Stack Product Engineer`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

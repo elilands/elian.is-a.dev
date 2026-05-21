@@ -390,7 +390,309 @@
 
 /* ── Responsive ───────────────────────────────────────────────────────── */
 
-@media (max-width: 1024px) {
+/* ─ Móvil Mini (320px - 374px) ─────────────────────────────────────────── */
+
+@media (max-width: 374px) {
+  .about {
+    padding-block: clamp(3rem, 8vw, 4rem);
+    padding-inline: var(--grid-gutter);
+  }
+
+  .aboutHeader {
+    gap: var(--space-4);
+    margin-bottom: 1.25rem;
+  }
+
+  .rule {
+    display: none;
+  }
+
+  .aboutTag {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+
+  .lineInner {
+    font-size: 1.65rem;
+    line-height: 1.06;
+  }
+
+  .statementBlock {
+    margin-bottom: 1.5rem;
+  }
+
+  .aboutBio {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .signalLabel {
+    font-size: 0.6rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .signalItem {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    padding: 0.75rem 0;
+  }
+
+  .signalTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .signalValue {
+    font-size: 0.85rem;
+  }
+
+  .skillChip {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.6rem;
+  }
+
+  .evidenceItem {
+    padding: 0.7rem 0;
+  }
+
+  .evidenceTitle {
+    font-size: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .evidenceDetail {
+    font-size: 0.85rem;
+  }
+
+  .valueItem {
+    gap: var(--space-2);
+    padding: 0.7rem 0;
+    font-size: 0.85rem;
+  }
+
+  .valueIndex {
+    font-size: 0.55rem;
+  }
+
+  .profileItem {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    padding: 0.65rem 0;
+  }
+
+  .profileLabel {
+    font-size: 0.6rem;
+  }
+
+  .profileValue {
+    font-size: 0.8rem;
+  }
+}
+
+/* ─ Móvil Pequeño (375px - 424px) ──────────────────────────────────────── */
+
+@media (min-width: 375px) and (max-width: 424px) {
+  .about {
+    padding-block: clamp(3.5rem, 9vw, 4.5rem);
+  }
+
+  .aboutHeader {
+    gap: var(--space-5);
+    margin-bottom: 1.5rem;
+  }
+
+  .rule {
+    display: none;
+  }
+
+  .aboutTag {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+  }
+
+  .lineInner {
+    font-size: 1.8rem;
+    line-height: 1.06;
+  }
+
+  .statementBlock {
+    margin-bottom: 1.75rem;
+  }
+
+  .aboutBio {
+    font-size: 0.92rem;
+    line-height: 1.68;
+  }
+
+  .signalLabel {
+    font-size: 0.65rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .signalItem {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+    padding: 0.8rem 0;
+  }
+
+  .signalTitle {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .signalValue {
+    font-size: 0.88rem;
+  }
+
+  .skillChip {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.65rem;
+  }
+
+  .evidenceItem {
+    padding: 0.75rem 0;
+  }
+
+  .evidenceTitle {
+    font-size: 0.65rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .evidenceDetail {
+    font-size: 0.88rem;
+  }
+
+  .valueItem {
+    gap: var(--space-3);
+    padding: 0.75rem 0;
+    font-size: 0.88rem;
+  }
+
+  .valueIndex {
+    font-size: 0.6rem;
+  }
+
+  .profileItem {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+    padding: 0.7rem 0;
+  }
+}
+
+/* ─ Móvil Mediano (425px - 768px) ──────────────────────────────────────── */
+
+@media (min-width: 425px) and (max-width: 768px) {
+  .about {
+    padding-block: clamp(3.5rem, 10vw, 5rem);
+  }
+
+  .aboutHeader {
+    margin-bottom: 1.75rem;
+  }
+
+  .rule {
+    flex: 1;
+    opacity: 0.5;
+  }
+
+  .lineInner {
+    font-size: clamp(1.9rem, 6vw, 2.5rem);
+  }
+
+  .statementBlock {
+    margin-bottom: 2rem;
+  }
+
+  .ruleMid {
+    margin-bottom: 2rem;
+  }
+
+  .aboutGrid {
+    gap: 1.5rem;
+  }
+
+  .signalItem {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    padding: 0.85rem 0;
+  }
+
+  .signalTitle {
+    font-size: clamp(1.2rem, 4vw, 1.4rem);
+  }
+
+  .signalValue {
+    font-size: 0.92rem;
+  }
+
+  .skillChip {
+    padding: 0.55rem 0.8rem;
+    font-size: 0.7rem;
+  }
+
+  .evidenceItem {
+    padding: 0.8rem 0;
+  }
+
+  .evidenceTitle {
+    font-size: 0.7rem;
+  }
+
+  .valueItem {
+    gap: var(--space-3);
+    padding: 0.85rem 0;
+  }
+
+  .profileItem {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 0.8rem 0;
+  }
+}
+
+/* ─ Tablet (769px - 1023px) ───────────────────────────────────────────── */
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  .about {
+    padding-block: clamp(5rem, 8vw, 7rem);
+  }
+
+  .lineInner {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+  }
+
+  .aboutHeader {
+    margin-bottom: 2rem;
+  }
+
+  .statementBlock {
+    margin-bottom: 2.5rem;
+  }
+
+  .aboutGrid {
+    gap: 2rem;
+  }
+
+  .signalItem {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
+
+  .signalTitle {
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+  }
+
+  .profileItem {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.9rem 0;
+  }
+}
+
+/* ─ Desktop (1024px - 1439px) ──────────────────────────────────────────── */
+
+@media (min-width: 1024px) and (max-width: 1439px) {
   .lineInner {
     font-size: clamp(2rem, 5vw, 4rem);
   }
@@ -410,6 +712,27 @@
   }
 }
 
+/* ─ Desktop Grande (1440px+) ───────────────────────────────────────────── */
+
+@media (min-width: 1440px) {
+  .aboutGrid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  .aboutCopy {
+    position: sticky;
+    top: clamp(6rem, 7vw, 7.5rem);
+    align-self: start;
+  }
+
+  .aboutAside {
+    padding-top: 0.5rem;
+  }
+}
+
+/* ─ Desktop Muy Grande (1440px+) con layout 2 columnas ────────────────── */
+
 @media (min-width: 1025px) {
   .aboutGrid {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -424,44 +747,6 @@
 
   .aboutAside {
     padding-top: 0.3rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .about {
-    padding-block: clamp(4rem, 12vw, 6rem);
-  }
-
-  .lineInner {
-    font-size: clamp(1.9rem, 8.6vw, 3rem);
-  }
-
-  .aboutHeader {
-    margin-bottom: clamp(1.5rem, 4vw, 2rem);
-  }
-
-  .statementBlock {
-    margin-bottom: clamp(2rem, 5vw, 3rem);
-  }
-
-  .aboutGrid {
-    gap: clamp(1.5rem, 5vw, 2rem);
-  }
-
-  .signalItem {
-    padding: 0.9rem 0;
-  }
-
-  .skillChip {
-    padding: 0.55rem 0.8rem;
-  }
-
-  .signalTitle {
-    font-size: clamp(1.28rem, 5vw, 1.65rem);
-  }
-
-  .valueItem {
-    gap: var(--space-3);
   }
 }
 

@@ -40,10 +40,8 @@ export function CustomCursor() {
     let velocityX = 0;
     let velocityY = 0;
     let scale = 1;
-    let isMoving = false;
 
     const onMove = (e: MouseEvent) => {
-      isMoving = true;
       velocityX = e.clientX - mouseX;
       velocityY = e.clientY - mouseY;
       mouseX = e.clientX;
@@ -70,7 +68,6 @@ export function CustomCursor() {
 
     const onMouseLeave = () => {
       if (container) container.style.opacity = '0';
-      isMoving = false;
     };
 
     // Trail & outer animation loop
