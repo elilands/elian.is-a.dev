@@ -40,6 +40,7 @@ export function CustomCursor() {
     let velocityX = 0;
     let velocityY = 0;
     let scale = 1;
+    let isMoving = false;
 
     const onMove = (e: MouseEvent) => {
       isMoving = true;
