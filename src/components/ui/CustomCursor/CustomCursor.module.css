@@ -1,0 +1,98 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   CustomCursor.module.css
+   Dos capas: inner (punto) + outer (orbe con lag).
+
+   El posicionamiento usa margin negativo para centrar el elemento
+   sobre la posición real del mouse. Esto permite que las transiciones
+   de tamaño (hover) mantengan el centrado sin ajustes en JS.
+
+   will-change: transform — solo aquí donde es absolutamente necesario.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Orbe exterior (lag, se expande en hover) ─────────────────────────── */
+
+.outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Centra el elemento sobre la posición translate del JS */
+  margin: -20px 0 0 -20px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  /* Estética: borde translúcido, fondo etéreo */
+  border: 1px solid rgba(201, 184, 232, 0.45);
+  background: rgba(201, 184, 232, 0.05);
+  backdrop-filter: blur(2px);
+
+  /* Cursor por encima de todo */
+  pointer-events: none;
+  z-index: var(--z-cursor);
+
+  /* Invisible hasta el primer mousemove */
+  opacity: 0;
+  transition:
+    opacity       var(--duration-slow) var(--ease-out),
+    width         var(--duration-base) var(--ease-out),
+    height        var(--duration-base) var(--ease-out),
+    margin        var(--duration-base) var(--ease-out),
+    background    var(--duration-base) var(--ease-out),
+    border-color  var(--duration-base) var(--ease-out),
+    box-shadow    var(--duration-base) var(--ease-out);
+
+  will-change: transform;
+}
+
+/* Estado hover: se expande y emite glow */
+.outerHover {
+  width: 64px;
+  height: 64px;
+  /* margin se ajusta en proporción para mantener centrado */
+  margin: -32px 0 0 -32px;
+  background:   rgba(201, 184, 232, 0.12);
+  border-color: rgba(201, 184, 232, 0.65);
+  box-shadow:
+    0 0 20px rgba(201, 184, 232, 0.35),
+    0 0 48px rgba(201, 184, 232, 0.18),
+    inset 0 0 10px rgba(201, 184, 232, 0.08);
+}
+
+/* ── Punto interior (instantáneo, sin lag) ────────────────────────────── */
+
+.inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Centra el punto de 8px */
+  margin: -4px 0 0 -4px;
+
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(201, 184, 232, 0.88);
+
+  pointer-events: none;
+  z-index: calc(var(--z-cursor) + 1);
+
+  /* Invisible hasta el primer mousemove */
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+
+  will-change: transform;
+}
+
+/* ── Reduced motion: cursor simple sin lag ni glow ───────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .outer {
+    transition: opacity var(--duration-base) linear;
+  }
+
+  .outerHover {
+    box-shadow: none;
+  }
+}

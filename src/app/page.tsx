@@ -1,66 +1,47 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Preloader from "@/components/sections/Preloader/Preloader";
+import Hero      from "@/components/sections/Hero/Hero";
+import About     from "@/components/sections/About/About";
+import Projects  from "@/components/sections/Projects/Projects";
+import Skills    from "@/components/sections/Skills/Skills";
+import Certifications from "@/components/sections/Certifications/Certifications";
+import Process   from "@/components/sections/Process/Process";
+import Contact   from "@/components/sections/Contact/Contact";
+import { structuredData } from "@/lib/seo";
+import styles    from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className={styles.main} id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
+
+      <Preloader />
+      <Hero />
+      <About />
+      <Projects />
+      <Skills />
+      <Certifications />
+      <Process />
+      <section 
+        className={styles.contactSection} 
+        id="contact"
+        aria-label="Contact section background"
+      >
+        <div className={styles.contactHalo} aria-hidden="true" />
+        <Contact />
+      </section>
+
+      <footer className={styles.footer}>
+        <div className="container">
+          <p className={styles.footerName}>Elian Mejia</p>
+          <p className={styles.footerCopy}>© 2026</p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </footer>
+
+    </main>
   );
 }

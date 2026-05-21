@@ -1,142 +1,769 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
+/* ─────────────────────────────────────────────────────────────────────────
+   page.module.css
+   Layout y estilos de la página principal.
+   Las animaciones GSAP se aplicarán sobre esta estructura sin modificarla.
+   ───────────────────────────────────────────────────────────────────────── */
 
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
-}
+/* ── Main ─────────────────────────────────────────────────────────────── */
 
 .main {
+  position: relative;
+  /*
+    Gradiente continuo que atraviesa toda la página sin cortes.
+    Flujo: noche (#08080B) → aurora violeta → crema (#FAF8F4)
+    min-height: 100vh asegura que el gradiente cubra toda la viewport.
+  */
+  background: linear-gradient(
+    to bottom,
+    #08080B   0%,      /* Hero — noche */
+    #0E0D18   12%,     /* Transición hacia About */
+    #101019   18%,     /* About finaliza */
+    #14121F   24%,     /* Projects inicia */
+    #171525   32%,     /* Projects — zona oscura */
+    #191730   40%,     /* Transición a Skills */
+    #1E1B34   48%,     /* Skills — violeta profundo */
+    #232038   56%,     /* Skills finaliza \ Process inicia */
+    #282540   62%,     /* Process — intensidad media */
+    #2F2B48   68%,     /* Process — pre-transición */
+    #34304E   74%,     /* Process finaliza \ Contact inicia */
+    #4A4565   80%,     /* Contact — violeta medio */
+    #6B6080   84%,     /* Contact — zona de amanecer */
+    #B0A8C8   88%,     /* Contact — violeta pálido */
+    #DDD8EE   92%,     /* Contact — casi blanco lavanda */
+    #F5F2F8   96%,     /* Pre-footer — blanco lavanda */
+    #FAF8F4   100%     /* Footer — crema final */
+  );
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Gradiente atmosférico de fondo */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-hero-radial);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Halo principal detrás del nombre */
+.heroHalo {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: clamp(300px, 52vw, 640px);
+  height: clamp(300px, 52vw, 640px);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(201, 184, 232, 0.22)  0%,
+    rgba(168, 196, 216, 0.14) 42%,
+    transparent                70%
+  );
+  animation: haloPulse 7s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Plumas decorativas flotando */
+.heroFeathers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/*
+  .feather: elementos decorativos de pluma.
+  Aquí se colocarán como background-image con los PNG de Stable Diffusion.
+  Por ahora son placeholders visuales con forma via clip-path.
+
+  ── Stable Diffusion prompt (hero feathers) ──────────────────────────────
+  Positive: "single feather, white and pale gold, ultra-soft, translucent,
+  ethereal, minimal, isolated on transparent background, watercolor texture,
+  backlit, dreamy, photorealistic detail, high resolution"
+  Negative: "colorful, saturated, dark, grunge, noise, background, shadow,
+  harsh lines, cartoon, vector, multiple feathers, person"
+  Steps: 30 · CFG: 7 · Sampler: DPM++ 2M Karras · Seed: 42
+  Size: 400×900px · Background: transparent (remove via Rembg in post)
+  Filename: /public/textures/feather-hero.png
+  ─────────────────────────────────────────────────────────────────────── */
+.feather {
+  position: absolute;
+  display: block;
+  width: clamp(24px, 3vw, 48px);
+  aspect-ratio: 2 / 5;
+  border-radius: 60% 40% 60% 40% / 70% 30% 70% 30%;
+
+  /*
+    Reemplazar background por next/image cuando el PNG esté generado.
+    Placeholder: forma orgánica con gradiente suave.
+  */
+  background: linear-gradient(
+    160deg,
+    rgba(255, 251, 240, 0.6)  0%,
+    rgba(201, 184, 232, 0.35) 60%,
+    rgba(232, 213, 163, 0.20) 100%
+  );
+  opacity: 0;
+  animation: featherFloat var(--duration-crawl) ease-in-out infinite;
+}
+
+/* Posición y timing distintos por pluma */
+.feather[data-index="1"] {
+  top: 18%;
+  left: 14%;
+  width: clamp(18px, 2.2vw, 36px);
+  animation-delay: 0s;
+  animation-duration: 9s;
+  transform: rotate(-15deg);
+  opacity: 0.45;
+}
+
+.feather[data-index="2"] {
+  top: 28%;
+  right: 16%;
+  width: clamp(22px, 2.8vw, 44px);
+  animation-delay: 2.5s;
+  animation-duration: 11s;
+  transform: rotate(8deg);
+  opacity: 0.38;
+}
+
+.feather[data-index="3"] {
+  bottom: 22%;
+  left: 22%;
+  width: clamp(14px, 1.8vw, 28px);
+  animation-delay: 1.2s;
+  animation-duration: 13s;
+  transform: rotate(-6deg);
+  opacity: 0.30;
+}
+
+/* Textura de grain sutil */
+.heroGrain {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  /*
+    El grain real vendrá de /public/textures/grain.png — PNG 256x256 tileable.
+    Por ahora: SVG inline como placeholder.
+  */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  animation: grainDrift 10s steps(1) infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Contenido del hero */
+.heroContent {
+  position: relative;
+  z-index: 4;
   display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  gap: var(--space-6);
+  text-align: center;
+  padding: var(--space-8) var(--grid-gutter);
+  /* Las palabras individuales se animarán con GSAP SplitText */
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+/* Etiqueta de rol — sobre el nombre */
+.heroEyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+/* Nombre — el elemento display principal */
+.heroName {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tighter);
+  line-height: 0.94;
+  color: var(--color-text-primary);
+
+  /*
+    Aurora sutil sobre el texto.
+    Se animará con GSAP (background-position) en el Hero component.
+  */
+  background: linear-gradient(
+    130deg,
+    var(--color-text-primary) 20%,
+    rgba(201, 184, 232, 0.85) 50%,
+    var(--color-text-primary) 80%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
+/* Statement — dos líneas directas */
+.heroStatement {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 34ch;
+  letter-spacing: var(--tracking-normal);
+}
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+/* CTA hacia proyectos */
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-8);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  border: 1px solid rgba(201, 184, 232, 0.30);
+  border-radius: var(--radius-full);
+  background: rgba(201, 184, 232, 0.06);
+  backdrop-filter: blur(10px);
+  transition:
+    background   var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow   var(--duration-base) var(--ease-out);
+}
+
+.heroCta::after {
+  content: '↓';
+  font-size: 0.8em;
+  transition: transform var(--duration-base) var(--ease-out);
+  opacity: 0.7;
+}
+
+.heroCta:hover {
+  background:   rgba(201, 184, 232, 0.14);
+  border-color: rgba(201, 184, 232, 0.55);
+  box-shadow:   var(--shadow-glow-lavender);
+}
+
+.heroCta:hover::after {
+  transform: translateY(4px);
+}
+
+/* ── Secciones — base ─────────────────────────────────────────────────── */
+
+.section,
+.sectionAlt {
+  position: relative;
+  padding-block: var(--space-section);
+  border-top: 1px solid rgba(201, 184, 232, 0.10);
+}
+
+/* Secciones alternas con fondo ligeramente diferenciado */
+.sectionAlt {
+  background: var(--color-base-alt);
+}
+
+/* Número / etiqueta de sección */
+.sectionTag {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+/* Título de sección */
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-light);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-8);
+}
+
+/* Párrafo de sección */
+.sectionBody {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: var(--weight-light);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 60ch;
+
+  /* En secciones seguidas, separación entre párrafos */
+  & + & {
+    margin-top: var(--space-5);
   }
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
+/* ── Projects grid ────────────────────────────────────────────────────── */
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  margin-top: var(--space-10);
+}
+
+/* Stub de proyecto — se reemplazará por ProjectCard */
+.projectStub {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  border: 1px solid rgba(201, 184, 232, 0.12);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  backdrop-filter: blur(8px);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow   var(--duration-base) var(--ease-out);
+}
+
+.projectStub:hover {
+  border-color: rgba(201, 184, 232, 0.28);
+  box-shadow: var(--shadow-glow-lavender);
+}
+
+/* Imagen del proyecto — placeholder hasta tener los visuals */
+.projectStubImage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    135deg,
+    rgba(201, 184, 232, 0.18) 0%,
+    rgba(168, 196, 216, 0.14) 50%,
+    rgba(232, 213, 163, 0.12) 100%
+  );
+  overflow: hidden;
+}
+
+.projectStubMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.projectName {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  color: var(--color-text-primary);
+}
+
+.projectDescription {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-light);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 52ch;
+}
+
+.projectStack {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-light);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Contact ──────────────────────────────────────────────────────────── */
+
+.contact {
+  position: relative;
+  padding-block: var(--space-section);
+  padding-inline: var(--grid-gutter);
+  border-top: 1px solid rgba(201, 184, 232, 0.12);
+  overflow: hidden;
+
+  /* Fondo más intenso: culminación visual del sitio */
+  background: linear-gradient(
+    180deg,
+    var(--color-base)                    0%,
+    rgba(201, 184, 232, 0.12)           60%,
+    rgba(168, 196, 216, 0.08)          100%
+  );
+}
+
+.contactHalo {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(400px, 70vw, 800px);
+  height: clamp(300px, 40vw, 500px);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(201, 184, 232, 0.20)  0%,
+    rgba(168, 196, 216, 0.10) 50%,
+    transparent               75%
+  );
+  animation: haloPulse 9s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contactHeading {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  max-width: 18ch;
+  margin-bottom: var(--space-6);
+}
+
+.contactStatement {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  color: var(--color-text-secondary);
+  max-width: 44ch;
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-10);
+}
+
+.contactCta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-10);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  border: 1px solid rgba(201, 184, 232, 0.35);
+  border-radius: var(--radius-full);
+  background: rgba(201, 184, 232, 0.08);
+  backdrop-filter: blur(12px);
+  transition:
+    background   var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow   var(--duration-base) var(--ease-out);
+}
+
+.contactCta::after {
+  content: '→';
+  font-size: 0.85em;
+  transition: transform var(--duration-base) var(--ease-out);
+  opacity: 0.7;
+}
+
+.contactCta:hover {
+  background:   rgba(201, 184, 232, 0.16);
+  border-color: rgba(201, 184, 232, 0.55);
+  box-shadow:   var(--shadow-glow-lavender);
+}
+
+.contactCta:hover::after {
+  transform: translateX(5px);
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+
+.footer {
+  padding-block: var(--space-8);
+  border-top: 1px solid rgba(201, 184, 232, 0.08);
+}
+
+.footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerName {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+.footerCopy {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-light);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+
+@media (min-width: 640px) {
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
+  .projectStub {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@media (min-width: 1024px) {
+  .heroContent {
+    gap: var(--space-10);
   }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .projectsGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
+
+  /* En desktop, los proyectos importantes van full-width */
+  .projectsGrid > .projectStub:first-child {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .projectsGrid > .projectStub:first-child .projectStubImage {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ESCALA DE COLOR PROGRESIVA
+   Cada sección hereda el color final de la anterior en su gradiente inicial.
+   El usuario percibe un único fade continuo de noche a día al hacer scroll.
+
+   Hero     #08080B → (About.module.css maneja su propio gradiente)
+   About    termina en #0E0D18
+   Projects #0E0D18 → #171525
+   Skills   #171525 → #232038
+   Process  #232038 → #34304E
+   Contact  #34304E → #FAF8F4  (la transición angélica)
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Tokens compartidos para stubs oscuros ───────────────────────────── */
+
+.projectsSection,
+.skillsSection,
+.processSection {
+  --s-text:   rgba(228, 225, 220, 0.90);
+  --s-text-2: rgba(178, 174, 168, 0.72);
+  --s-text-3: rgba(128, 124, 118, 0.54);
+  --s-border: rgba(228, 225, 220, 0.07);
+}
+
+/* ── Projects ────────────────────────────────────────────────────────── */
+
+.projectsSection {
+  position: relative;
+  padding-block: var(--space-section);
+  padding-inline: var(--grid-gutter);
+  border-top: 1px solid rgba(228, 225, 220, 0.06);
+  background: transparent;
+}
+
+/* ── Skills ──────────────────────────────────────────────────────────── */
+
+.skillsSection {
+  position: relative;
+  padding-block: var(--space-section);
+  padding-inline: var(--grid-gutter);
+  border-top: 1px solid rgba(228, 225, 220, 0.06);
+  background: transparent;
+}
+
+/* ── Process ─────────────────────────────────────────────────────────── */
+
+.processSection {
+  position: relative;
+  padding-block: var(--space-section);
+  padding-inline: var(--grid-gutter);
+  border-top: 1px solid rgba(228, 225, 220, 0.06);
+  background: transparent;
+}
+
+/* ── Stub text (todos los stubs oscuros) ─────────────────────────────── */
+
+.stubTag {
+  display: block;
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color:          var(--s-text-3);
+  margin-bottom:  var(--space-4);
+}
+
+.stubHeading {
+  font-family:    var(--font-display);
+  font-size:      var(--text-2xl);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--s-text);
+  margin-bottom:  var(--space-6);
+}
+
+.stubBody {
+  font-family:  var(--font-body);
+  font-size:    var(--text-md);
+  font-weight:  var(--weight-light);
+  color:        var(--s-text-2);
+  line-height:  var(--leading-relaxed);
+}
+
+/* ── Contact ─────────────────────────────────────────────────────────── */
+
+/*
+  La transición más dramática del sitio.
+  Arriba: el violeta oscuro del Process (#34304E).
+  La luz sube — violeta pálido → crema — como el amanecer.
+  Cuando el usuario llega aquí, ya está en el mundo claro.
+*/
+.contactSection {
+  position: relative;
+  padding-block: var(--space-section);
+  padding-inline: var(--grid-gutter);
+  overflow: hidden;
+  text-align: center;
+  background: transparent !important;
+}
+
+.contactHalo {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(400px, 70vw, 800px);
+  height: clamp(300px, 40vw, 500px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse,
+    rgba(201, 184, 232, 0.22)  0%,
+    rgba(168, 196, 216, 0.12) 50%,
+    transparent                75%
+  );
+  animation: haloPulse 9s ease-in-out infinite;
+}
+
+.contactHeading {
+  position: relative;
+  z-index: 1;
+  font-family:    var(--font-display);
+  font-size:      var(--text-3xl);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color:          var(--color-text-primary);
+  max-width: 18ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-6);
+}
+
+.contactStatement {
+  position: relative;
+  z-index: 1;
+  font-family:  var(--font-body);
+  font-size:    var(--text-lg);
+  font-weight:  var(--weight-light);
+  color:        var(--color-text-secondary);
+  max-width: 44ch;
+  margin-inline: auto;
+  line-height:  var(--leading-relaxed);
+  margin-bottom: var(--space-10);
+}
+
+.contactCta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-10);
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--color-text-primary);
+  border:         1px solid rgba(201, 184, 232, 0.35);
+  border-radius:  var(--radius-full);
+  background:     rgba(201, 184, 232, 0.08);
+  backdrop-filter: blur(12px);
+  transition:
+    background   var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow   var(--duration-base) var(--ease-out);
+}
+
+.contactCta::after {
+  content: "→";
+  font-size: 0.85em;
+  opacity: 0.7;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.contactCta:hover {
+  background:   rgba(201, 184, 232, 0.16);
+  border-color: rgba(201, 184, 232, 0.55);
+  box-shadow:   var(--shadow-glow-lavender);
+}
+
+.contactCta:hover::after {
+  transform: translateX(5px);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+
+.footer {
+  padding-block: var(--space-8);
+  border-top: 1px solid rgba(201, 184, 232, 0.08);
+  background: transparent;
+}
+
+.footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerName {
+  font-family:    var(--font-display);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-light);
+  color:          var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+.footerCopy {
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  color:          var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
 }

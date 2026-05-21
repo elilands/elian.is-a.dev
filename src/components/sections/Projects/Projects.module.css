@@ -1,0 +1,464 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Projects.module.css
+   Escala: #0E0D18 (About final) → #171525
+   ───────────────────────────────────────────────────────────────────────── */
+
+.projects {
+  --p-text:   rgba(224, 221, 216, 0.90);
+  --p-text-2: rgba(174, 170, 164, 0.72);
+  --p-text-3: rgba(124, 120, 114, 0.54);
+  --p-border: rgba(224, 221, 216, 0.08);
+  --p-accent: rgba(201, 184, 232, 0.55);
+}
+
+/* ── Sección ──────────────────────────────────────────────────────────── */
+
+.projects {
+  position: relative;
+  padding-block: clamp(5.5rem, 11vw, 9rem);
+  padding-inline: var(--grid-gutter);
+  overflow: hidden;
+
+  background: linear-gradient(
+    to bottom,
+    #171525 0%,
+    #1F1D33 100%
+  );
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.tag {
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color:          var(--p-text-3);
+  flex-shrink: 0;
+  will-change: transform, opacity;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  will-change: transform;
+  background: linear-gradient(
+    to right,
+    rgba(224, 221, 216, 0.22) 0%,
+    rgba(201, 184, 232, 0.10) 55%,
+    transparent               100%
+  );
+}
+
+/* ── Heading ──────────────────────────────────────────────────────────── */
+
+.headingWrap {
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  margin-bottom: clamp(4rem, 8vw, 6.5rem);
+}
+
+.headingMask {
+  overflow: hidden;
+  line-height: 1.05;
+  padding-bottom: 0.04em;
+}
+
+.headingInner {
+  display: block;
+  font-family:    var(--font-display);
+  font-size:      clamp(2.8rem, 6.0vw, 6.0rem);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.032em;
+  line-height:    1.05;
+  color:          var(--p-text);
+  will-change: transform;
+}
+
+/* ── Featured card (Omyu) ─────────────────────────────────────────────── */
+
+.featured {
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+  display: grid;
+  grid-template-columns: 52fr 48fr;
+  gap: clamp(3rem, 6vw, 7rem);
+  align-items: center;
+  padding: clamp(2.5rem, 4vw, 4rem);
+  border: 1px solid var(--p-border);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.018);
+  backdrop-filter: blur(6px);
+  will-change: transform, opacity;
+  transition:
+    border-color var(--duration-slow) var(--ease-out),
+    background   var(--duration-slow) var(--ease-out);
+}
+
+.featured:hover {
+  border-color: rgba(201, 184, 232, 0.22);
+  background:   rgba(201, 184, 232, 0.032);
+}
+
+.featuredInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.featuredTopRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.cardNum {
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color:          var(--p-text-3);
+}
+
+.featuredBadge {
+  font-family:    var(--font-body);
+  font-size:      var(--text-2xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wider);
+  color:          var(--p-accent);
+  text-transform: uppercase;
+  padding: 2px var(--space-3);
+  border: 1px solid rgba(201, 184, 232, 0.22);
+  border-radius: var(--radius-full);
+}
+
+.featuredMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.featuredName {
+  font-family:    var(--font-display);
+  font-size:      clamp(2.4rem, 4.2vw, 4.4rem);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.028em;
+  line-height:    1.0;
+  color:          var(--p-text);
+}
+
+.featuredTagline {
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--p-accent);
+}
+
+.featuredDesc {
+  font-family:  var(--font-body);
+  font-size:    var(--text-base);
+  font-weight:  var(--weight-light);
+  line-height:  var(--leading-relaxed);
+  color:        var(--p-text-2);
+  max-width: 46ch;
+}
+
+/* ── Stack chips (compartido) ─────────────────────────────────────────── */
+
+.stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  font-family:    var(--font-body);
+  font-size:      var(--text-2xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wider);
+  color:          var(--p-text-3);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--p-border);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+/* ── CTA (compartido) ─────────────────────────────────────────────────── */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  align-self: flex-start;
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--p-text);
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid rgba(224, 221, 216, 0.12);
+  border-radius: var(--radius-full);
+  transition:
+    color        var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    background   var(--duration-base) var(--ease-out);
+}
+
+.cta:hover {
+  color:        rgba(201, 184, 232, 0.90);
+  border-color: rgba(201, 184, 232, 0.35);
+  background:   rgba(201, 184, 232, 0.06);
+}
+
+.ctaArrow {
+  display: inline-block;
+  font-size: 0.85em;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.cta:hover .ctaArrow {
+  transform: translate(2px, -2px);
+}
+
+/* ── Featured visual / placeholder ───────────────────────────────────── */
+
+.featuredVisual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--p-border);
+  will-change: transform, opacity;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background:
+    radial-gradient(ellipse 80% 60% at 40% 50%,
+      rgba(201, 184, 232, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 70% 70%,
+      rgba(168, 196, 216, 0.05) 0%, transparent 65%),
+    #131220;
+}
+
+.pBar {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(224, 221, 216, 0.06);
+}
+
+.pRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.pBlock {
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: rgba(201, 184, 232, 0.05);
+  border: 1px solid rgba(201, 184, 232, 0.07);
+}
+
+/* ── Grid 2×2 ─────────────────────────────────────────────────────────── */
+
+.grid {
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.gridCard {
+  display: block;
+  padding: clamp(1.8rem, 3vw, 2.8rem);
+  border: 1px solid var(--p-border);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.015);
+  will-change: transform, opacity;
+  text-decoration: none;
+
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background   var(--duration-base) var(--ease-out),
+    transform    var(--duration-base) var(--ease-out);
+}
+
+.gridCard:hover {
+  border-color: rgba(201, 184, 232, 0.20);
+  background:   rgba(201, 184, 232, 0.028);
+  transform: translateY(-3px);
+}
+
+.gridCardInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  height: 100%;
+}
+
+.gridCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gridArrow {
+  font-size: var(--text-base);
+  color: var(--p-text-3);
+  transition:
+    color     var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.gridCard:hover .gridArrow {
+  color: var(--p-accent);
+  transform: translate(2px, -2px);
+}
+
+.gridCardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.gridName {
+  font-family:    var(--font-display);
+  font-size:      clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.022em;
+  line-height:    1.05;
+  color:          var(--p-text);
+}
+
+.gridTagline {
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--p-accent);
+}
+
+.gridDesc {
+  font-family:  var(--font-body);
+  font-size:    var(--text-sm);
+  font-weight:  var(--weight-light);
+  line-height:  var(--leading-relaxed);
+  color:        var(--p-text-2);
+
+  /* Limitar a 3 líneas para consistencia visual entre cards */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── GitHub callout ───────────────────────────────────────────────────── */
+
+.ghRow {
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  will-change: opacity;
+}
+
+.ghText {
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--p-text-3);
+}
+
+.ghLink {
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--p-text-2);
+  border-bottom: 1px solid rgba(224, 221, 216, 0.14);
+  padding-bottom: 1px;
+  transition:
+    color        var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+
+.ghLink:hover {
+  color:        var(--p-text);
+  border-color: rgba(224, 221, 216, 0.32);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .featured {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+  .headingInner {
+    font-size: clamp(2.4rem, 5.5vw, 5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .featured {
+    grid-template-columns: 1fr;
+  }
+
+  /* Visual de Omyu: primero en mobile */
+  .featuredVisual { order: -1; aspect-ratio: 16 / 10; }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .headingInner {
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
+  }
+
+  /* En mobile quitamos el clamp de líneas — hay espacio vertical */
+  .gridDesc {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .headingInner,
+  .featured,
+  .gridCard,
+  .ghRow,
+  .tag {
+    opacity:   1    !important;
+    transform: none !important;
+  }
+  .rule    { transform: none !important; }
+  .gridCard:hover { transform: none; }
+}

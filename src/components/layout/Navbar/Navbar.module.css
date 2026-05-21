@@ -1,0 +1,456 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Navbar.module.css
+
+   Estados:
+   · Default (dark)  — texto claro, fondo transparente
+   · .navScrolled    — frosted glass sutil
+   · .navLight       — texto oscuro (sobre Contact)
+   · .navLight.navScrolled — frosted glass claro
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Skip Link ─────────────────────────────────────────────────────────── */
+
+.skipLink {
+  position: fixed;
+  top: -40px;
+  left: 0;
+  z-index: 1000;
+  padding: 8px 16px;
+  background: rgba(28, 26, 40, 0.95);
+  color: #FAF8F4;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: top 0.3s ease-out;
+}
+
+.skipLink:focus {
+  top: 0;
+  outline: 3px solid rgba(201, 184, 232, 0.6);
+  outline-offset: 2px;
+}
+
+/* ── Tokens ─────────────────────────────────────────────────────────────– */
+
+.nav {
+  /* Dark mode (default) */
+  --n-text:    rgba(232, 229, 224, 0.88);
+  --n-text-2:  rgba(180, 176, 170, 0.60);
+  --n-text-3:  rgba(130, 126, 120, 0.44);
+  --n-border:  rgba(232, 229, 224, 0.08);
+  --n-bg:      rgba(8, 8, 11, 0.72);
+  --n-cta-bg:  rgba(232, 229, 224, 0.06);
+  --n-cta-border: rgba(232, 229, 224, 0.14);
+}
+
+/* Light override (sobre Contact) */
+.navLight {
+  --n-text:    rgba(28, 26, 40, 0.88);
+  --n-text-2:  rgba(28, 26, 40, 0.55);
+  --n-text-3:  rgba(28, 26, 40, 0.35);
+  --n-border:  rgba(28, 26, 40, 0.08);
+  --n-bg:      rgba(250, 248, 244, 0.80);
+  --n-cta-bg:  rgba(28, 26, 40, 0.05);
+  --n-cta-border: rgba(28, 26, 40, 0.14);
+}
+
+/* ── Nav base ─────────────────────────────────────────────────────────── */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+
+  height: clamp(56px, 8vh, 72px);
+  padding-inline: var(--grid-gutter);
+
+  /* Sin fondo — aparece con scroll */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+
+  will-change: transform, opacity;
+
+  transition:
+    background   0.45s var(--ease-out),
+    border-color 0.45s var(--ease-out),
+    backdrop-filter 0.45s var(--ease-out);
+}
+
+/* Frosted glass al hacer scroll */
+.navScrolled {
+  background:     var(--n-bg);
+  border-color:   var(--n-border);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+/* ── Logo ─────────────────────────────────────────────────────────────── */
+
+.logo {
+  font-family:    var(--font-display);
+  font-size:      var(--text-lg);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.02em;
+  color:          var(--n-text);
+  text-decoration: none;
+  flex-shrink: 0;
+
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.logo:hover {
+  color: var(--n-text-2);
+}
+
+/* ── Links desktop ────────────────────────────────────────────────────── */
+
+.links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+
+  /* Centrado real entre logo y CTA */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--n-text-2);
+  text-decoration: none;
+  position: relative;
+
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+/* Underline animado */
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--n-text);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Estado activo */
+.linkActive {
+  color: var(--n-text);
+}
+
+.linkActive::after {
+  transform: scaleX(1);
+  opacity: 0.45;
+}
+
+.linkNum {
+  font-size:      0.75em;
+  letter-spacing: var(--tracking-widest);
+  color:          var(--n-text-3);
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.link:hover .linkNum,
+.linkActive .linkNum {
+  color: var(--n-text-2);
+}
+
+/* ── CTA desktop ──────────────────────────────────────────────────────── */
+
+.cta {
+  flex-shrink: 0;
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--n-text);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--n-cta-border);
+  border-radius: var(--radius-full);
+  background: var(--n-cta-bg);
+
+  transition:
+    color        var(--duration-base) var(--ease-out),
+    background   var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+
+.cta:hover {
+  background:   rgba(201, 184, 232, 0.10);
+  border-color: rgba(201, 184, 232, 0.35);
+  color:        var(--n-text);
+}
+
+/* ── Burger ───────────────────────────────────────────────────────────── */
+
+.burger {
+  display: none; /* oculto en desktop */
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 5px;
+  width:  36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.burgerLine {
+  display: block;
+  height: 1px;
+  background: var(--n-text);
+  border-radius: 1px;
+  transform-origin: center;
+
+  transition:
+    transform  var(--duration-base) var(--ease-out),
+    opacity    var(--duration-base) var(--ease-out),
+    width      var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
+}
+
+/* Línea 1: full width */
+.burgerLine:nth-child(1) { width: 22px; }
+/* Línea 2: más corta */
+.burgerLine:nth-child(2) { width: 14px; }
+
+/* Estado abierto — X */
+.burgerOpen .burgerLine:nth-child(1) {
+  transform: translateY(3px) rotate(45deg);
+  width: 18px;
+}
+.burgerOpen .burgerLine:nth-child(2) {
+  transform: translateY(-3px) rotate(-45deg);
+  width: 18px;
+}
+
+/* ── Overlay mobile ───────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(8, 8, 11, 0.60);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* ── Drawer mobile ────────────────────────────────────────────────────── */
+
+.drawer {
+  position: fixed;
+  top:    0;
+  right:  0;
+  bottom: 0;
+  z-index: 160;
+  width: min(360px, 88vw);
+  background: #0E0D18;
+  border-left: 1px solid rgba(232, 229, 224, 0.07);
+
+  /* Empieza fuera — GSAP lo mueve */
+  transform: translateX(100%);
+  will-change: transform;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Oculto del DOM si no está visible */
+  visibility: hidden;
+}
+
+.drawerVisible {
+  visibility: visible;
+}
+
+.drawerInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+/* Header del drawer */
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(3rem, 8vw, 5rem);
+}
+
+.drawerLogo {
+  font-family:    var(--font-display);
+  font-size:      var(--text-lg);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.02em;
+  color:          rgba(232, 229, 224, 0.88);
+}
+
+.drawerClose {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-sm);
+  color:     rgba(180, 176, 170, 0.55);
+  padding:   var(--space-2);
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.drawerClose:hover {
+  color: rgba(232, 229, 224, 0.88);
+}
+
+/* Links */
+.drawerLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+.drawerLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: clamp(1.1rem, 2.5vw, 1.6rem);
+  border-bottom: 1px solid rgba(232, 229, 224, 0.06);
+  text-decoration: none;
+
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+
+.drawerLink:hover {
+  border-color: rgba(201, 184, 232, 0.18);
+}
+
+.drawerNum {
+  font-family:    var(--font-body);
+  font-size:      var(--text-2xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color:          rgba(130, 126, 120, 0.44);
+  flex-shrink: 0;
+}
+
+.drawerLabel {
+  font-family:    var(--font-display);
+  font-size:      clamp(1.8rem, 6vw, 2.6rem);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.022em;
+  color:          rgba(232, 229, 224, 0.88);
+
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.drawerLink:hover .drawerLabel {
+  color: rgba(201, 184, 232, 0.90);
+}
+
+/* Footer del drawer */
+.drawerFooter {
+  padding-top: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid rgba(232, 229, 224, 0.06);
+}
+
+.drawerCta {
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          rgba(201, 184, 232, 0.65);
+  text-decoration: none;
+
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.drawerCta:hover {
+  color: rgba(201, 184, 232, 0.90);
+}
+
+/* ── Barra de progreso ────────────────────────────────────────────────── */
+
+.progressBar {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-lavender) 0%,
+    var(--color-glacier) 50%,
+    var(--color-gold) 100%
+  );
+  box-shadow: 
+    0 0 12px rgba(201, 184, 232, 0.4),
+    0 0 24px rgba(168, 196, 216, 0.2);
+  z-index: 99;
+  transform-origin: left;
+  transition: 
+    width 0.6s cubic-bezier(0.16, 1.00, 0.30, 1.00),
+    opacity 0.3s ease-out;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .links {
+    gap: var(--space-6);
+  }
+}
+
+/* Tablet/mobile: ocultar links y CTA, mostrar burger */
+@media (max-width: 767px) {
+  .links { display: none; }
+  .cta   { display: none; }
+  .burger { display: flex; }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .link,
+  .link::after,
+  .cta,
+  .logo,
+  .burgerLine {
+    transition: none;
+  }
+  .drawer {
+    transition: none;
+  }
+}

@@ -1,0 +1,303 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Certifications.module.css
+   Escala: #232038 → #34304E
+   Fondo: orbes animados con CSS keyframes
+   Estilo consistente con la sección de Skills
+   ───────────────────────────────────────────────────────────────────────── */
+
+.certifications {
+  --c-text:   rgba(218, 215, 210, 0.88);
+  --c-text-2: rgba(168, 164, 158, 0.70);
+  --c-text-3: rgba(118, 114, 108, 0.52);
+  --c-border: rgba(218, 215, 210, 0.07);
+  --c-accent: rgba(201, 184, 232, 0.55);
+  --c-hot:    rgba(201, 184, 232, 0.92);
+}
+
+/* ── Sección ──────────────────────────────────────────────────────────── */
+
+.certifications {
+  position: relative;
+  padding-top:    clamp(5.5rem, 11vw, 9rem);
+  padding-bottom: clamp(5.5rem, 11vw, 9rem);
+  padding-inline: var(--grid-gutter);
+  overflow: hidden;
+
+  background: linear-gradient(
+    to bottom,
+    #34304E 0%,
+    #4A4565 100%
+  );
+}
+
+/* ── Orbes de fondo ───────────────────────────────────────────────────── */
+
+.bgOrbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+/* Orbe 1: lavanda, lado izquierdo superior */
+.orb1 {
+  width:  clamp(400px, 55vw, 700px);
+  height: clamp(400px, 55vw, 700px);
+  top:  -15%;
+  left: -15%;
+  background: radial-gradient(
+    circle,
+    rgba(201, 184, 232, 0.12)  0%,
+    rgba(201, 184, 232, 0.04) 55%,
+    transparent                80%
+  );
+  animation: orbDrift1 22s ease-in-out infinite;
+}
+
+/* Orbe 2: glacier, lado derecho medio */
+.orb2 {
+  width:  clamp(300px, 45vw, 580px);
+  height: clamp(300px, 45vw, 580px);
+  top:  30%;
+  right: -10%;
+  background: radial-gradient(
+    circle,
+    rgba(168, 196, 216, 0.10)  0%,
+    rgba(168, 196, 216, 0.03) 55%,
+    transparent                80%
+  );
+  animation: orbDrift2 28s ease-in-out infinite;
+}
+
+/* Orbe 3: gold suave, centro inferior */
+.orb3 {
+  width:  clamp(250px, 35vw, 460px);
+  height: clamp(250px, 35vw, 460px);
+  bottom: 5%;
+  left:   35%;
+  background: radial-gradient(
+    circle,
+    rgba(232, 213, 163, 0.07)  0%,
+    rgba(232, 213, 163, 0.02) 55%,
+    transparent                80%
+  );
+  animation: orbDrift3 18s ease-in-out infinite;
+}
+
+@keyframes orbDrift1 {
+  0%   { transform: translate(0px,   0px)  scale(1.00); }
+  33%  { transform: translate(40px, -30px) scale(1.05); }
+  66%  { transform: translate(-20px, 45px) scale(0.97); }
+  100% { transform: translate(0px,   0px)  scale(1.00); }
+}
+
+@keyframes orbDrift2 {
+  0%   { transform: translate(0px,  0px)  scale(1.00); }
+  40%  { transform: translate(-50px, 30px) scale(1.08); }
+  75%  { transform: translate(20px, -40px) scale(0.95); }
+  100% { transform: translate(0px,  0px)  scale(1.00); }
+}
+
+@keyframes orbDrift3 {
+  0%   { transform: translate(0px,   0px) scale(1.00); }
+  50%  { transform: translate(30px, -25px) scale(1.06); }
+  100% { transform: translate(0px,   0px) scale(1.00); }
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+
+.header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.tag {
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-widest);
+  color:          var(--c-text-3);
+  flex-shrink: 0;
+  will-change: transform, opacity;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  will-change: transform;
+  background: linear-gradient(
+    to right,
+    rgba(218, 215, 210, 0.20) 0%,
+    rgba(201, 184, 232, 0.10) 55%,
+    transparent               100%
+  );
+}
+
+/* ── Heading ──────────────────────────────────────────────────────────── */
+
+.headingWrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.headingMask {
+  overflow: hidden;
+  line-height: 1.05;
+  padding-bottom: 0.04em;
+}
+
+.headingInner {
+  display: block;
+  font-family:    var(--font-display);
+  font-size:      clamp(2.8rem, 6.0vw, 6.0rem);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.032em;
+  line-height:    1.05;
+  color:          var(--c-text);
+  will-change: transform;
+}
+
+/* ── Certificaciones Grid ─────────────────────────────────────────────── */
+
+.certGrid {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+/* ── Categoria de certificaciones ─────────────────────────────────────── */
+
+.certSection {
+  will-change: opacity, transform;
+}
+
+.certTitle {
+  font-family:    var(--font-display);
+  font-size:      clamp(1.6rem, 3.5vw, 3rem);
+  font-weight:    var(--weight-light);
+  letter-spacing: -0.028em;
+  color:          var(--c-text);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.certList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.certItem {
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  font-weight:    var(--weight-light);
+  line-height:    var(--leading-relaxed);
+  color:          var(--c-text-2);
+  padding-left: 1.5rem;
+  position: relative;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.certItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width:  4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(201, 184, 232, 0.55);
+  box-shadow: 0 0 6px rgba(201, 184, 232, 0.40);
+}
+
+.certItem:hover {
+  color: var(--c-accent);
+}
+
+/* ── Badge de Credly ──────────────────────────────────────────────────── */
+
+.credlyLink {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--c-border);
+  text-align: center;
+}
+
+.credlyText {
+  font-family:    var(--font-body);
+  font-size:      var(--text-sm);
+  color:          var(--c-text-2);
+  margin-bottom: 1rem;
+}
+
+.credlyButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-family:    var(--font-body);
+  font-size:      var(--text-xs);
+  font-weight:    var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color:          var(--c-accent);
+  border: 1px solid var(--c-accent);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--duration-base) var(--ease-out);
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.credlyButton:hover {
+  background: rgba(201, 184, 232, 0.10);
+  box-shadow: 0 0 24px rgba(201, 184, 232, 0.20);
+  color: rgba(201, 184, 232, 0.96);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .headingInner   { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+  .certGrid       { grid-template-columns: 1fr; gap: var(--space-4); }
+  .certTitle      { font-size: clamp(1.4rem, 5vw, 2rem); }
+
+  /* Orbes más pequeños en mobile */
+  .orb1 { width: 280px; height: 280px; }
+  .orb2 { width: 220px; height: 220px; }
+  .orb3 { width: 180px; height: 180px; }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .orb               { animation: none !important; }
+  .headingInner,
+  .certSection      { opacity: 1 !important; transform: none !important; }
+  .rule              { transform: none !important; }
+}
