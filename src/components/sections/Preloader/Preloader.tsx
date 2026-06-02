@@ -178,6 +178,8 @@ export default function Preloader() {
   const puffsRef    = useRef<CloudPuff[]>([]);
   const rafRef      = useRef<number>(0);
   const pageReadyRef = useRef(false);
+  const fontsReadyRef = useRef(false);
+  const stableRef = useRef(false);
   const phaseRef    = useRef<Phase>("falling");
   const finishRequestedRef = useRef(false);
   const cycleIndexRef = useRef(-1);
@@ -268,13 +270,40 @@ export default function Preloader() {
   
   useEffect(() => {
     const handleLoad = () => {
-      pageReadyRef.current = true;
+      // Wait for fonts to be ready before marking page as ready
+      if ((document as any).fonts && (document as any).fonts.ready) {
+        (document as any).fonts.ready.then(() => {
+          fontsReadyRef.current = true;
+          // small settle delay to let late resources finish
+          setTimeout(() => { stableRef.current = true; pageReadyRef.current = true; }, 350);
+        }).catch(() => {
+          fontsReadyRef.current = true;
+          stableRef.current = true;
+          pageReadyRef.current = true;
+        });
+      } else {
+        stableRef.current = true;
+        pageReadyRef.current = true;
+      }
     };
     
     window.addEventListener("load", handleLoad);
     
     if (document.readyState === "complete") {
-      pageReadyRef.current = true;
+      // If already complete, ensure fonts are ready too
+      if ((document as any).fonts && (document as any).fonts.ready) {
+        (document as any).fonts.ready.then(() => {
+          fontsReadyRef.current = true;
+          setTimeout(() => { stableRef.current = true; pageReadyRef.current = true; }, 350);
+        }).catch(() => {
+          fontsReadyRef.current = true;
+          stableRef.current = true;
+          pageReadyRef.current = true;
+        });
+      } else {
+        stableRef.current = true;
+        pageReadyRef.current = true;
+      }
     }
     
     return () => window.removeEventListener("load", handleLoad);

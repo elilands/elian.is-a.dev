@@ -17,6 +17,7 @@ import { gsap } from "@/lib/gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { LenisContext } from "@/context/LenisContext";
 import { setLenisInstance } from "@/lib/lenisInstance";
+import { usePreloaderComplete } from "@/context/PreloaderContext";
 
 interface SmoothScrollProviderProps {
   children: ReactNode;
@@ -24,24 +25,27 @@ interface SmoothScrollProviderProps {
 
 export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
+  const { isComplete } = usePreloaderComplete();
 
   useEffect(() => {
+    if (!isComplete) return; // wait until preloader finished
+
+    // detect low-perf devices (best-effort)
+    let lowPerfLocal = false;
+    try {
+      const mem = (navigator as any).deviceMemory;
+      const hw = (navigator as any).hardwareConcurrency;
+      const conn = (navigator as any).connection;
+      const saveData = conn && conn.saveData;
+      if ((mem && mem <= 2) || (hw && hw <= 2) || saveData) lowPerfLocal = true;
+    } catch {}
+
     const instance = new Lenis({
-      /*
-        lerp 0.06: deliberadamente lento, como flotar.
-        El rango 0.04–0.07 es el especificado en el brief.
-        Más bajo = más suave pero más laggy; encontrar el punto
-        con el diseño final y ajustar aquí.
-      */
-      lerp: 0.06,
+      // Make the scroll very soft on capable devices
+      lerp: lowPerfLocal ? 0.06 : 0.03,
       smoothWheel: true,
-      /*
-        syncTouch: false — el tacto usa scroll nativo.
-        true haría el touch tan lento como el wheel, lo cual en mobile
-        se siente antinatural. Se mantiene falso por UX.
-      */
       syncTouch: false,
-      touchMultiplier: 1.2,
+      touchMultiplier: lowPerfLocal ? 1.0 : 1.6,
     });
 
     // Sincronizar ScrollTrigger con cada tick de Lenis
@@ -66,7 +70,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
       gsap.ticker.remove(update);
       instance.destroy();
     };
-  }, []);
+  }, [isComplete]);
 
   return (
     <LenisContext.Provider value={lenis}>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import styles from "./Skills.module.css";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 type SkillLevel = "Advanced" | "Intermediate" | "Learning";
 
@@ -214,13 +215,28 @@ export default function Skills() {
   const openRef = useRef<number | null>(null);
   // openSet holds which category index is open; start with all collapsed
   const [openSet, setOpenSet] = useState<Set<number>>(() => new Set());
+  const prefersReducedMotion = useReducedMotion();
+  const [lowPerf, setLowPerf] = useState<boolean>(false);
+  const shouldReduce = prefersReducedMotion || lowPerf;
 
   useEffect(() => {
+    // Detect lower-end devices (best-effort): low device memory, few CPU cores, or Save-Data
+    try {
+      const mem = (navigator as any).deviceMemory;
+      const hw = (navigator as any).hardwareConcurrency;
+      const conn = (navigator as any).connection;
+      const saveData = conn && conn.saveData;
+      if ((mem && mem <= 2) || (hw && hw <= 2) || saveData) setLowPerf(true);
+    } catch (e) {
+      // ignore if not available
+    }
+
     const ctx = gsap.context(() => {
       const blooms = bloomRefs.current.filter(Boolean) as HTMLElement[];
       const categories = categoryRefs.current.filter(Boolean) as HTMLElement[];
       const profileItems = profileRefs.current.filter(Boolean) as HTMLDivElement[];
 
+      // Initial states. Keep transforms/opacity only for smooth GPU compositing when possible.
       gsap.set(tagRef.current, { opacity: 0, y: 14, force3D: true });
       gsap.set(ruleRef.current, { scaleX: 0, transformOrigin: "left center" });
       gsap.set(titleRef.current, { yPercent: 115, force3D: true });
@@ -234,33 +250,56 @@ export default function Skills() {
         const rows = Array.from(el.querySelectorAll(`.${styles.skillRow}`)) as HTMLElement[];
         if (openRef.current !== null && openRef.current === i) {
           const natural = el.scrollHeight;
-          gsap.set(el, { maxHeight: natural, opacity: 1, overflow: 'hidden', force3D: true });
-          gsap.set(rows, { opacity: 1, y: 0, force3D: true });
+          if (shouldReduce) {
+            // avoid animating maxHeight (layout) on low-perf devices
+            gsap.set(el, { maxHeight: 'none', opacity: 1, overflow: 'visible', force3D: true });
+            gsap.set(rows, { opacity: 1, y: 0, force3D: true });
+          } else {
+            gsap.set(el, { maxHeight: natural, opacity: 1, overflow: 'hidden', force3D: true });
+            gsap.set(rows, { opacity: 1, y: 0, force3D: true });
+          }
         } else {
-          gsap.set(el, { maxHeight: 0, opacity: 0, overflow: 'hidden', force3D: true });
-          gsap.set(rows, { opacity: 0, y: 8, force3D: true });
+          if (shouldReduce) {
+            gsap.set(el, { maxHeight: 0, opacity: 0, overflow: 'hidden', force3D: true });
+            gsap.set(rows, { opacity: 0, y: 0, force3D: true });
+          } else {
+            gsap.set(el, { maxHeight: 0, opacity: 0, overflow: 'hidden', force3D: true });
+            gsap.set(rows, { opacity: 0, y: 8, force3D: true });
+          }
         }
       });
       gsap.set(profileItems, { opacity: 0, y: 14, force3D: true });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 78%",
-          toggleActions: "play none none none",
-        },
-        defaults: { ease: "power3.out", force3D: true },
-      });
+      if (shouldReduce) {
+        // For reduced / low-perf devices, apply final states without elaborate timelines
+        gsap.set(tagRef.current, { opacity: 1, y: 0 });
+        gsap.set(ruleRef.current, { scaleX: 1 });
+        gsap.set(titleRef.current, { yPercent: 0 });
+        gsap.set(leadRef.current, { opacity: 1, y: 0 });
+        gsap.set(ribbonRef.current, { opacity: 1 });
+        gsap.set(blooms, { opacity: 1, y: 0 });
+        gsap.set(categories, { opacity: 1, y: 0 });
+        gsap.set(profileItems, { opacity: 1, y: 0 });
+      } else {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 78%",
+            toggleActions: "play none none none",
+          },
+          defaults: { ease: "power3.out", force3D: true },
+        });
 
-      tl
-        .to(tagRef.current, { opacity: 1, y: 0, duration: 0.45 })
-        .to(ruleRef.current, { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, "-=0.28")
-        .to(titleRef.current, { yPercent: 0, duration: 0.85, ease: "power4.out" }, "-=0.4")
-        .to(leadRef.current, { opacity: 1, y: 0, duration: 0.55 }, "-=0.32")
-        .to(ribbonRef.current, { opacity: 1, duration: 0.55 }, "-=0.22")
-        .to(blooms, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.18")
-        .to(categories, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.18")
-        .to(profileItems, { opacity: 1, y: 0, duration: 0.45, stagger: 0.05 }, "-=0.22");
+        tl
+          .to(tagRef.current, { opacity: 1, y: 0, duration: 0.45 })
+          .to(ruleRef.current, { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, "-=0.28")
+          .to(titleRef.current, { yPercent: 0, duration: 0.85, ease: "power4.out" }, "-=0.4")
+          .to(leadRef.current, { opacity: 1, y: 0, duration: 0.55 }, "-=0.32")
+          .to(ribbonRef.current, { opacity: 1, duration: 0.55 }, "-=0.22")
+          .to(blooms, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.18")
+          .to(categories, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.18")
+          .to(profileItems, { opacity: 1, y: 0, duration: 0.45, stagger: 0.05 }, "-=0.22");
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -274,6 +313,37 @@ export default function Skills() {
     const isOpen = openRef.current === i;
     const rows = Array.from(current.querySelectorAll(`.${styles.skillRow}`)) as HTMLElement[];
     
+    if (shouldReduce) {
+      // Instant toggle for reduced-motion / low-perf devices to avoid layout-heavy animations
+      if (isOpen) {
+        gsap.set(rows, { opacity: 0, y: 0 });
+        gsap.set(current, { maxHeight: 0, opacity: 0, overflow: 'hidden' });
+        openRef.current = null;
+        setOpenSet(new Set());
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+        return;
+      }
+
+      // close others
+      const currentlyOpen = openRef.current;
+      if (currentlyOpen !== null && currentlyOpen !== i) {
+        const openEl = skillListRefs.current[currentlyOpen];
+        if (openEl) {
+          const openRows = Array.from(openEl.querySelectorAll(`.${styles.skillRow}`)) as HTMLElement[];
+          gsap.set(openRows, { opacity: 0, y: 0 });
+          gsap.set(openEl, { maxHeight: 0, opacity: 0, overflow: 'hidden' });
+        }
+      }
+
+      // open current instantly
+      gsap.set(current, { maxHeight: 'none', opacity: 1, overflow: 'visible' });
+      gsap.set(rows, { opacity: 1, y: 0 });
+      openRef.current = i;
+      setOpenSet(new Set([i]));
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      return;
+    }
+
     if (isOpen) {
       // Closing current
       gsap.set(current, { maxHeight: current.scrollHeight, opacity: 1, overflow: 'hidden' });
