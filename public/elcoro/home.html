@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>El Coro de Jorge Patiño — Moda Lenta & Sastrería Artesanal</title>
+  
+  <!-- Tipografías: Serif Editorial Escandinava & Sans-serif Funcional -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET Y VARIABLES ESCANDINAVAS QUIET LUXURY ─── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-ivory: #FBF9F5;
+      --container-stone: #F2EFE9;
+      --card-border: #E8E4DC;
+      --text-charcoal: #1A1A1A;
+      --text-muted: #736E66;
+      --text-subtle: #A39D94;
+      --accent-gold: #C2A675;
+      --hairline: rgba(26, 26, 26, 0.08);
+      
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      background-color: var(--bg-ivory);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-ivory);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ─── 1. TOP APP BAR / HEADER ─── */
+    .top-app-bar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 64px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(251, 249, 245, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--hairline);
+      z-index: 100;
+    }
+
+    .brand-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-crest-wrapper {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background-color: #FFFFFF;
+      flex-shrink: 0;
+    }
+
+    .brand-crest-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--text-charcoal);
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* Navegación desktop (oculta en móvil) */
+    .desktop-nav-links {
+      display: none;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .desktop-nav-link {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .desktop-nav-link:hover,
+    .desktop-nav-link.active {
+      color: var(--text-charcoal);
+    }
+
+    .desktop-nav-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background-color: var(--text-charcoal);
+    }
+
+    .app-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-charcoal);
+      border-radius: 50%;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background-color: var(--container-stone);
+    }
+
+    .icon-btn:active {
+      opacity: 0.6;
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.5;
+    }
+
+    /* ─── CONTENEDOR PRINCIPAL ─── */
+    .main-wrapper {
+      width: 100%;
+      max-width: 1260px;
+      margin: 0 auto;
+      flex: 1;
+      padding-bottom: 96px; /* Espacio para barra móvil */
+    }
+
+    /* ─── 2. EDITORIAL HERO CANVAS (MOBILE FIRST) ─── */
+    .hero-section {
+      width: 100%;
+      position: relative;
+      background-color: var(--container-stone);
+    }
+
+    .hero-mobile-container {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      overflow: hidden;
+      background-color: var(--container-stone);
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(26, 26, 26, 0.04) 0%,
+        rgba(26, 26, 26, 0.28) 45%,
+        rgba(26, 26, 26, 0.90) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 22px;
+      color: #FFFFFF;
+    }
+
+    .hero-tag {
+      font-family: var(--font-sans);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      max-width: 360px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 22px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 48px;
+      background-color: var(--text-charcoal);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .hero-cta:hover {
+      background-color: #000000;
+    }
+
+    .hero-cta:active {
+      opacity: 0.85;
+    }
+
+    /* ─── 3. STORYTELLING MODULE (CAROUSEL / GRID) ─── */
+    .storytelling-section {
+      padding: 38px 0 24px 0;
+    }
+
+    .section-header-box {
+      padding: 0 22px 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: var(--text-charcoal);
+    }
+
+    .section-meta {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 4px 22px 18px 22px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .editorial-card {
+      flex: 0 0 240px;
+      width: 240px;
+      scroll-snap-align: start;
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      border-radius: 0px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-media {
+      width: 100%;
+      height: 270px;
+      position: relative;
+      background-color: #E7E3DC;
+      overflow: hidden;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .card-sketch-art {
+      width: 100%;
+      height: 100%;
+      background: #F7F5F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 24px;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: rgba(251, 249, 245, 0.94);
+      padding: 4px 8px;
+      font-family: var(--font-sans);
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-charcoal);
+      border: 1px solid var(--card-border);
+    }
+
+    .card-content {
+      padding: 16px 16px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .card-step {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+
+    .card-heading {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text-charcoal);
+      margin-bottom: 6px;
+    }
+
+    .card-caption {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    /* ─── PIE DE PÁGINA EDITORIAL ─── */
+    .editorial-footnote {
+      padding: 24px 22px 30px 22px;
+      text-align: center;
+      border-top: 1px solid var(--hairline);
+      margin: 20px 22px 0 22px;
+    }
+
+    .footnote-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin: 0 auto 8px auto;
+    }
+
+    .footnote-colophon {
+      font-family: var(--font-sans);
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+
+    /* ─── 4. BOTTOM NAVIGATION BAR (MÓVIL) ─── */
+    .bottom-nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      background-color: rgba(251, 249, 245, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 12px 14px 12px;
+      z-index: 200;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--text-muted);
+      width: 60px;
+      gap: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .nav-label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    /* Pestaña activa: Icono oscuro sólido, SIN brillos ni neón */
+    .nav-item.active {
+      color: var(--text-charcoal);
+    }
+
+    .nav-item.active svg {
+      stroke: var(--text-charcoal);
+      stroke-width: 2;
+    }
+
+    .nav-item.active svg.icon-filled {
+      fill: var(--text-charcoal);
+    }
+
+    .nav-item.active .nav-label {
+      font-weight: 600;
+      color: var(--text-charcoal);
+    }
+
+    /* ─── ESTILOS PARA COMPUTADORA / DESKTOP (BREAKPOINT >= 768px y >= 1024px) ─── */
+    @media (min-width: 768px) {
+      .top-app-bar {
+        height: 78px;
+        padding: 0 48px;
+      }
+
+      .desktop-nav-links {
+        display: flex;
+      }
+
+      .main-wrapper {
+        padding-bottom: 40px; /* Sin barra inferior en desktop */
+      }
+
+      /* Hero Section en Computadora: Diseño editorial de 2 columnas tipo revista de arte */
+      .hero-section {
+        margin: 32px 48px 0 48px;
+        background-color: var(--container-stone);
+        border: 1px solid var(--card-border);
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        min-height: 560px;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .hero-mobile-container {
+        height: 100%;
+        min-height: 560px;
+        position: static;
+        display: contents;
+      }
+
+      .hero-image {
+        grid-column: 2;
+        grid-row: 1;
+        height: 100%;
+        max-height: 600px;
+        object-fit: cover;
+        object-position: center 25%;
+        border-left: 1px solid var(--card-border);
+      }
+
+      .hero-vignette {
+        grid-column: 1;
+        grid-row: 1;
+        position: static;
+        background: none;
+        padding: 56px 64px;
+        color: var(--text-charcoal);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .hero-tag {
+        color: var(--accent-gold);
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+
+      .hero-title {
+        color: var(--text-charcoal);
+        font-size: 48px;
+        line-height: 1.08;
+        max-width: 480px;
+        margin-bottom: 14px;
+      }
+
+      .hero-subtitle {
+        color: var(--text-muted);
+        font-size: 19px;
+        max-width: 420px;
+        margin-bottom: 32px;
+      }
+
+      .hero-cta {
+        width: auto;
+        padding: 0 38px;
+        height: 52px;
+        font-size: 11.5px;
+      }
+
+      /* Storytelling en Computadora: Cuadrícula editorial de 3 columnas */
+      .storytelling-section {
+        padding: 56px 48px 24px 48px;
+      }
+
+      .section-header-box {
+        padding: 0 0 24px 0;
+        border-bottom: 1px solid var(--hairline);
+        margin-bottom: 28px;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .carousel-track {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding: 0;
+        overflow-x: visible;
+      }
+
+      .editorial-card {
+        width: 100%;
+        flex: auto;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+      }
+
+      .editorial-card:hover {
+        transform: translateY(-4px);
+        border-color: #D3CDC2;
+      }
+
+      .card-media {
+        height: 320px;
+      }
+
+      .editorial-card:hover .card-media img {
+        transform: scale(1.03);
+      }
+
+      .card-content {
+        padding: 22px 20px 24px 20px;
+      }
+
+      .card-heading {
+        font-size: 20px;
+      }
+
+      .card-caption {
+        font-size: 12.5px;
+      }
+
+      .editorial-footnote {
+        margin: 40px 48px 0 48px;
+        padding: 32px 0;
+      }
+
+      /* Ocultar barra inferior fija en computadora */
+      .bottom-nav-bar {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .hero-section {
+        margin: 40px auto 0 auto;
+        max-width: 1180px;
+      }
+
+      .storytelling-section {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 64px 0 32px 0;
+      }
+
+      .editorial-footnote {
+        max-width: 1180px;
+        margin: 40px auto 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. TOP APP BAR / HEADER -->
+  <header class="top-app-bar">
+    <a href="/elcoro" class="brand-identity" aria-label="El Coro de Jorge Patiño — Inicio">
+      <div class="brand-crest-wrapper">
+        <img src="/elcoro/crest.jpg" alt="Crest El Coro de Jorge Patiño" class="brand-crest-img">
+      </div>
+      <div class="brand-titles">
+        <span class="brand-name">El Coro</span>
+        <span class="brand-subtitle">Jorge Patiño · Atelier</span>
+      </div>
+    </a>
+
+    <!-- Menú de navegación elegante para Computadora -->
+    <nav class="desktop-nav-links" aria-label="Navegación principal">
+      <a href="/elcoro" class="desktop-nav-link active">Inicio</a>
+      <a href="/elcoro/producto" class="desktop-nav-link">Colección</a>
+      <a href="/elcoro/closet" class="desktop-nav-link">Mi Clóset</a>
+      <a href="/elcoro/checkout" class="desktop-nav-link">Bolsa (1)</a>
+    </nav>
+
+    <!-- Acciones / Iconos monocromáticos de 1.5px -->
+    <div class="app-bar-actions">
+      <!-- Icono Búsqueda -->
+      <button class="icon-btn" aria-label="Buscar en la colección" id="search-trigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="21.5" y2="21.5"/>
+        </svg>
+      </button>
+
+      <!-- Icono Bolsa de Compra (1) -->
+      <a href="/elcoro/checkout" class="icon-btn" aria-label="Bolsa de compra (1)" style="position: relative; text-decoration: none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M6 2L3 6V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V6L18 2H6Z" stroke-width="1.5"/>
+          <line x1="3" y1="6" x2="21" y2="6" stroke-width="1.5"/>
+          <path d="M16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10" stroke-width="1.5"/>
+        </svg>
+        <span style="position: absolute; top: 3px; right: 3px; width: 6px; height: 6px; background-color: var(--text-charcoal); border-radius: 50%;"></span>
+      </a>
+
+      <!-- Icono Cuenta de Usuario -->
+      <button class="icon-btn" aria-label="Cuenta de usuario" id="user-trigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20C4 16.6863 7.58172 14 12 14C16.4183 14 20 16.6863 20 20"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="main-wrapper">
+
+    <!-- 2. EDITORIAL HERO CANVAS -->
+    <section class="hero-section" aria-label="Pieza destacada de colección">
+      <div class="hero-mobile-container">
+        <img src="/elcoro/hero.jpg" alt="Blazer artesanal de lana en tonos arena y tabaco" class="hero-image">
+        
+        <div class="hero-vignette">
+          <span class="hero-tag">Edición Limitada · Temporada 2026</span>
+          <h1 class="hero-title">Prendas que cuentan historias.</h1>
+          <p class="hero-subtitle">Siluetas que superan el tiempo.</p>
+          <a href="/elcoro/producto" class="hero-cta" id="cta-explore">
+            Explorar colección
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. STORYTELLING MODULE -->
+    <section class="storytelling-section" id="origen" aria-label="Módulo de narrativa artesanal">
+      <div class="section-header-box">
+        <h2 class="section-title">El origen de cada corte</h2>
+        <span class="section-meta">Documental de Atelier</span>
+      </div>
+
+      <div class="carousel-track">
+        
+        <!-- Card 1: Raw textile weave close-ups -->
+        <article class="editorial-card">
+          <div class="card-media">
+            <span class="card-badge">Materia Prima</span>
+            <img src="/elcoro/textile.jpg" alt="Detalle del tejido artesanal de lana y lino">
+          </div>
+          <div class="card-content">
+            <div>
+              <span class="card-step">01 / Hilado Crudo</span>
+              <h3 class="card-heading">Urdimbre & Trama</h3>
+              <p class="card-caption">Lana pura y lino orgánico entrelazados con tensión manual para dotar a la fibra de memoria, peso y respiración natural.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Hand-tailoring sketch -->
+        <article class="editorial-card">
+          <div class="card-media">
+            <span class="card-badge">Patronaje</span>
+            <div class="card-sketch-art">
+              <svg width="150" height="210" viewBox="0 0 140 200" fill="none" stroke="#2D2823" stroke-width="1.2">
+                <!-- Trazo de patronaje y solapa satorial -->
+                <path d="M40 30 C55 25, 85 25, 100 30" stroke-dasharray="2 2"/>
+                <path d="M40 30 L20 70 L38 78 L52 46 Z"/>
+                <path d="M100 30 L120 70 L102 78 L88 46 Z"/>
+                <path d="M52 46 L50 140 L70 148 L90 140 L88 46"/>
+                <path d="M70 46 L70 170" stroke-dasharray="3 3"/>
+                <path d="M38 78 L34 165 L50 162"/>
+                <path d="M102 78 L106 165 L90 162"/>
+                <circle cx="70" cy="85" r="2" fill="#2D2823"/>
+                <circle cx="70" cy="115" r="2" fill="#2D2823"/>
+                <line x1="28" y1="110" x2="112" y2="110" stroke="#C2A675" stroke-dasharray="2 3"/>
+                <text x="73" y="108" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" fill="#C2A675" letter-spacing="1">T-48 SARTORIAL</text>
+              </svg>
+            </div>
+          </div>
+          <div class="card-content">
+            <div>
+              <span class="card-step">02 / El Trazo Primario</span>
+              <h3 class="card-heading">Patrón Anatómico</h3>
+              <p class="card-caption">Cada solapa y sisa se dibuja a mano alzada con tiza de sastre sobre papel de archivo, respetando la caída orgánica del cuerpo.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Studio cutting table -->
+        <article class="editorial-card">
+          <div class="card-media">
+            <span class="card-badge">Manufactura</span>
+            <div class="card-sketch-art" style="background: #EFECE6;">
+              <svg width="160" height="200" viewBox="0 0 150 190" fill="none" stroke="#1A1A1A" stroke-width="1.3">
+                <rect x="15" y="30" width="120" height="130" stroke="#DDD6C9" stroke-width="1"/>
+                <line x1="15" y1="50" x2="135" y2="50" stroke="#E2DCD2" stroke-dasharray="4 4"/>
+                <line x1="15" y1="90" x2="135" y2="90" stroke="#E2DCD2" stroke-dasharray="4 4"/>
+                <circle cx="50" cy="135" r="10"/>
+                <circle cx="72" cy="135" r="10"/>
+                <line x1="56" y1="128" x2="88" y2="65"/>
+                <line x1="66" y1="128" x2="48" y2="65"/>
+                <path d="M25 40 Q75 30 125 45" stroke="#C2A675" stroke-width="2"/>
+                <text x="45" y="172" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" fill="#736E66" letter-spacing="1.5">MESA N° 3 · ATELIER</text>
+              </svg>
+            </div>
+          </div>
+          <div class="card-content">
+            <div>
+              <span class="card-step">03 / Mesa de Corte</span>
+              <h3 class="card-heading">Tijera de Forja</h3>
+              <p class="card-caption">Corte individualizado pieza por pieza sobre tableros de roble macizo. Producción meditada, sin desperdicios ni prisa fabril.</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- PIE DE PÁGINA EDITORIAL -->
+    <footer class="editorial-footnote">
+      <p class="footnote-quote">«El coro es la armonía de múltiples manos creando una única pieza eterna.»</p>
+      <span class="footnote-colophon">El Coro de Jorge Patiño — Sastrería & Moda Lenta © 2026</span>
+    </footer>
+
+  </main>
+
+  <!-- 4. BOTTOM NAVIGATION BAR (FIJA EN MÓVIL, 5 ICONOS MINIMALISTAS) -->
+  <nav class="bottom-nav-bar" aria-label="Navegación móvil">
+    
+    <!-- Inicio (Activa: icono sólido, sin brillos) -->
+    <button class="nav-item active" data-tab="inicio" aria-label="Pestaña Inicio">
+      <svg viewBox="0 0 24 24" class="icon-filled">
+        <path d="M3 10.5L12 3L21 10.5V20C21 20.5523 20.5523 21 20 21H15V14H9V21H4C3.44772 21 3 20.5523 3 20V10.5Z"/>
+      </svg>
+      <span class="nav-label">Inicio</span>
+    </button>
+
+    <!-- Colección -->
+    <a href="/elcoro/producto" class="nav-item" data-tab="coleccion" aria-label="Pestaña Colección">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="3" width="8" height="8" rx="0"/>
+        <rect x="13" y="3" width="8" height="8" rx="0"/>
+        <rect x="3" y="13" width="8" height="8" rx="0"/>
+        <rect x="13" y="13" width="8" height="8" rx="0"/>
+      </svg>
+      <span class="nav-label">Colección</span>
+    </a>
+
+    <!-- Mi clóset -->
+    <a href="/elcoro/closet" class="nav-item" data-tab="closet" aria-label="Pestaña Mi clóset">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 4C10.5 4 10 5.2 10 6C10 7.2 11.2 7.8 12 8.5L3 13.5V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V13.5L12 8.5Z"/>
+        <circle cx="12" cy="5" r="1.5"/>
+      </svg>
+      <span class="nav-label">Mi clóset</span>
+    </a>
+
+    <!-- Bolsa de Compra -->
+    <a href="/elcoro/checkout" class="nav-item" data-tab="bolsa" aria-label="Pestaña Bolsa">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 2L3 6V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V6L18 2H6Z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10"/>
+      </svg>
+      <span class="nav-label">Bolsa</span>
+    </a>
+  </nav>
+
+  <script>
+    // Cambio interactivo de pestañas móviles
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Desplazamiento suave para CTA
+    const ctaBtn = document.getElementById('cta-explore');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById('origen');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

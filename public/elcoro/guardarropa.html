@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Mi Clóset — El Coro de Jorge Patiño</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-stone: #FBF9F5;
+      --container-stone: #F2EFE9;
+      --card-border: #E5E0D8;
+      --text-charcoal: #1A1A1A;
+      --text-muted: #736E66;
+      --text-subtle: #9E988F;
+      --accent-gold: #C2A675;
+      --divider-line: #E5E0D8;
+      --hairline: rgba(26, 26, 26, 0.08);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      background-color: var(--bg-stone);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-stone);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── 1. HEADER & USER GREETING ─── */
+    .closet-header {
+      padding: 24px 20px 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .greeting-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .greeting-label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+
+    .greeting-name {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--text-charcoal);
+    }
+
+    .greeting-quote {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Bell icon with flat numeric indicator */
+    .bell-btn {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: 1px solid var(--card-border);
+      color: var(--text-charcoal);
+      cursor: pointer;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .bell-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .bell-indicator {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--text-charcoal);
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 600;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* ─── 2. SEGMENTED NAVIGATION TABS ─── */
+    .tabs-bar {
+      display: flex;
+      border-bottom: 1px solid var(--divider-line);
+      padding: 0 20px;
+      background-color: var(--bg-stone);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .tab-btn {
+      padding: 14px 16px;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--text-charcoal);
+      font-weight: 600;
+    }
+
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-charcoal);
+    }
+
+    /* ─── CONTENIDO PRINCIPAL ─── */
+    .closet-main {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px 20px 96px 20px;
+      flex: 1;
+    }
+
+    /* ─── 3. CANVAS / STYLING STUDIO MODULE ─── */
+    .styling-studio {
+      margin-bottom: 32px;
+    }
+
+    .studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .studio-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-charcoal);
+    }
+
+    .studio-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    .flatlay-canvas {
+      width: 100%;
+      border: 1px dashed var(--divider-line);
+      background-color: var(--container-stone);
+      padding: 12px;
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .flatlay-img-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background-color: #E8E4DC;
+    }
+
+    .flatlay-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .flatlay-caption {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .studio-actions-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .studio-action-btn {
+      flex: 1;
+      height: 44px;
+      background-color: var(--bg-stone);
+      border: 1px solid var(--card-border);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+      border-radius: 0;
+    }
+
+    .studio-action-btn:hover {
+      background-color: var(--container-stone);
+      border-color: var(--text-charcoal);
+    }
+
+    .studio-action-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* ─── 4. GARMENT GRID (2-COLUMN MASONRY) ─── */
+    .garment-section {
+      margin-bottom: 32px;
+    }
+
+    .garment-section-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 14px;
+      color: var(--text-charcoal);
+    }
+
+    .garment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .garment-card {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .garment-tile {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .garment-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .garment-card:hover .garment-tile img {
+      transform: scale(1.03);
+    }
+
+    .garment-label-box {
+      padding-top: 8px;
+    }
+
+    .garment-name {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-charcoal);
+      letter-spacing: 0.02em;
+    }
+
+    .garment-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ─── 5. EDITORIAL TEXTILE CARE CARD ─── */
+    .care-card {
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      padding: 18px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 0;
+      transition: border-color 0.2s ease;
+    }
+
+    .care-card:hover {
+      border-color: #D3CDC2;
+    }
+
+    .care-label {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-gold);
+    }
+
+    .care-title {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--text-charcoal);
+    }
+
+    .care-arrow-link {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-charcoal);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+    }
+
+    /* ─── 6. BOTTOM NAVIGATION BAR ─── */
+    .bottom-nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      background-color: rgba(251, 249, 245, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 12px 14px 12px;
+      z-index: 200;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--text-muted);
+      width: 60px;
+      gap: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .nav-label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .nav-item.active {
+      color: var(--text-charcoal);
+    }
+
+    .nav-item.active svg {
+      stroke: var(--text-charcoal);
+      stroke-width: 2;
+    }
+
+    .nav-item.active svg.icon-filled {
+      fill: var(--text-charcoal);
+    }
+
+    .nav-item.active .nav-label {
+      font-weight: 600;
+      color: var(--text-charcoal);
+    }
+
+    /* Desktop Navigation Header */
+    .desktop-header-nav {
+      display: none;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .desktop-nav-link {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      text-decoration: none;
+      color: var(--text-muted);
+    }
+
+    .desktop-nav-link.active {
+      color: var(--text-charcoal);
+      border-bottom: 1.5px solid var(--text-charcoal);
+      padding-bottom: 2px;
+    }
+
+    /* ─── ADAPTACIÓN COMPUTADORA ─── */
+    @media (min-width: 768px) {
+      .closet-header {
+        padding: 24px 48px;
+        align-items: center;
+      }
+      .desktop-header-nav {
+        display: flex;
+      }
+      .closet-main {
+        padding: 36px 48px 60px 48px;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 48px;
+        align-items: flex-start;
+      }
+      .styling-studio {
+        margin-bottom: 0;
+      }
+      .bottom-nav-bar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HEADER & USER GREETING -->
+  <header class="closet-header">
+    <div class="greeting-titles">
+      <span class="greeting-label">Atelier Personal</span>
+      <h1 class="greeting-name">Tu guardarropa, Camila</h1>
+      <p class="greeting-quote">«Piezas hechas para perdurar.»</p>
+    </div>
+
+    <!-- Menú desktop -->
+    <nav class="desktop-header-nav" aria-label="Navegación escritorio">
+      <a href="/elcoro" class="desktop-nav-link">Inicio</a>
+      <a href="/elcoro/producto" class="desktop-nav-link">Colección</a>
+      <a href="/elcoro/closet" class="desktop-nav-link active">Mi Clóset</a>
+      <a href="/elcoro/checkout" class="desktop-nav-link">Bolsa (1)</a>
+    </nav>
+
+    <!-- Tracking bell icon with flat numeric indicator -->
+    <button class="bell-btn" id="bell-btn" aria-label="Seguimiento de envíos: 1 paquete en camino">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 8A6 6 0 0 0 6 8C6 15 3 17 3 17H21S18 15 18 8Z"/>
+        <path d="M13.73 21A2 2 0 0 1 10.27 21"/>
+      </svg>
+      <span class="bell-indicator">1</span>
+    </button>
+  </header>
+
+  <!-- 2. SEGMENTED NAVIGATION TABS -->
+  <nav class="tabs-bar" aria-label="Secciones del armario">
+    <button class="tab-btn active" id="tab-prendas">Mis Prendas (8)</button>
+    <button class="tab-btn" id="tab-combos">Combinaciones Guardadas (4)</button>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="closet-main">
+
+    <!-- COLUMNA IZQUIERDA EN DESKTOP: 3. CANVAS / STYLING STUDIO MODULE -->
+    <section class="styling-studio" aria-label="Estudio de estilismo">
+      <div class="studio-header">
+        <h2 class="studio-title">Combinación de la Semana</h2>
+        <span class="studio-tag">Curaduría Atelier</span>
+      </div>
+
+      <!-- Flat-lay curated outfit canvas -->
+      <div class="flatlay-canvas">
+        <div class="flatlay-img-wrap">
+          <img src="/elcoro/flatlay.jpg" alt="Composición flat-lay con blazer El Coro, pantalón pinzado y mocasines">
+        </div>
+        <div class="flatlay-caption">
+          <span>Look 03 · Lana Arena & Mocasín Piel</span>
+          <span>Clima templado · 19°C</span>
+        </div>
+      </div>
+
+      <!-- Action row beneath canvas -->
+      <div class="studio-actions-row">
+        <button class="studio-action-btn" id="btn-create-combo">
+          <svg viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          <span>Crear nueva combinación</span>
+        </button>
+
+        <button class="studio-action-btn" id="btn-weather-combo">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+          </svg>
+          <span>Sugerir outfit con clima de hoy</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- COLUMNA DERECHA EN DESKTOP: 4. GARMENT GRID & 5. TEXTILE CARE CARD -->
+    <div>
+      
+      <!-- 4. GARMENT GRID (2-COLUMN MASONRY) -->
+      <section class="garment-section" aria-label="Prendas guardadas">
+        <h2 class="garment-section-title">Prendas en Guardarropa</h2>
+
+        <div class="garment-grid">
+          
+          <!-- Item 1: Blazer Arena El Coro -->
+          <a href="/elcoro/producto" class="garment-card">
+            <div class="garment-tile">
+              <img src="/elcoro/hero.jpg" alt="Blazer Arena El Coro">
+            </div>
+            <div class="garment-label-box">
+              <div class="garment-name">Blazer Arena El Coro</div>
+              <div class="garment-sub">Adquirido Octubre 2026</div>
+            </div>
+          </a>
+
+          <!-- Item 2: Pantalón Tabaco 2024 -->
+          <div class="garment-card">
+            <div class="garment-tile">
+              <img src="/elcoro/pantalon.jpg" alt="Pantalón Tabaco 2024">
+            </div>
+            <div class="garment-label-box">
+              <div class="garment-name">Pantalón Tabaco 2024</div>
+              <div class="garment-sub">Lana virgen pinzada</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. EDITORIAL TEXTILE CARE CARD -->
+      <section class="care-card" aria-label="Guía de cuidado textil">
+        <span class="care-label">Documento de Preservación</span>
+        <h3 class="care-title">Guía de longevidad textil: cómo cepillar y ventilar lana virgen sin lavados agresivos.</h3>
+        <span class="care-arrow-link">
+          <span>Leer artículo de taller</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </span>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- 6. BOTTOM NAVIGATION BAR -->
+  <nav class="bottom-nav-bar" aria-label="Navegación móvil">
+    
+    <!-- Inicio -->
+    <a href="/elcoro" class="nav-item" aria-label="Pestaña Inicio">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5L12 3L21 10.5V20C21 20.5523 20.5523 21 20 21H15V14H9V21H4C3.44772 21 3 20.5523 3 20V10.5Z"/>
+      </svg>
+      <span class="nav-label">Inicio</span>
+    </a>
+
+    <!-- Colección -->
+    <a href="/elcoro/producto" class="nav-item" aria-label="Pestaña Colección">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="3" width="8" height="8" rx="0"/>
+        <rect x="13" y="3" width="8" height="8" rx="0"/>
+        <rect x="3" y="13" width="8" height="8" rx="0"/>
+        <rect x="13" y="13" width="8" height="8" rx="0"/>
+      </svg>
+      <span class="nav-label">Colección</span>
+    </a>
+
+    <!-- Mi clóset (Activo: Icono sólido) -->
+    <a href="/elcoro/closet" class="nav-item active" aria-label="Pestaña Mi clóset">
+      <svg viewBox="0 0 24 24" class="icon-filled">
+        <path d="M12 4C10.5 4 10 5.2 10 6C10 7.2 11.2 7.8 12 8.5L3 13.5V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V13.5L12 8.5Z"/>
+        <circle cx="12" cy="5" r="1.5"/>
+      </svg>
+      <span class="nav-label">Mi clóset</span>
+    </a>
+
+    <!-- Bolsa -->
+    <a href="/elcoro/checkout" class="nav-item" aria-label="Pestaña Bolsa">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 2L3 6V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V6L18 2H6Z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10"/>
+      </svg>
+      <span class="nav-label">Bolsa</span>
+    </a>
+
+    <!-- Perfil -->
+    <a href="/elcoro/closet" class="nav-item" aria-label="Pestaña Perfil">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="7" r="4"/>
+        <path d="M5 21C5 17 8 14 12 14C16 14 19 17 19 21"/>
+      </svg>
+      <span class="nav-label">Perfil</span>
+    </a>
+  </nav>
+
+  <script>
+    // Cambio interactivo de tabs (Prendas vs Combinaciones)
+    const tabPrendas = document.getElementById('tab-prendas');
+    const tabCombos = document.getElementById('tab-combos');
+    const garmentSection = document.querySelector('.garment-section');
+
+    if (tabPrendas && tabCombos) {
+      tabPrendas.addEventListener('click', () => {
+        tabPrendas.classList.add('active');
+        tabCombos.classList.remove('active');
+      });
+      tabCombos.addEventListener('click', () => {
+        tabCombos.classList.add('active');
+        tabPrendas.classList.remove('active');
+      });
+    }
+
+    // Acción de clima
+    const weatherBtn = document.getElementById('btn-weather-combo');
+    if (weatherBtn) {
+      weatherBtn.addEventListener('click', () => {
+        weatherBtn.style.borderColor = 'var(--text-charcoal)';
+        weatherBtn.innerHTML = '<span>Outfit ajustado a 19°C (Templado) ✓</span>';
+        setTimeout(() => {
+          weatherBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;stroke-width:1.5;fill:none;">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            </svg>
+            <span>Sugerir outfit con clima de hoy</span>
+          `;
+          weatherBtn.style.borderColor = 'var(--card-border)';
+        }, 2500);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Saco Estructurado Tabaco — El Coro de Jorge Patiño</title>
+  
+  <!-- Tipografías: Serif Editorial Escandinava & Sans-serif Funcional -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET Y VARIABLES MINIMALISMO EDITORIAL ─── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-stone: #FBF9F5;
+      --container-stone: #F2EFE9;
+      --card-border: #E5E0D8;
+      --text-charcoal: #1A1A1A;
+      --text-muted: #736E66;
+      --text-subtle: #A39D94;
+      --accent-gold: #C2A675;
+      --divider-line: #E5E0D8;
+      --hairline: rgba(26, 26, 26, 0.08);
+      
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      background-color: var(--bg-stone);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-stone);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ─── 1. TOP NAVIGATION (TRANSPARENTE SLIM BAR) ─── */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 56px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(251, 249, 245, 0.95) 0%, rgba(251, 249, 245, 0.75) 65%, transparent 100%);
+      z-index: 100;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: var(--text-charcoal);
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background-color: rgba(242, 239, 233, 0.8);
+    }
+
+    .nav-btn:active {
+      opacity: 0.6;
+    }
+
+    .nav-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .nav-btn.bookmarked svg {
+      fill: var(--text-charcoal);
+    }
+
+    /* ─── CONTENEDOR PRINCIPAL PRODUCTO ─── */
+    .product-page-main {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex: 1;
+      padding-bottom: 92px; /* Margen para fixed action bar móvil */
+    }
+
+    /* ─── 2. PRODUCT GALLERY (MOBILE FIRST) ─── */
+    .product-gallery {
+      position: relative;
+      width: 100%;
+      background-color: var(--container-stone);
+    }
+
+    /* Imagen grande vertical 4:5 aspect ratio */
+    .main-image-viewport {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      position: relative;
+      overflow: hidden;
+      background-color: #EFECE6;
+    }
+
+    .main-gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Puntos de paginación: dashes neutrales grises sin desenfoque */
+    .gallery-dashes {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 0 6px 0;
+      background-color: var(--bg-stone);
+    }
+
+    .gallery-dash {
+      width: 22px;
+      height: 2px;
+      background-color: var(--divider-line);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background-color 0.2s ease, width 0.2s ease;
+    }
+
+    .gallery-dash.active {
+      background-color: var(--text-charcoal);
+      width: 32px;
+    }
+
+    /* Fila de miniaturas fotográficas macro */
+    .thumbnails-row {
+      display: flex;
+      gap: 10px;
+      padding: 8px 20px 16px 20px;
+      overflow-x: auto;
+      background-color: var(--bg-stone);
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .thumbnails-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .thumb-item {
+      flex: 0 0 68px;
+      width: 68px;
+      height: 68px;
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      border-radius: 0px;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 0;
+      scroll-snap-align: start;
+      transition: border-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-item.active {
+      border: 1.5px solid var(--text-charcoal);
+    }
+
+    .thumb-item:not(.active) {
+      opacity: 0.7;
+    }
+
+    /* ─── 3. PRODUCT HIERARCHY ─── */
+    .product-info-container {
+      padding: 18px 20px 24px 20px;
+    }
+
+    .product-header {
+      margin-bottom: 22px;
+    }
+
+    .product-series {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    /* Tipografía serif refinada sin bold exagerado */
+    .product-title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text-charcoal);
+      margin-bottom: 8px;
+    }
+
+    /* Precio limpio y sin negrita */
+    .product-price {
+      font-family: var(--font-sans);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-charcoal);
+      letter-spacing: 0.04em;
+    }
+
+    /* Specs Grid: tabla minimalista de 2 columnas con divisores de 1px soft stone gray */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--divider-line);
+      border-bottom: 1px solid var(--divider-line);
+      margin-bottom: 26px;
+    }
+
+    .spec-item {
+      padding: 14px 12px 14px 0;
+      border-bottom: 1px solid var(--divider-line);
+    }
+
+    .spec-item:nth-child(even) {
+      padding: 14px 0 14px 14px;
+      border-left: 1px solid var(--divider-line);
+    }
+
+    .spec-item:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    .spec-label {
+      font-family: var(--font-sans);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-subtle);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .spec-value {
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text-charcoal);
+    }
+
+    /* ─── 4. INTERACTIVE SIZING & FIT UTILITY ─── */
+    .sizing-module {
+      margin-bottom: 28px;
+    }
+
+    .sizing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sizing-title {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-charcoal);
+    }
+
+    /* Selector de tallas: outlines cuadrados nítidos */
+    .size-selector-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .size-btn {
+      flex: 1;
+      height: 44px;
+      background-color: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      border-radius: 0px;
+    }
+
+    .size-btn:hover {
+      border-color: var(--text-charcoal);
+    }
+
+    /* Estado activo: fondo gris carbón sólido con texto blanco */
+    .size-btn.active {
+      background-color: var(--text-charcoal);
+      border-color: var(--text-charcoal);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Enlace guía interactiva de medidas con icono cinta métrica */
+    .measure-guide-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0;
+      margin-bottom: 12px;
+    }
+
+    .measure-guide-trigger svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 1.5;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Tarjeta compacta desplegable con medidas reales de la prenda */
+    .measurements-card {
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      line-height: 1.2;
+    }
+
+    .measurement-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .metric-name {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-subtle);
+    }
+
+    .metric-val {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-charcoal);
+    }
+
+    .measurement-divider {
+      width: 1px;
+      height: 24px;
+      background-color: var(--divider-line);
+    }
+
+    /* ─── 5. BOTTOM ACTION BAR (FIXED EN MÓVIL, ZERO BLUR / ZERO FLOAT) ─── */
+    .bottom-action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 74px;
+      background-color: #FFFFFF;
+      border-top: 1px solid var(--divider-line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px 16px 18px;
+      z-index: 150;
+    }
+
+    /* Botón secundario delineado neutral */
+    .btn-secondary-closet {
+      flex: 1;
+      height: 48px;
+      background-color: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      border-radius: 0px;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-secondary-closet:active {
+      background-color: var(--container-stone);
+    }
+
+    .btn-secondary-closet svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* Botón primario sólido deep-charcoal rectangular */
+    .btn-primary-add {
+      flex: 1.35;
+      height: 48px;
+      background-color: var(--text-charcoal);
+      border: 1px solid var(--text-charcoal);
+      color: #FFFFFF;
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 0px;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-primary-add:hover {
+      background-color: #000000;
+    }
+
+    .btn-primary-add:active {
+      opacity: 0.85;
+    }
+
+    /* Toast de notificación humana y sutil */
+    .cart-toast {
+      position: fixed;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background-color: var(--text-charcoal);
+      color: #FFFFFF;
+      padding: 10px 18px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 250;
+      border-radius: 0px;
+    }
+
+    .cart-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ─── ESTILOS PARA COMPUTADORA (BREAKPOINTS DESKTOP) ─── */
+    @media (min-width: 768px) {
+      .top-nav {
+        position: static;
+        height: 72px;
+        padding: 0 48px;
+        background: var(--bg-stone);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .product-page-main {
+        padding: 40px 48px 60px 48px;
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: 56px;
+        align-items: flex-start;
+      }
+
+      .product-gallery {
+        position: sticky;
+        top: 24px;
+        background: transparent;
+      }
+
+      .main-image-viewport {
+        border: 1px solid var(--card-border);
+      }
+
+      .product-info-container {
+        padding: 0;
+      }
+
+      .product-title {
+        font-size: 42px;
+      }
+
+      .product-price {
+        font-size: 22px;
+        margin-bottom: 28px;
+      }
+
+      .specs-grid {
+        margin-bottom: 32px;
+      }
+
+      .sizing-module {
+        margin-bottom: 36px;
+      }
+
+      /* En desktop, la barra de acciones vive dentro de la columna de producto */
+      .bottom-action-bar {
+        position: static;
+        height: auto;
+        padding: 0;
+        background: transparent;
+        border-top: none;
+        display: flex;
+        gap: 14px;
+      }
+
+      .btn-secondary-closet,
+      .btn-primary-add {
+        height: 52px;
+        font-size: 12px;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .product-page-main {
+        gap: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. TOP NAVIGATION -->
+  <header class="top-nav">
+    <a href="/elcoro" class="nav-btn" aria-label="Volver al inicio de El Coro">
+      <!-- Thin back arrow icon -->
+      <svg viewBox="0 0 24 24">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </a>
+
+    <div style="font-family: var(--font-serif); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase;">
+      El Coro · Atelier
+    </div>
+
+    <!-- Mi clóset link / bookmark icon -->
+    <a href="/elcoro/closet" class="nav-btn" id="bookmark-btn" aria-label="Ir a Mi clóset">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 4C10.5 4 10 5.2 10 6C10 7.2 11.2 7.8 12 8.5L3 13.5V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V13.5L12 8.5Z"></path>
+        <circle cx="12" cy="5" r="1.5"></circle>
+      </svg>
+    </a>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="product-page-main">
+
+    <!-- 2. PRODUCT GALLERY -->
+    <section class="product-gallery" aria-label="Galería fotográfica de la prenda">
+      
+      <!-- Fotografía vertical 4:5 -->
+      <div class="main-image-viewport">
+        <img 
+          src="/elcoro/saco.jpg" 
+          alt="Saco Estructurado Tabaco sobre maniquí de madera artesanal" 
+          class="main-gallery-img" 
+          id="main-product-img"
+        >
+      </div>
+
+      <!-- Pagination dots: minimal, un-blurred neutral gray dashes -->
+      <div class="gallery-dashes" role="tablist" aria-label="Selector de vistas">
+        <button class="gallery-dash active" data-index="0" aria-label="Vista 1"></button>
+        <button class="gallery-dash" data-index="1" aria-label="Vista 2"></button>
+        <button class="gallery-dash" data-index="2" aria-label="Vista 3"></button>
+        <button class="gallery-dash" data-index="3" aria-label="Vista 4"></button>
+      </div>
+
+      <!-- Thumbnail row: macro close-up photography -->
+      <div class="thumbnails-row">
+        <!-- Maniquí completo -->
+        <button class="thumb-item active" data-img="/elcoro/saco.jpg" data-index="0" aria-label="Silueta general">
+          <img src="/elcoro/saco.jpg" alt="Silueta general saco">
+        </button>
+
+        <!-- Real reinforced inner stitching -->
+        <button class="thumb-item" data-img="/elcoro/stitching.jpg" data-index="1" aria-label="Costura interna reforzada">
+          <img src="/elcoro/stitching.jpg" alt="Costura francesa interior reforzada">
+        </button>
+
+        <!-- Horn buttons -->
+        <button class="thumb-item" data-img="/elcoro/buttons.jpg" data-index="2" aria-label="Botones de cuerno genuino">
+          <img src="/elcoro/buttons.jpg" alt="Botón de cuerno natural torneado">
+        </button>
+
+        <!-- Textile weave -->
+        <button class="thumb-item" data-img="/elcoro/textile.jpg" data-index="3" aria-label="Tejido de lana y lino">
+          <img src="/elcoro/textile.jpg" alt="Textura de urdimbre textil">
+        </button>
+      </div>
+
+    </section>
+
+    <!-- 3. PRODUCT HIERARCHY & SIZING -->
+    <section class="product-info-container">
+      
+      <!-- Encabezado con serif refinado y precio sin bold -->
+      <header class="product-header">
+        <span class="product-series">Sastrería Lenta · Colección 2026</span>
+        <h1 class="product-title">Saco Estructurado Tabaco</h1>
+        <div class="product-price">$3,850 MXN</div>
+      </header>
+
+      <!-- Specs Grid: dos columnas minimalistas con divisores soft stone gray #E5E0D8 -->
+      <div class="specs-grid">
+        <div class="spec-item">
+          <span class="spec-label">Composición</span>
+          <p class="spec-value">100% Lana virgen con forro de algodón orgánico</p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Manufactura</span>
+          <p class="spec-value">Confección manual con costura francesa interior</p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Botones</span>
+          <p class="spec-value">Cuerno natural torneado en taller local</p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Corte & Caída</span>
+          <p class="spec-value">Estructura relajada con entretela de crin de caballo</p>
+        </div>
+      </div>
+
+      <!-- 4. INTERACTIVE SIZING & FIT UTILITY -->
+      <div class="sizing-module">
+        <div class="sizing-header">
+          <span class="sizing-title">Seleccionar Talla</span>
+          <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;" id="selected-size-label">Talla: M</span>
+        </div>
+
+        <!-- Size selector: neat square outlines -->
+        <div class="size-selector-row" role="group" aria-label="Tallas disponibles">
+          <button class="size-btn" data-size="XS" data-chest="96" data-shoulder="42" data-length="74">XS</button>
+          <button class="size-btn" data-size="S" data-chest="100" data-shoulder="44" data-length="76">S</button>
+          <button class="size-btn active" data-size="M" data-chest="104" data-shoulder="46" data-length="78">M</button>
+          <button class="size-btn" data-size="L" data-chest="108" data-shoulder="48" data-length="80">L</button>
+          <button class="size-btn" data-size="XL" data-chest="114" data-shoulder="50" data-length="82">XL</button>
+        </div>
+
+        <!-- Enlace guía interactiva de medidas con icono cinta métrica -->
+        <button class="measure-guide-trigger" id="guide-toggle-btn">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="10" rx="1"></rect>
+            <line x1="6" y1="7" x2="6" y2="11"></line>
+            <line x1="10" y1="7" x2="10" y2="13"></line>
+            <line x1="14" y1="7" x2="14" y2="11"></line>
+            <line x1="18" y1="7" x2="18" y2="13"></line>
+          </svg>
+          <span>Guía interactiva de medidas (cm)</span>
+        </button>
+
+        <!-- Compact expandable card: medidas reales de la prenda -->
+        <div class="measurements-card" id="measurements-card">
+          <div class="measurement-metric">
+            <span class="metric-name">Pecho</span>
+            <span class="metric-val" id="metric-chest">104 cm</span>
+          </div>
+          <div class="measurement-divider"></div>
+          <div class="measurement-metric">
+            <span class="metric-name">Hombro</span>
+            <span class="metric-val" id="metric-shoulder">46 cm</span>
+          </div>
+          <div class="measurement-divider"></div>
+          <div class="measurement-metric">
+            <span class="metric-name">Largo</span>
+            <span class="metric-val" id="metric-length">78 cm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. BOTTOM ACTION BAR (EN DESKTOP DENTRO DEL CONTENEDOR) -->
+      <div class="bottom-action-bar">
+        <!-- Secondary outlined neutral button -->
+        <button class="btn-secondary-closet" id="save-closet-btn">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 4C10.5 4 10 5.2 10 6C10 7.2 11.2 7.8 12 8.5L3 13.5V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V13.5L12 8.5Z"></path>
+            <circle cx="12" cy="5" r="1.5"></circle>
+          </svg>
+          <span id="closet-btn-text">Guardar en Mi clóset</span>
+        </button>
+
+        <!-- Primary solid deep-charcoal rectangular button -->
+        <button class="btn-primary-add" id="add-to-bag-btn">
+          Añadir a la bolsa
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Notificación Toast sutil -->
+  <div class="cart-toast" id="toast-msg">Añadido a tu bolsa</div>
+
+  <script>
+    // ─── 1. INTERACCIÓN DE GALERÍA Y MINIATURAS ───
+    const mainImg = document.getElementById('main-product-img');
+    const dashes = document.querySelectorAll('.gallery-dash');
+    const thumbnails = document.querySelectorAll('.thumb-item');
+
+    function setActiveImage(index, imgSrc) {
+      if (mainImg) {
+        mainImg.style.opacity = '0.35';
+        setTimeout(() => {
+          mainImg.src = imgSrc;
+          mainImg.style.opacity = '1';
+        }, 120);
+      }
+      dashes.forEach(d => d.classList.toggle('active', parseInt(d.dataset.index) === index));
+      thumbnails.forEach(t => t.classList.toggle('active', parseInt(t.dataset.index) === index));
+    }
+
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const index = parseInt(thumb.dataset.index);
+        const src = thumb.dataset.img;
+        setActiveImage(index, src);
+      });
+    });
+
+    dashes.forEach(dash => {
+      dash.addEventListener('click', () => {
+        const index = parseInt(dash.dataset.index);
+        const targetThumb = thumbnails[index];
+        if (targetThumb) {
+          setActiveImage(index, targetThumb.dataset.img);
+        }
+      });
+    });
+
+    // ─── 2. SELECTOR DE TALLAS Y MEDIDAS DINÁMICAS ───
+    const sizeBtns = document.querySelectorAll('.size-btn');
+    const sizeLabel = document.getElementById('selected-size-label');
+    const metricChest = document.getElementById('metric-chest');
+    const metricShoulder = document.getElementById('metric-shoulder');
+    const metricLength = document.getElementById('metric-length');
+
+    sizeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const size = btn.dataset.size;
+        if (sizeLabel) sizeLabel.textContent = `Talla: ${size}`;
+        if (metricChest) metricChest.textContent = `${btn.dataset.chest} cm`;
+        if (metricShoulder) metricShoulder.textContent = `${btn.dataset.shoulder} cm`;
+        if (metricLength) metricLength.textContent = `${btn.dataset.length} cm`;
+      });
+    });
+
+    // ─── 3. GUÍA INTERACTIVA DE MEDIDAS (ACCORDION) ───
+    const guideToggle = document.getElementById('guide-toggle-btn');
+    const measureCard = document.getElementById('measurements-card');
+    if (guideToggle && measureCard) {
+      guideToggle.addEventListener('click', () => {
+        if (measureCard.style.display === 'none') {
+          measureCard.style.display = 'flex';
+        } else {
+          measureCard.style.display = 'none';
+        }
+      });
+    }
+
+    // ─── 4. GUARDAR EN CLÓSET Y AÑADIR A LA BOLSA ───
+    const bookmarkBtn = document.getElementById('bookmark-btn');
+    const closetBtn = document.getElementById('save-closet-btn');
+    const closetText = document.getElementById('closet-btn-text');
+    const addBagBtn = document.getElementById('add-to-bag-btn');
+    const toast = document.getElementById('toast-msg');
+
+    let isSaved = false;
+
+    function toggleSave() {
+      isSaved = !isSaved;
+      if (bookmarkBtn) bookmarkBtn.classList.toggle('bookmarked', isSaved);
+      if (closetBtn) {
+        closetBtn.style.backgroundColor = isSaved ? 'var(--container-stone)' : 'transparent';
+      }
+      if (closetText) {
+        closetText.textContent = isSaved ? 'Guardado en Mi clóset' : 'Guardar en Mi clóset';
+      }
+      showToast(isSaved ? 'Guardado en tu clóset' : 'Eliminado de tu clóset');
+    }
+
+    if (bookmarkBtn) bookmarkBtn.addEventListener('click', toggleSave);
+    if (closetBtn) closetBtn.addEventListener('click', toggleSave);
+
+    function showToast(message) {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('visible');
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 2200);
+    }
+
+    if (addBagBtn) {
+      addBagBtn.addEventListener('click', () => {
+        const activeSize = document.querySelector('.size-btn.active')?.dataset.size || 'M';
+        showToast(`Añadido a la bolsa (Talla ${activeSize}) — Redirigiendo...`);
+        setTimeout(() => {
+          window.location.href = '/elcoro/checkout';
+        }, 900);
+      });
+    }
+  </script>
+
+</body>
+</html>

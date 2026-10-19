@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Bolsa de compra — El Coro de Jorge Patiño</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-stone: #FBF9F5;
+      --container-stone: #F2EFE9;
+      --card-border: #E5E0D8;
+      --text-charcoal: #1A1A1A;
+      --text-muted: #736E66;
+      --text-subtle: #9E988F;
+      --divider-line: #E5E0D8;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      background-color: var(--bg-stone);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-stone);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── 1. TOP HEADER ─── */
+    .checkout-header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 56px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(251, 249, 245, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--divider-line);
+      z-index: 100;
+    }
+
+    .header-back-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-charcoal);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .header-back-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .header-title {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-charcoal);
+    }
+
+    .header-spacer {
+      width: 40px;
+    }
+
+    /* ─── CONTENEDOR PRINCIPAL ─── */
+    .checkout-container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 20px 18px 120px 18px;
+      flex: 1;
+    }
+
+    /* ─── 2. ORDER SUMMARY CARD ─── */
+    .order-card {
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      padding: 14px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .order-thumb {
+      width: 64px;
+      height: 80px;
+      flex-shrink: 0;
+      background-color: #E6E2D9;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+    }
+
+    .order-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .order-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .order-item-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text-charcoal);
+    }
+
+    .order-item-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .order-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 6px;
+    }
+
+    .order-item-price {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-charcoal);
+    }
+
+    .order-edit-link {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    /* ─── 3. LOGISTICS CALCULATOR ─── */
+    .section-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .logistics-box {
+      margin-bottom: 24px;
+    }
+
+    .postal-input-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .postal-input {
+      flex: 1;
+      height: 44px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--card-border);
+      padding: 0 14px;
+      font-size: 12.5px;
+      font-family: var(--font-sans);
+      color: var(--text-charcoal);
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.15s ease;
+    }
+
+    .postal-input::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .postal-input:focus {
+      border-color: var(--text-charcoal);
+    }
+
+    .postal-btn {
+      height: 44px;
+      padding: 0 16px;
+      background-color: var(--container-stone);
+      border: 1px solid var(--card-border);
+      color: var(--text-charcoal);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 0;
+    }
+
+    .line-items-breakdown {
+      border-top: 1px solid var(--divider-line);
+      border-bottom: 1px solid var(--divider-line);
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .breakdown-row.total {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      border-top: 1px solid var(--divider-line);
+      padding-top: 8px;
+      margin-top: 2px;
+    }
+
+    .delivery-date {
+      font-size: 10.5px;
+      color: var(--text-subtle);
+      margin-left: 4px;
+    }
+
+    /* ─── 4. PAYMENT METHOD SELECTOR ─── */
+    .payment-module {
+      margin-bottom: 26px;
+    }
+
+    .payment-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .payment-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background-color: var(--bg-stone);
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      border-radius: 0;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .payment-row.active {
+      border-color: var(--text-charcoal);
+      background-color: var(--container-stone);
+    }
+
+    .payment-row-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Radio button custom */
+    .radio-circle {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--card-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .payment-row.active .radio-circle {
+      border-color: var(--text-charcoal);
+    }
+
+    .radio-inner-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: transparent;
+    }
+
+    .payment-row.active .radio-inner-dot {
+      background-color: var(--text-charcoal);
+    }
+
+    .payment-name {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-charcoal);
+    }
+
+    .payment-subtext {
+      font-size: 10px;
+      color: var(--text-subtle);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── 5. TRUST & POLICIES BADGE ─── */
+    .trust-policies-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      border-top: 1px solid var(--divider-line);
+      border-bottom: 1px solid var(--divider-line);
+      padding: 14px 0;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .policy-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .policy-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-charcoal);
+      stroke-width: 1.3;
+      fill: none;
+    }
+
+    .policy-text {
+      font-size: 9.5px;
+      line-height: 1.35;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── 6. PRIMARY CHECKOUT CTA ─── */
+    .bottom-cta-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #FFFFFF;
+      border-top: 1px solid var(--divider-line);
+      padding: 12px 18px 16px 18px;
+      z-index: 150;
+    }
+
+    .btn-checkout-confirm {
+      width: 100%;
+      max-width: 724px;
+      margin: 0 auto;
+      height: 50px;
+      background-color: var(--text-charcoal);
+      color: #FFFFFF;
+      border: 1px solid var(--text-charcoal);
+      border-radius: 0;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-checkout-confirm svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .btn-checkout-confirm:hover {
+      background-color: #000000;
+    }
+
+    .btn-checkout-confirm:active {
+      opacity: 0.85;
+    }
+
+    /* Toast de confirmación */
+    .checkout-toast {
+      position: fixed;
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background-color: var(--text-charcoal);
+      color: #FFFFFF;
+      padding: 10px 18px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 300;
+      border-radius: 0;
+    }
+
+    .checkout-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ─── DESKTOP ADAPTATION ─── */
+    @media (min-width: 768px) {
+      .checkout-header {
+        height: 72px;
+        padding: 0 48px;
+      }
+      .checkout-container {
+        padding: 40px 48px 60px 48px;
+      }
+      .bottom-cta-wrap {
+        position: static;
+        padding: 0;
+        background: transparent;
+        border-top: none;
+        margin-top: 10px;
+      }
+      .btn-checkout-confirm {
+        max-width: 100%;
+        height: 52px;
+        font-size: 12.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. TOP HEADER -->
+  <header class="checkout-header">
+    <a href="/elcoro/producto" class="header-back-btn" aria-label="Volver a detalle del producto">
+      <svg viewBox="0 0 24 24">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </a>
+    <h1 class="header-title">Bolsa de compra (1)</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="checkout-container">
+    
+    <!-- 2. ORDER SUMMARY CARD -->
+    <div class="order-card">
+      <div class="order-thumb">
+        <img src="/elcoro/saco.jpg" alt="Saco Estructurado Tabaco miniatura">
+      </div>
+      <div class="order-details">
+        <div class="order-item-title">Saco Estructurado Tabaco</div>
+        <div class="order-item-meta">Talla M · Confección artesanal · 1 unidad</div>
+        <div class="order-price-row">
+          <span class="order-item-price">$3,850 MXN</span>
+          <a href="/elcoro/producto" class="order-edit-link">Editar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TRANSPARENT LOGISTICS CALCULATOR -->
+    <section class="logistics-box" aria-label="Cálculo de envío">
+      <span class="section-label">Logística y Entrega</span>
+      <div class="postal-input-wrap">
+        <input 
+          type="text" 
+          class="postal-input" 
+          id="postal-input" 
+          placeholder="Ingresa tu Código Postal" 
+          value="06700" 
+          maxlength="8"
+          aria-label="Código Postal"
+        >
+        <button class="postal-btn" id="postal-calc-btn">Calcular</button>
+      </div>
+
+      <div class="line-items-breakdown">
+        <div class="breakdown-row">
+          <span>Subtotal</span>
+          <span>$3,850 MXN</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Envío exprés asegurado <span class="delivery-date">(Llega 22-24 Oct)</span></span>
+          <span id="shipping-cost">$180 MXN</span>
+        </div>
+        <div class="breakdown-row total">
+          <span>Total garantizado</span>
+          <span id="total-cost">$4,030 MXN</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PAYMENT METHOD SELECTOR -->
+    <section class="payment-module" aria-label="Método de pago">
+      <span class="section-label">Método de Pago</span>
+      <div class="payment-options-list" role="radiogroup">
+        
+        <!-- Apple Pay -->
+        <div class="payment-row active" data-method="applepay" role="radio" aria-checked="true" tabindex="0">
+          <div class="payment-row-left">
+            <div class="radio-circle">
+              <div class="radio-inner-dot"></div>
+            </div>
+            <div>
+              <div class="payment-name">Apple Pay</div>
+              <div class="payment-subtext">Autorización biométrica con un toque</div>
+            </div>
+          </div>
+          <svg width="28" height="18" viewBox="0 0 28 18" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M7 6C6 7 5.5 8.5 5.5 10C5.5 13 8 14 8 14C8 14 7.2 16 6 17"/>
+            <path d="M7 4C7.5 3 8.5 2.5 9.5 2.5"/>
+          </svg>
+        </div>
+
+        <!-- Tarjeta Bancaria -->
+        <div class="payment-row" data-method="card" role="radio" aria-checked="false" tabindex="0">
+          <div class="payment-row-left">
+            <div class="radio-circle">
+              <div class="radio-inner-dot"></div>
+            </div>
+            <div>
+              <div class="payment-name">Tarjeta Bancaria</div>
+              <div class="payment-subtext">Crédito o débito (Visa, Mastercard, Amex)</div>
+            </div>
+          </div>
+          <svg width="22" height="16" viewBox="0 0 22 16" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="1" y="2" width="20" height="12" rx="1"/>
+            <line x1="1" y1="6" x2="21" y2="6"/>
+          </svg>
+        </div>
+
+        <!-- SPEI / Transferencia directa -->
+        <div class="payment-row" data-method="spei" role="radio" aria-checked="false" tabindex="0">
+          <div class="payment-row-left">
+            <div class="radio-circle">
+              <div class="radio-inner-dot"></div>
+            </div>
+            <div>
+              <div class="payment-name">SPEI / Transferencia directa</div>
+              <div class="payment-subtext">Confirmación inmediata sin intermediarios</div>
+            </div>
+          </div>
+          <svg width="20" height="18" viewBox="0 0 20 18" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M1 6L10 2L19 6V8H1V6Z"/>
+            <line x1="4" y1="8" x2="4" y2="14"/>
+            <line x1="10" y1="8" x2="10" y2="14"/>
+            <line x1="16" y1="8" x2="16" y2="14"/>
+            <line x1="2" y1="14" x2="18" y2="14"/>
+          </svg>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. TRUST & POLICIES BADGE -->
+    <div class="trust-policies-row">
+      <div class="policy-item">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L3 7V12C3 17.5 7 21.5 12 22C17 21.5 21 17.5 21 12V7L12 2Z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <span class="policy-text">Garantía de confección</span>
+      </div>
+      <div class="policy-item">
+        <svg viewBox="0 0 24 24">
+          <polyline points="1 4 1 10 7 10"/>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+        </svg>
+        <span class="policy-text">Cambios sin costo dentro de 30 días</span>
+      </div>
+      <div class="policy-item">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="1"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span class="policy-text">Aviso de privacidad</span>
+      </div>
+    </div>
+
+    <!-- 6. PRIMARY CHECKOUT CTA -->
+    <div class="bottom-cta-wrap">
+      <button class="btn-checkout-confirm" id="confirm-order-btn">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="1"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span>Confirmar compra segura ($4,030 MXN)</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div class="checkout-toast" id="checkout-toast">Pedido asegurado y confirmado</div>
+
+  <script>
+    // Selector de método de pago
+    const paymentRows = document.querySelectorAll('.payment-row');
+    paymentRows.forEach(row => {
+      row.addEventListener('click', () => {
+        paymentRows.forEach(r => {
+          r.classList.remove('active');
+          r.setAttribute('aria-checked', 'false');
+        });
+        row.classList.add('active');
+        row.setAttribute('aria-checked', 'true');
+      });
+    });
+
+    // Botón de confirmar compra segura
+    const confirmBtn = document.getElementById('confirm-order-btn');
+    const toast = document.getElementById('checkout-toast');
+    if (confirmBtn && toast) {
+      confirmBtn.addEventListener('click', () => {
+        toast.classList.add('visible');
+        setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 3000);
+      });
+    }
+
+    // Botón calcular CP
+    const calcBtn = document.getElementById('postal-calc-btn');
+    if (calcBtn) {
+      calcBtn.addEventListener('click', () => {
+        const cp = document.getElementById('postal-input')?.value;
+        if (cp && cp.trim().length >= 4) {
+          calcBtn.textContent = 'Actualizado';
+          setTimeout(() => { calcBtn.textContent = 'Calcular'; }, 1600);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
