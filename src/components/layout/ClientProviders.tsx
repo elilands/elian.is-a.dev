@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { PreloaderProvider } from "@/context/PreloaderContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/layout/Navbar/Navbar";
 
 const SmoothScrollProvider = dynamic(
@@ -17,13 +18,15 @@ const CustomCursor = dynamic(
 
 export default function ClientProviders({ children }: { children: ReactNode }) {
   return (
-    // PreloaderProvider envuelve todo — cualquier componente puede leer isComplete
-    <PreloaderProvider>
-      <SmoothScrollProvider>
-        <Navbar />
-        {children}
-        <CustomCursor />
-      </SmoothScrollProvider>
-    </PreloaderProvider>
+    // LanguageProvider y PreloaderProvider envuelven todo
+    <LanguageProvider>
+      <PreloaderProvider>
+        <SmoothScrollProvider>
+          <Navbar />
+          {children}
+          <CustomCursor />
+        </SmoothScrollProvider>
+      </PreloaderProvider>
+    </LanguageProvider>
   );
 }

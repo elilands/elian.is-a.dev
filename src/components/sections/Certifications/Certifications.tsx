@@ -2,36 +2,32 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import { useLanguage } from "@/context/LanguageContext";
 import styles from "./Certifications.module.css";
 
-/* ── Datos ──────────────────────────────────────────────────────────── */
+/* ── Datos fijos de certificados ────────────────────────────────────── */
 
-const CERTIFICATIONS = {
-  oracle: {
-    title: "Oracle Certifications",
-    certs: [
-      "Oracle Fusion Cloud Applications CX Process Essentials",
-      "Oracle Fusion Cloud Applications SCM Process Essentials",
-      "OCI Foundations Associate",
-      "OCI AI Foundations Associate",
-      "Oracle Data Platform Foundations Associate",
-    ],
-  },
-  aws: {
-    title: "AWS Certifications (In Progress)",
-    certs: [
-      "Introduction to Cloud 101",
-      "Machine Learning Foundations",
-      "Introduction to Generative Artificial Intelligence",
-      "Introduction to the AWS Management Console",
-      "Working with User Data",
-    ],
-  },
+const CERT_LISTS = {
+  oracle: [
+    "Oracle Fusion Cloud Applications CX Process Essentials",
+    "Oracle Fusion Cloud Applications SCM Process Essentials",
+    "OCI Foundations Associate",
+    "OCI AI Foundations Associate",
+    "Oracle Data Platform Foundations Associate",
+  ],
+  aws: [
+    "Introduction to Cloud 101",
+    "Machine Learning Foundations",
+    "Introduction to Generative Artificial Intelligence",
+    "Introduction to the AWS Management Console",
+    "Working with User Data",
+  ],
 };
 
 /* ── Componente ─────────────────────────────────────────────────────── */
 
 export default function Certifications() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const tagRef     = useRef<HTMLSpanElement>(null);
   const ruleRef    = useRef<HTMLDivElement>(null);
@@ -102,7 +98,7 @@ export default function Certifications() {
 
       {/* ── Header ──────────────────────────────────────────────────── */}
       <div className={styles.header}>
-        <span ref={tagRef} className={styles.tag}>04</span>
+        <span ref={tagRef} className={styles.tag}>{t.certifications.tag}</span>
         <div  ref={ruleRef} className={styles.rule} aria-hidden="true" />
       </div>
 
@@ -110,16 +106,19 @@ export default function Certifications() {
       <div className={styles.headingWrap}>
         <div className={styles.headingMask}>
           <span ref={headRef} className={styles.headingInner}>
-            Professional Certifications.
+            {t.certifications.heading}
           </span>
         </div>
       </div>
 
       {/* ── Grid de certificaciones ─────────────────────────────────── */}
       <div ref={gridRef} className={styles.certGrid}>
-        {Object.entries(CERTIFICATIONS).map(([key, data], idx) => (
+        {[
+          { key: "oracle", title: t.certifications.oracleTitle, certs: CERT_LISTS.oracle },
+          { key: "aws",    title: t.certifications.awsTitle,    certs: CERT_LISTS.aws },
+        ].map((data, idx) => (
           <div
-            key={key}
+            key={data.key}
             ref={(el) => { sectionRefs.current[idx] = el; }}
             className={styles.certSection}
           >
@@ -138,7 +137,7 @@ export default function Certifications() {
       {/* ── Credly Badge Link ────────────────────────────────────────── */}
       <div ref={credlyRef} className={styles.credlyLink}>
         <p className={styles.credlyText}>
-          Verify all certifications and digital badges on Credly:
+          {t.certifications.credlyText}
         </p>
         <a
           href="https://www.credly.com/users/elian-mejia-gallardo"
@@ -146,7 +145,7 @@ export default function Certifications() {
           rel="noopener noreferrer"
           className={styles.credlyButton}
         >
-          View All Badges
+          {t.certifications.credlyButton}
         </a>
       </div>
 

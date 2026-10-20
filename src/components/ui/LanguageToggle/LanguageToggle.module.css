@@ -1,0 +1,95 @@
+.toggleGroup {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  background: var(--n-cta-bg, rgba(232, 229, 224, 0.05));
+  border: 1px solid var(--n-cta-border, rgba(232, 229, 224, 0.12));
+  border-radius: var(--radius-full, 9999px);
+  padding: 2px;
+  gap: 2px;
+  user-select: none;
+  transition:
+    background var(--duration-base, 0.3s) var(--ease-out, ease-out),
+    border-color var(--duration-base, 0.3s) var(--ease-out, ease-out);
+}
+
+.toggleGroup:hover {
+  border-color: rgba(201, 184, 232, 0.3);
+}
+
+.toggleBtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: var(--radius-full, 9999px);
+  font-family: var(--font-body, inherit);
+  font-size: var(--text-2xs, 0.72rem);
+  font-weight: var(--weight-medium, 500);
+  letter-spacing: var(--tracking-wider, 0.08em);
+  text-transform: uppercase;
+  color: var(--n-text-3, rgba(180, 176, 170, 0.5));
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  transition:
+    color var(--duration-base, 0.25s) var(--ease-out, ease-out),
+    background var(--duration-base, 0.25s) var(--ease-out, ease-out);
+}
+
+.toggleBtn:hover {
+  color: var(--n-text, rgba(232, 229, 224, 0.9));
+}
+
+.toggleBtnActive {
+  background: rgba(201, 184, 232, 0.16);
+  color: var(--n-text, rgba(232, 229, 224, 0.98));
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Light mode support */
+:global(.navLight) .toggleGroup {
+  background: rgba(28, 26, 40, 0.04);
+  border-color: rgba(28, 26, 40, 0.12);
+}
+
+:global(.navLight) .toggleBtn {
+  color: rgba(28, 26, 40, 0.5);
+}
+
+:global(.navLight) .toggleBtn:hover {
+  color: rgba(28, 26, 40, 0.9);
+}
+
+:global(.navLight) .toggleBtnActive {
+  background: rgba(28, 26, 40, 0.1);
+  color: rgba(28, 26, 40, 0.95);
+}
+
+/* Drawer variant (dark always) */
+.drawerVariant {
+  background: rgba(232, 229, 224, 0.06);
+  border-color: rgba(232, 229, 224, 0.14);
+  padding: 3px;
+  gap: 4px;
+}
+
+.drawerVariant .toggleBtn {
+  padding: 6px 14px;
+  font-size: var(--text-xs, 0.8rem);
+  color: rgba(180, 176, 170, 0.6);
+}
+
+.drawerVariant .toggleBtnActive {
+  background: rgba(201, 184, 232, 0.22);
+  color: #FAF8F4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggleGroup,
+  .toggleBtn {
+    transition: none;
+  }
+}

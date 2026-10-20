@@ -2,81 +2,31 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useLanguage } from "@/context/LanguageContext";
 import styles from "./Projects.module.css";
 
-/* ── Datos ──────────────────────────────────────────────────────────── */
+/* ── Metadata fija (stack y URLs) ───────────────────────────────────── */
 
-interface Project {
-  id:          string;
-  name:        string;
-  tagline:     string;
-  description: string;
-  stack:       string[];
-  href:        string;
-  featured?:   boolean;
-}
-
-const FEATURED: Project = {
-  id:       "01",
-  name:     "Omyu",
-  tagline:  "Your intelligent life companion",
-  featured: true,
-  href:     "https://omyu.de",
-  description:
-    "A multi-functional platform built around the user as a whole. " +
-    "Train against an AI for real scenarios — negotiate a raise, handle conflict, close a deal. " +
-    "Beyond that: calendar, tasks, music, a personality profile built from a questionnaire, " +
-    "a message decoder especially useful for neurodivergent users, a habit garden, " +
-    "and an upcoming match system more personal and grounded than any existing platform — " +
-    "plus community creation tools.",
+const FEATURED_META = {
   stack: ["Next.js", "TypeScript", "MariaDB", "SiliconFlow API"],
+  href: "https://omyu.de",
 };
 
-const GRID_PROJECTS: Project[] = [
+const GRID_PROJECTS_META = [
   {
-    id:      "02",
-    name:    "Study Edu Cout",
-    tagline: "English certification platform",
-    href:    "https://studyeducout.org",
-    description:
-      "Landing and course platform for English certification. " +
-      "Built specifically for structured learning and exam prep, " +
-      "with Gmail SMTP for communication flows.",
+    href: "https://studyeducout.org",
     stack: ["Next.js", "React", "JavaScript", "CSS", "SMTP"],
   },
   {
-    id:      "03",
-    name:    "Study Edu Cout — Portal",
-    tagline: "Independent LMS for teachers & students",
-    href:    "https://portal.studyeducout.org",
-    description:
-      "Full intranet alternative to Moodle. Teachers upload content, " +
-      "grade assignments, and manage classes. Students access structured " +
-      "coursework through role-based access. Built for independence and " +
-      "full ownership of the learning infrastructure.",
+    href: "https://portal.studyeducout.org",
     stack: ["Next.js", "React", "JavaScript", "MariaDB", "Bcrypt", "SMTP"],
   },
   {
-    id:      "04",
-    name:    "Fixit Ya",
-    tagline: "AI-powered home services",
-    href:    "https://fixitya.com",
-    description:
-      "Chat with an AI bot to request cleaning, plumbing, or any home " +
-      "service. Logs all interactions and requests. First project built " +
-      "entirely in TypeScript — also my first integration with SiliconFlow.",
+    href: "https://fixitya.com",
     stack: ["Next.js", "TypeScript", "React", "MariaDB", "SiliconFlow API", "SMTP"],
   },
   {
-    id:      "05",
-    name:    "Cartia",
-    tagline: "Restaurant management & delivery platform",
-    href:    "https://cartia.com.mx",
-    description:
-      "Alternative to Rappi and Uber for restaurants. Fully customized " +
-      "digital menus, a complete admin panel for managing staff, delivery " +
-      "drivers, and revenue — with commission charged only at the end. " +
-      "Real-time order flow via WhatsApp API.",
+    href: "https://cartia.com.mx",
     stack: ["Next.js", "React", "TypeScript", "MariaDB", "WhatsApp API"],
   },
 ];
@@ -84,6 +34,7 @@ const GRID_PROJECTS: Project[] = [
 /* ── Componente ─────────────────────────────────────────────────────── */
 
 export default function Projects() {
+  const { t } = useLanguage();
   const sectionRef   = useRef<HTMLElement>(null);
   const tagRef       = useRef<HTMLSpanElement>(null);
   const ruleRef      = useRef<HTMLDivElement>(null);
@@ -163,7 +114,7 @@ export default function Projects() {
 
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className={styles.header}>
-        <span ref={tagRef} className={styles.tag}>02</span>
+        <span ref={tagRef} className={styles.tag}>{t.projects.tag}</span>
         <div  ref={ruleRef} className={styles.rule} aria-hidden="true" />
       </div>
 
@@ -171,7 +122,7 @@ export default function Projects() {
       <div className={styles.headingWrap}>
         <div className={styles.headingMask}>
           <span ref={headRef} className={styles.headingInner}>
-            What I&apos;ve built.
+            {t.projects.heading}
           </span>
         </div>
       </div>
@@ -181,31 +132,31 @@ export default function Projects() {
 
         <div className={styles.featuredInfo}>
           <div className={styles.featuredTopRow}>
-            <span className={styles.cardNum}>{FEATURED.id}</span>
-            <span className={styles.featuredBadge}>Featured</span>
+            <span className={styles.cardNum}>{t.projects.featured.id}</span>
+            <span className={styles.featuredBadge}>{t.projects.featuredBadge}</span>
           </div>
 
           <div className={styles.featuredMeta}>
-            <h3 className={styles.featuredName}>{FEATURED.name}</h3>
-            <p  className={styles.featuredTagline}>{FEATURED.tagline}</p>
+            <h3 className={styles.featuredName}>{t.projects.featured.name}</h3>
+            <p  className={styles.featuredTagline}>{t.projects.featured.tagline}</p>
           </div>
 
-          <p className={styles.featuredDesc}>{FEATURED.description}</p>
+          <p className={styles.featuredDesc}>{t.projects.featured.description}</p>
 
           <ul className={styles.stack} aria-label="Stack tecnológico">
-            {FEATURED.stack.map((t) => (
+            {FEATURED_META.stack.map((t) => (
               <li key={t} className={styles.chip}>{t}</li>
             ))}
           </ul>
 
           <a
-            href={FEATURED.href}
+            href={FEATURED_META.href}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.cta}
             data-cursor-hover
           >
-            Visit Omyu
+            {t.projects.visitFeatured}
             <span className={styles.ctaArrow} aria-hidden="true">↗</span>
           </a>
         </div>
@@ -228,45 +179,48 @@ export default function Projects() {
 
       {/* ── Grid 2×2 ────────────────────────────────────────────── */}
       <div ref={gridRef} className={styles.grid}>
-        {GRID_PROJECTS.map((p, i) => (
-          <a
-            key={p.id}
-            ref={(el) => { cardRefs.current[i] = el as HTMLDivElement | null; }}
-            href={p.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.gridCard}
-            aria-label={`Project: ${p.name}`}
-            data-cursor-hover
-          >
-            <div className={styles.gridCardInner}>
+        {t.projects.items.map((p, i) => {
+          const meta = GRID_PROJECTS_META[i] || { href: "#", stack: [] };
+          return (
+            <a
+              key={p.id}
+              ref={(el) => { cardRefs.current[i] = el as HTMLDivElement | null; }}
+              href={meta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.gridCard}
+              aria-label={`Project: ${p.name}`}
+              data-cursor-hover
+            >
+              <div className={styles.gridCardInner}>
 
-              <div className={styles.gridCardTop}>
-                <span className={styles.cardNum}>{p.id}</span>
-                <span className={styles.gridArrow} aria-hidden="true">↗</span>
+                <div className={styles.gridCardTop}>
+                  <span className={styles.cardNum}>{p.id}</span>
+                  <span className={styles.gridArrow} aria-hidden="true">↗</span>
+                </div>
+
+                <div className={styles.gridCardMeta}>
+                  <h3 className={styles.gridName}>{p.name}</h3>
+                  <p  className={styles.gridTagline}>{p.tagline}</p>
+                </div>
+
+                <p className={styles.gridDesc}>{p.description}</p>
+
+                <ul className={styles.stack} aria-label="Stack">
+                  {meta.stack.map((item) => (
+                    <li key={item} className={styles.chip}>{item}</li>
+                  ))}
+                </ul>
+
               </div>
-
-              <div className={styles.gridCardMeta}>
-                <h3 className={styles.gridName}>{p.name}</h3>
-                <p  className={styles.gridTagline}>{p.tagline}</p>
-              </div>
-
-              <p className={styles.gridDesc}>{p.description}</p>
-
-              <ul className={styles.stack} aria-label="Stack">
-                {p.stack.map((t) => (
-                  <li key={t} className={styles.chip}>{t}</li>
-                ))}
-              </ul>
-
-            </div>
-          </a>
-        ))}
+            </a>
+          );
+        })}
       </div>
 
       {/* ── GitHub callout ──────────────────────────────────────── */}
       <div ref={ghRowRef} className={styles.ghRow}>
-        <span className={styles.ghText}>More work on</span>
+        <span className={styles.ghText}>{t.projects.moreWorkOn}</span>
         <a
           href="https://github.com/elilands"
           target="_blank"

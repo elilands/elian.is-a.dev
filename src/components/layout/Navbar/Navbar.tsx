@@ -13,17 +13,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "@/lib/gsap";
 import { scrollToTarget } from "@/lib/lenisInstance";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageToggle from "@/components/ui/LanguageToggle/LanguageToggle";
 import styles from "./Navbar.module.css";
 
 /* ── Config ─────────────────────────────────────────────────────────── */
 
-const NAV_LINKS = [
-  { href: "#about",          label: "About",          num: "01" },
-  { href: "#projects",       label: "Projects",       num: "02" },
-  { href: "#skills",         label: "Skills",         num: "03" },
-  { href: "#certifications", label: "Certifications", num: "04" },
-  { href: "#process",        label: "Process",        num: "05" },
-  { href: "#contact",        label: "Contact",        num: "06" },
+const NAV_ITEM_KEYS = [
+  { href: "#about",          key: "about" as const,          num: "01" },
+  { href: "#projects",       key: "projects" as const,       num: "02" },
+  { href: "#skills",         key: "skills" as const,         num: "03" },
+  { href: "#certifications", key: "certifications" as const, num: "04" },
+  { href: "#process",        key: "process" as const,        num: "05" },
+  { href: "#contact",        key: "contact" as const,        num: "06" },
 ];
 
 // Sections can opt into a "light" theme by adding `data-light="true"`
@@ -74,6 +76,7 @@ function useSmoothAnchor() {
 /* ── Componente ─────────────────────────────────────────────────────── */
 
 export default function Navbar() {
+  const { t } = useLanguage();
   const navRef     = useRef<HTMLElement>(null);
   const drawerRef  = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -272,7 +275,7 @@ export default function Navbar() {
           mainContent?.focus();
         }}
       >
-        Skip to main content
+        {t.nav.skipToContent}
       </a>
 
       <nav
@@ -299,7 +302,7 @@ export default function Navbar() {
 
         {/* Links desktop */}
         <ul className={styles.links} role="list" aria-label="Navigation links">
-          {NAV_LINKS.map(({ href, label, num }) => (
+          {NAV_ITEM_KEYS.map(({ href, key, num }) => (
             <li key={href}>
               <a
                 href={href}
@@ -312,28 +315,31 @@ export default function Navbar() {
                 aria-current={activeLink === href ? "page" : undefined}
               >
                 <span className={styles.linkNum} aria-hidden="true">{num}</span>
-                {label}
+                {t.nav[key]}
               </a>
             </li>
           ))}
         </ul>
 
-        {/* CTA desktop */}
-        <a
-          href="mailto:elian.mejiag@gmail.com"
-          className={styles.cta}
-          data-cursor-hover
-          aria-label="Contact via email: elian.mejiag@gmail.com"
-          title="Send email to elian.mejiag@gmail.com"
-        >
-          Get in touch
-        </a>
+        {/* Actions desktop: Language Toggle + CTA */}
+        <div className={styles.navActions}>
+          <LanguageToggle />
+          <a
+            href="mailto:elian.mejiag@gmail.com"
+            className={styles.cta}
+            data-cursor-hover
+            aria-label="Contact via email: elian.mejiag@gmail.com"
+            title="Send email to elian.mejiag@gmail.com"
+          >
+            {t.nav.getInTouch}
+          </a>
+        </div>
 
         {/* Burger mobile */}
         <button
           className={[styles.burger, menuOpen ? styles.burgerOpen : ""].join(" ")}
           onClick={menuOpen ? closeMenu : openMenu}
-          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
           aria-expanded={menuOpen}
           aria-controls="mobile-drawer"
         >
@@ -371,7 +377,7 @@ export default function Navbar() {
         className={[styles.drawer, menuOpen ? styles.drawerVisible : ""].join(" ")}
         role="dialog"
         aria-modal="true"
-        aria-label="Menú de navegación"
+        aria-label={t.nav.navigationMenu}
         inert={!menuOpen ? true : undefined}
       >
         <div className={styles.drawerInner}>
@@ -381,14 +387,14 @@ export default function Navbar() {
             <button
               className={styles.drawerClose}
               onClick={closeMenu}
-              aria-label="Cerrar menú"
+              aria-label={t.nav.closeMenu}
             >
               ✕
             </button>
           </div>
 
           <ul className={styles.drawerLinks} role="list">
-            {NAV_LINKS.map(({ href, label, num }) => (
+            {NAV_ITEM_KEYS.map(({ href, key, num }) => (
               <li key={href}>
                 <a
                   href={href}
@@ -396,7 +402,7 @@ export default function Navbar() {
                   onClick={(e) => handleNavLink(e, href)}
                 >
                   <span className={styles.drawerNum}>{num}</span>
-                  <span className={styles.drawerLabel}>{label}</span>
+                  <span className={styles.drawerLabel}>{t.nav[key]}</span>
                 </a>
               </li>
             ))}
@@ -406,6 +412,7 @@ export default function Navbar() {
             <a href="mailto:elian.mejiag@gmail.com" className={styles.drawerCta}>
               elian.mejiag@gmail.com ↗
             </a>
+            <LanguageToggle variant="drawer" />
           </div>
 
         </div>

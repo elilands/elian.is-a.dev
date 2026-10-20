@@ -1,3 +1,5 @@
+"use client";
+
 /*
   Process — Elian Mejia
   Color escala: #232038 (Skills final) → #34304E
@@ -15,48 +17,10 @@
   · Working style: opacity+y
 */
 
-"use client";
-
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import { useLanguage } from "@/context/LanguageContext";
 import styles from "./Process.module.css";
-
-/* ── Datos ──────────────────────────────────────────────────────────── */
-
-const STEPS = [
-  {
-    num:   "01",
-    title: "Discovery",
-    body:  "You explain the problem. I ask the right questions. " +
-           "The schema design starts here — never in the middle of the build.",
-  },
-  {
-    num:   "02",
-    title: "Architecture",
-    body:  "DB → API → UI. In that order, always. " +
-           "Decisions made early prevent rewrites made late.",
-  },
-  {
-    num:   "03",
-    title: "Build",
-    body:  "Fast iterations with real previews. " +
-           "You see progress, not promises. " +
-           "I ship working software — not perfect software.",
-  },
-  {
-    num:   "04",
-    title: "Ship",
-    body:  "Deployed, monitored, documented. " +
-           "Then we look at what's next.",
-  },
-];
-
-const TRAITS = [
-  "Async-friendly",
-  "Ships on time",
-  "Direct communication",
-  "CST — Mexico City",
-];
 
 /* ── Componente ─────────────────────────────────────────────────────── */
 
@@ -66,6 +30,7 @@ interface StepRefs {
 }
 
 export default function Process() {
+  const { t } = useLanguage();
   const sectionRef  = useRef<HTMLElement>(null);
   const tagRef      = useRef<HTMLSpanElement>(null);
   const ruleRef     = useRef<HTMLDivElement>(null);
@@ -73,10 +38,13 @@ export default function Process() {
   const stepsRef    = useRef<HTMLDivElement>(null);
   const traitsRef   = useRef<HTMLDivElement>(null);
 
-  // Refs por paso: línea + contenido
-  const stepRefs = useRef<StepRefs[]>(
-    STEPS.map(() => ({ line: null, content: null }))
-  );
+  // Refs por paso: línea + contenido (4 pasos)
+  const stepRefs = useRef<StepRefs[]>([
+    { line: null, content: null },
+    { line: null, content: null },
+    { line: null, content: null },
+    { line: null, content: null },
+  ]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -154,7 +122,7 @@ export default function Process() {
 
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className={styles.header}>
-        <span ref={tagRef} className={styles.tag}>05</span>
+        <span ref={tagRef} className={styles.tag}>{t.process.tag}</span>
         <div  ref={ruleRef} className={styles.rule} aria-hidden="true" />
       </div>
 
@@ -162,14 +130,14 @@ export default function Process() {
       <div className={styles.headingWrap}>
         <div className={styles.headingMask}>
           <span ref={headRef} className={styles.headingInner}>
-            How I work.
+            {t.process.heading}
           </span>
         </div>
       </div>
 
       {/* ── Pasos ───────────────────────────────────────────────── */}
       <div ref={stepsRef} className={styles.steps}>
-        {STEPS.map((step, i) => (
+        {t.process.steps.map((step, i) => (
           <div key={step.num} className={styles.step}>
 
             {/* Número */}
@@ -197,7 +165,7 @@ export default function Process() {
 
       {/* ── Working style ───────────────────────────────────────── */}
       <div ref={traitsRef} className={styles.traits}>
-        {TRAITS.map((trait, i) => (
+        {t.process.traits.map((trait, i) => (
           <span key={trait} className={styles.traitItem}>
             {i > 0 && <span className={styles.traitSep} aria-hidden="true">·</span>}
             {trait}

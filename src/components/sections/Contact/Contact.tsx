@@ -18,9 +18,11 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useLanguage } from "@/context/LanguageContext";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
+  const { t } = useLanguage();
   const sectionRef  = useRef<HTMLElement>(null);
   const haloRef     = useRef<HTMLDivElement>(null);
   const headRef     = useRef<HTMLSpanElement>(null);
@@ -122,13 +124,13 @@ export default function Contact() {
         {/* Heading */}
         <div className={styles.headingMask}>
           <span ref={headRef} className={styles.headingInner}>
-            Let&apos;s make<br />something.
+            {t.contact.headingLine1}<br />{t.contact.headingLine2}
           </span>
         </div>
 
         {/* Tagline */}
         <p ref={taglineRef} className={styles.tagline}>
-          If you have something to build, I&apos;m listening.
+          {t.contact.tagline}
         </p>
 
         {/* Email CTA */}
@@ -137,9 +139,9 @@ export default function Contact() {
           href="mailto:elian.mejiag@gmail.com"
           className={styles.emailCta}
           data-cursor-hover
-          aria-label="Send email to Elian Mejia"
+          aria-label={t.contact.emailAria}
         >
-          <span className={styles.emailLabel}>elian.mejiag@gmail.com</span>
+          <span className={styles.emailLabel}>{t.contact.emailLabel}</span>
           <span className={styles.emailArrow} aria-hidden="true">↗</span>
         </a>
 

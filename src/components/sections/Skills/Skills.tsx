@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useLanguage } from "@/context/LanguageContext";
 import styles from "./Skills.module.css";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -44,163 +45,8 @@ const SKILL_RIBBON = [
   "EBC Business Lens",
 ];
 
-const PROFILE_POINTS = [
-  {
-    label: "Major",
-    value: "International Commerce and Business at Escuela Bancaria y Comercial",
-  },
-  {
-    label: "Base",
-    value: "Mexico City, working with CST and international context in mind",
-  },
-  {
-    label: "Focus",
-    value: "Technical execution that respects business logic, clarity, and people",
-  },
-];
-
-const CORE_BLOOMS = [
-  {
-    title: "Core Stack",
-    subtitle: "Frontend, backend, and data",
-    description:
-      "I build with a full product view. I can move comfortably between UI detail, API structure, and database decisions, which helps me keep implementation aligned with the bigger picture.",
-    metric: "Build depth",
-    metricValue: "Advanced",
-  },
-  {
-    title: "Business & Communication",
-    subtitle: "How I work with people",
-    description:
-      "My strongest differentiator is how I collaborate: I ask good questions, reduce friction, and translate complexity into language that technical and non-technical people can use.",
-    metric: "Operating style",
-    metricValue: "Advanced",
-  },
-  {
-    title: "Cloud & Delivery",
-    subtitle: "Shipping with control",
-    description:
-      "I am comfortable thinking about deployment, hosting, performance, and maintenance. I like systems that are stable, understandable, and easy to hand off or improve later.",
-    metric: "Delivery maturity",
-    metricValue: "Intermediate",
-  },
-  {
-    title: "AI, Data & Integrations",
-    subtitle: "Useful automation, not hype",
-    description:
-      "I use AI and integrations when they support real workflows. The goal is to make products more efficient, more responsive, and more practical for the people using them.",
-    metric: "Exploration",
-    metricValue: "Intermediate",
-  },
-];
-
-const CATEGORIES: SkillCategory[] = [
-  {
-    index: "01",
-    title: "Frontend Systems",
-    eyebrow: "Interface + motion + product logic",
-    description:
-      "I can build responsive interfaces that feel polished and intentional. I care about flow, visual hierarchy, and interaction details that help users understand what is happening without effort.",
-    accent: "Advanced",
-    items: [
-      { name: "Next.js", level: "Advanced", note: "App structure, routing, server/client boundaries, and performance-minded composition." },
-      { name: "React", level: "Advanced", note: "Component architecture, state organization, and reusable UI systems." },
-      { name: "Vue", level: "Advanced", note: "Progressive UI frameworks and pragmatic component composition." },
-      { name: "TypeScript", level: "Advanced", note: "Typed interfaces that keep larger projects readable and safer to evolve." },
-      { name: "Tailwind", level: "Advanced", note: "Utility-first styling for fast, consistent UI development." },
-      { name: "Framer Motion", level: "Intermediate", note: "Declarative motion for UI transitions and micro-interactions." },
-      { name: "GSAP", level: "Intermediate", note: "Narrative motion, scroll choreography, and controlled reveals." },
-      { name: "Lenis", level: "Intermediate", note: "Smooth scroll behavior that supports cinematic, editorial-feeling sections." },
-    ],
-  },
-  {
-    index: "02",
-    title: "Backend & Data",
-    eyebrow: "APIs, persistence, and structure",
-    description:
-      "I like building systems that are easy to reason about. Clear schemas, predictable APIs, and thoughtful data handling matter because they reduce friction later in the lifecycle.",
-    accent: "Advanced",
-    items: [
-      { name: "Node.js", level: "Advanced", note: "Backend logic, service orchestration, and practical API behavior." },
-      { name: "Python", level: "Advanced", note: "Scripting, backend services, and data work for practical product needs." },
-      { name: "Django", level: "Intermediate", note: "Fast, structured web apps and admin-driven workflows." },
-      { name: "Java", level: "Learning", note: "Fundamentals of a strongly typed backend ecosystem (beginner)." },
-      { name: "Go", level: "Intermediate", note: "Concurrent services and efficient APIs for production workloads." },
-      { name: "PHP", level: "Intermediate", note: "Pragmatic web backends and integration with existing ecosystems." },
-      { name: "REST APIs", level: "Advanced", note: "Simple, dependable endpoints designed with clear contracts." },
-      { name: "PostgreSQL", level: "Advanced", note: "Strong relational foundations for scalable product work." },
-      { name: "Redis", level: "Intermediate", note: "Caching, ephemeral storage, and fast coordination between services." },
-    ],
-  },
-  {
-    index: "03",
-    title: "Cloud & Infrastructure",
-    eyebrow: "Deployment and operational thinking",
-    description:
-      "Infrastructure is part of the product experience. I focus on practical deployment, dependable environments, and hosting choices that make maintenance easier for real teams.",
-    accent: "Intermediate",
-    items: [
-      { name: "Docker", level: "Intermediate", note: "Portable environments and cleaner handoffs between development stages." },
-      { name: "AWS", level: "Advanced", note: "Core cloud services for production-grade systems." },
-      { name: "Vercel", level: "Intermediate", note: "Optimized hosting for modern frontends and serverless flows." },
-      { name: "OCI", level: "Intermediate", note: "Enterprise cloud and data services for production workloads." },
-      { name: "Redis", level: "Intermediate", note: "Managed caching and fast in-memory services in cloud environments." },
-    ],
-  },
-  {
-    index: "04",
-    title: "AI, Integrations & Automation",
-    eyebrow: "Making products more useful",
-    description:
-      "I use integrations to make workflows smoother, not more complicated. That includes messaging, email, AI services, and product utilities that support actual user needs.",
-    accent: "Intermediate",
-    items: [
-      { name: "WhatsApp API", level: "Intermediate", note: "Operational communication and real-time product interactions." },
-      { name: "Postman", level: "Intermediate", note: "API testing and integration workflows." },
-      { name: "Stripe API", level: "Intermediate", note: "Payment flows and practical monetization integrations." },
-      { name: "Zapier", level: "Intermediate", note: "Low-code automation for product and business workflows." },
-      { name: "OCI Data Science", level: "Learning", note: "Data science tooling and managed experimentation on OCI." },
-      { name: "OCI Forecasting", level: "Learning", note: "Practical forecasting and business planning services." },
-      { name: "Vector Search", level: "Learning", note: "Exploring semantic retrieval and search-oriented workflows." },
-      { name: "RAG Systems", level: "Learning", note: "Studying retrieval-backed assistants and structured knowledge flow." },
-    ],
-  },
-  {
-    index: "05",
-    title: "Business & Soft Skills",
-    eyebrow: "Where the technical side becomes valuable",
-    description:
-      "This is the layer that gives the section more weight: communication, critical thinking, and international business context. I do not approach work as a pure technician; I approach it as someone trained to understand operations, people, and decisions.",
-    accent: "Advanced",
-    items: [
-      { name: "International Commerce", level: "Advanced", note: "A commercial and global perspective that shapes how I read requirements and constraints." },
-      { name: "Product Thinking", level: "Advanced", note: "Designing features with a clear value and measurable outcomes." },
-      { name: "Requirements Analysis", level: "Advanced", note: "Translating fuzzy needs into clear acceptance criteria and scope." },
-      { name: "Financial Awareness", level: "Advanced", note: "Understanding unit economics, cost drivers and commercial viability." },
-      { name: "Leadership", level: "Advanced", note: "Guiding teams, decision-making and accountability." },
-      { name: "Continuous Learning", level: "Advanced", note: "A habit of improving systems, skills and product thinking." },
-      { name: "Time Management", level: "Advanced", note: "Prioritization and delivery with predictable cadence." },
-      { name: "Emotional Intelligence", level: "Advanced", note: "Practical empathy for teammates and stakeholders." },
-    ],
-  },
-  {
-    index: "06",
-    title: "Currently Exploring",
-    eyebrow: "What I want to sharpen next",
-    description:
-      "I keep a learning lane open for ideas that can improve product quality or deepen my technical range. I like exploring tools that can make systems more expressive or more intelligent.",
-    accent: "Learning",
-    items: [
-      { name: "Rust", level: "Learning", note: "A stronger systems-level foundation and performance-oriented thinking." },
-      { name: "Three.js", level: "Learning", note: "More expressive visual and 3D experiences for the web." },
-      { name: "llama.cpp", level: "Learning", note: "Local AI workflows and smaller-model experimentation." },
-      { name: "Model Fine-tuning", level: "Learning", note: "Improving how I adapt model behavior to specific use cases." },
-      { name: "Workflow Design", level: "Learning", note: "Bringing business and product context closer to implementation choices." },
-    ],
-  },
-];
-
 export default function Skills() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const tagRef = useRef<HTMLSpanElement>(null);
   const ruleRef = useRef<HTMLDivElement>(null);
@@ -400,18 +246,18 @@ export default function Skills() {
       </div>
 
       <div className={styles.headerRow}>
-        <span ref={tagRef} className={styles.tag}>03</span>
+        <span ref={tagRef} className={styles.tag}>{t.skills.tag}</span>
         <div ref={ruleRef} className={styles.rule} aria-hidden="true" />
       </div>
 
       <div className={styles.heroBlock}>
         <div className={styles.heroCopy}>
           <div className={styles.titleMask}>
-            <span ref={titleRef} className={styles.title}>What I bring to the table.</span>
+            <span ref={titleRef} className={styles.title}>{t.skills.title}</span>
           </div>
 
           <p ref={leadRef} className={styles.lead}>
-            Skills is where the technical side and the commercial side meet. I build digital products with a practical understanding of business, operations, and people, so the work feels useful instead of just polished.
+            {t.skills.lead}
           </p>
 
           <div ref={ribbonRef} className={styles.ribbon} aria-hidden="true">
@@ -428,9 +274,9 @@ export default function Skills() {
 
         <aside className={styles.heroAside}>
           <div className={styles.profileCard}>
-            <p className={styles.profileHeading}>Professional profile</p>
+            <p className={styles.profileHeading}>{t.skills.profileHeading}</p>
             <div className={styles.profileList}>
-              {PROFILE_POINTS.map((point, index) => (
+              {t.skills.profilePoints.map((point, index) => (
                 <div
                   key={point.label}
                   ref={(el) => { profileRefs.current[index] = el; }}
@@ -444,16 +290,16 @@ export default function Skills() {
           </div>
 
           <div className={styles.lensCard}>
-            <p className={styles.lensHeading}>Working lens</p>
+            <p className={styles.lensHeading}>{t.skills.lensHeading}</p>
             <p className={styles.lensBody}>
-              I am strongest when I have to connect a business goal with a technical solution. That is where International Commerce and Business adds value to the way I think, communicate, and execute.
+              {t.skills.lensBody}
             </p>
           </div>
         </aside>
       </div>
 
       <div className={styles.gridWrap}>
-        {CORE_BLOOMS.map((block, index) => (
+        {t.skills.blooms.map((block, index) => (
           <article
             key={block.title}
             ref={(el) => { bloomRefs.current[index] = el; }}
@@ -473,12 +319,12 @@ export default function Skills() {
       </div>
 
       <div className={styles.categoryIntro}>
-        <p className={styles.categoryIntroTag}>Skill map</p>
-        <h2 className={styles.categoryIntroTitle}>A more detailed view of the tools and abilities I use.</h2>
+        <p className={styles.categoryIntroTag}>{t.skills.categoryIntroTag}</p>
+        <h2 className={styles.categoryIntroTitle}>{t.skills.categoryIntroTitle}</h2>
       </div>
 
       <div className={styles.categoryGrid}>
-        {CATEGORIES.map((category, index) => {
+        {t.skills.categories.map((category, index) => {
           const isOpen = openSet.has(index);
           return (
             <article

@@ -1,443 +1,458 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Hero.module.css — Elian Mejia
-   Dark editorial layout. Todas las variables de color son explícitas
-   y oscuras — independientes del sistema (prefers-color-scheme).
-   La transición a claro la hace el overlay .heroAngelic via ScrollTrigger.
+   Hero.module.css — Locked Scroll-Scrub Photorealistic Angelcore Hero
    ───────────────────────────────────────────────────────────────────────── */
 
-/* ── Tokens locales oscuros ───────────────────────────────────────────── */
-
-.hero {
-  /* Colores hardcodeados para el contexto oscuro del hero */
-  --h-bg:         #08080B;
-  --h-text:       rgba(240, 237, 232, 0.95);
-  --h-text-2:     rgba(190, 186, 180, 0.78);
-  --h-text-3:     rgba(140, 136, 130, 0.62);
-  --h-accent:     rgba(201, 184, 232, 0.55);
-  --h-border:     rgba(240, 237, 232, 0.10);
-  --h-border-2:   rgba(240, 237, 232, 0.20);
-}
-
-/* ── Sección ──────────────────────────────────────────────────────────── */
-
-.hero {
+.heroFixed {
   position: relative;
-  min-height: 100dvh;
+  height: 100dvh;
+  width: 100%;
   overflow: hidden;
-  background: linear-gradient(
-    to bottom,
-    #08080B 0%,
-    #0E0D18 100%
-  );
+  background: #08070d;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ── Luz angélica ─────────────────────────────────────────────────────── */
+/* ── Capa 1: Fotografía de cielo cinematográfica ─────────────────────── */
 
-/*
-  Overlay en z-index alto que cubre el hero al hacer scroll.
-  La luz sube desde el suelo — dawn breaking beneath.
-  ScrollTrigger lo lleva de opacity:0 a opacity:1.
-  Cuando opacity:1, el hero parece transicionar al tema claro
-  del sitio, como si el usuario emergiera de la oscuridad.
-*/
-/*
-  .heroAngelic ELIMINADO.
-
-  El sistema de gradientes progresivos maneja la transición:
-  · Hero         termina en #08080B
-  · About        empieza en #08080B → llega a #0E0D18
-  · Projects     empieza en #0E0D18 → llega a #171525
-  · ...
-  · Contact      llega a #FAF8F4 (la revelación angélica)
-
-  Un overlay blanco en el Hero contradecía este sistema y causaba
-  el corte oscuro después del blanco.
-*/
-
-/* ── Grain ────────────────────────────────────────────────────────────── */
-
-.heroGrain {
+.skyLayer {
   position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/celestial-sky.webp");
+  background-size: cover;
+  background-position: center 30%;
+  will-change: transform;
+  transform-origin: center center;
   z-index: 1;
-  opacity: 0.55;
-  mix-blend-mode: screen; /* screen funciona mejor en fondos oscuros */
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
-  background-size: 256px 256px;
-  animation: grainDrift 9s steps(1) infinite;
 }
 
-/* ── Partículas ───────────────────────────────────────────────────────── */
-
-.heroParticles {
+.atmosphericGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 70% at 50% 45%,
+    rgba(255, 235, 195, 0.08) 0%,
+    rgba(16, 12, 26, 0.42) 60%,
+    rgba(8, 7, 13, 0.9) 100%
+  );
+  pointer-events: none;
   z-index: 2;
 }
 
-/* ── Halo ─────────────────────────────────────────────────────────────── */
+/* ── Capa 2: Marca / Nombre monumental revelado detrás de las nubes ─ */
 
-/*
-  Glow difuso detrás del nombre — más a la izquierda (donde está el nombre)
-  y centrado verticalmente en la zona del display type.
-*/
-.heroHalo {
+.brandMarkLayer {
   position: absolute;
-  top:  42%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justifyContent: center;
+  /* Centrado óptico equilibrado considerando el navbar (60-72px) */
+  padding: clamp(60px, 8vh, 80px) 5% clamp(60px, 8vh, 80px);
+  text-align: center;
+  opacity: 0;
   pointer-events: none;
-  width:  clamp(360px, 50vw, 680px);
-  height: clamp(360px, 50vw, 680px);
-  border-radius: 50%;
-  will-change: transform, opacity;
-
-  background: radial-gradient(
-    circle,
-    rgba(201, 184, 232, 0.16)  0%,
-    rgba(168, 196, 216, 0.09) 40%,
-    rgba(255, 250, 235, 0.04) 65%,
-    transparent                80%
-  );
-
-  animation: haloPulse 10s ease-in-out infinite;
+  z-index: 3;
+  will-change: transform, opacity, filter;
 }
 
-/* ── Contenido ────────────────────────────────────────────────────────── */
+.brandKicker {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(9px, 1.2vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.85);
+  margin-bottom: clamp(6px, 1.4vh, 16px);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
 
-.heroContent {
-  position: relative;
-  z-index: 5;
+.brandTitle {
+  font-family: var(--font-display), "Cormorant", Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(40px, 9.5vw, 160px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: #fffaf2;
+  text-shadow: 
+    0 4px 50px rgba(0, 0, 0, 0.75),
+    0 0 60px rgba(232, 213, 163, 0.35),
+    0 0 100px rgba(201, 184, 232, 0.25);
+  margin: 0;
+}
+
+.brandSub {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(10px, 1.2vw, 14px);
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240, 235, 248, 0.85);
+  margin-top: clamp(8px, 1.8vh, 20px);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
+}
+
+/* ── Capa 3: Nubes fotorrealistas recortadas al frente ─────────────────── */
+
+.cloudsCutoutLayer {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  min-height: 100dvh;
-
-  display: grid;
-  /* 58/42 — la izquierda domina con el nombre */
-  grid-template-columns: 58fr 42fr;
-  column-gap: clamp(2.5rem, 5vw, 6rem);
-
-  padding-inline: var(--grid-gutter);
-  padding-top: clamp(5rem, 12vh, 8rem);    /* espacio para el nav */
-  padding-bottom: clamp(3rem, 6vh, 5rem);
-
+  height: 100%;
+  background-image: url("/images/celestial-clouds-cutout.png");
+  background-size: cover;
+  background-position: center bottom;
+  pointer-events: none;
+  z-index: 4;
   will-change: transform, opacity;
+  transform-origin: center bottom;
 }
 
-/* ── Columna izquierda ────────────────────────────────────────────────── */
-
-.heroLeft {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* ── Nombre ───────────────────────────────────────────────────────────── */
-
-/*
-  nameMask: el clip invisible.
-  overflow:hidden oculta el span hasta que GSAP lo sube.
-  padding-bottom: deja un pequeño respiro para el baseline de Cormorant.
-*/
-.nameMask {
-  overflow: hidden;
-  line-height: 0.90; /* aprieta las dos líneas */
-  padding-bottom: 0.06em;
-}
-
-/*
-  nameWord: el span que GSAP mueve de yPercent:115 a 0.
-  Empieza invisible debajo de la máscara.
-*/
-.nameWord {
-  display: block;
-  font-family: var(--font-display);
-  font-size: clamp(5.5rem, 14.5vw, 13.5rem);
-  font-weight: var(--weight-light);
-  letter-spacing: -0.04em;
-  line-height: 0.90;
-  color: var(--h-text);
-  will-change: transform;
-
-  /*
-    Sin background-clip. Sin -webkit-text-fill-color.
-    Color sólido — cero bugs de herencia con GSAP.
-  */
-}
-
-/* ── Regla horizontal ─────────────────────────────────────────────────── */
-
-.heroRule {
-  width: 100%;
-  height: 1px;
-  margin-block: clamp(1.8rem, 3.5vh, 3rem);
-  will-change: transform;
-
+.bottomShadowFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(80px, 18vh, 180px);
   background: linear-gradient(
-    90deg,
-    rgba(240, 237, 232, 0.40) 0%,
-    rgba(201, 184, 232, 0.22) 55%,
-    transparent 100%
+    to bottom,
+    transparent 0%,
+    rgba(8, 7, 13, 0.65) 60%,
+    #08080B 100%
   );
+  pointer-events: none;
+  z-index: 5;
 }
 
-/* ── Parte inferior izquierda ─────────────────────────────────────────── */
+/* ── Capa 4: Intro Inicial (Centrado y despejado del Navbar) ───────────── */
 
-.heroBottomLeft {
+.introLayer {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  align-items: center;
+  justifyContent: center;
+  padding: clamp(60px, 8vh, 80px) 5% clamp(60px, 8vh, 80px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 6;
+  will-change: transform, opacity, filter;
 }
 
-/* Proyecto destacado */
-.heroProject {
+.introKicker {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(10px, 1.4vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.9);
+  margin-bottom: clamp(10px, 1.8vh, 18px);
+  text-shadow: 0 0 16px rgba(232, 213, 163, 0.45);
+}
+
+.introMainTitle {
+  font-family: var(--font-display), "Cormorant", Georgia, serif;
+  font-size: clamp(38px, 7.5vw, 92px);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: #FAF8F4;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.75), 0 0 40px rgba(255, 251, 240, 0.25);
+  margin: 0;
+}
+
+.introTechStack {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(11px, 1.3vw, 15px);
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  color: rgba(240, 237, 232, 0.78);
+  margin-top: clamp(12px, 2vh, 22px);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  max-width: 90vw;
+}
+
+/* ── Capa 5: HUD Lateral (Desktop y Mobile responsive) ─────────────────── */
+
+.hudLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 7;
+  transition: opacity 0.3s ease;
+}
+
+.hudLeft {
+  position: absolute;
+  left: clamp(16px, 3.5vw, 48px);
+  bottom: clamp(24px, 5vh, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.featuredBadge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-light);
-  letter-spacing: var(--tracking-wide);
-  color: var(--h-text-3);
-  transition:
-    color var(--duration-base) var(--ease-out),
-    gap   var(--duration-base) var(--ease-out);
+  gap: 8px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(10px, 1.1vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(255, 250, 240, 0.85);
+  text-decoration: none;
+  background: rgba(18, 16, 28, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(232, 213, 163, 0.2);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
-.heroProject:hover {
-  color: var(--h-text-2);
-  gap: var(--space-4);
+.featuredBadge:hover {
+  color: #fff;
+  background: rgba(30, 26, 46, 0.8);
+  border-color: rgba(232, 213, 163, 0.5);
+  box-shadow: 0 0 20px rgba(232, 213, 163, 0.25);
 }
 
-.projectArrow {
-  font-size: 1em;
-  display: inline-block;
-  transition: transform var(--duration-base) var(--ease-out);
+.badgeArrow {
+  font-size: 1.1em;
+  transition: transform 0.25s ease;
 }
 
-.heroProject:hover .projectArrow {
+.featuredBadge:hover .badgeArrow {
   transform: translate(2px, -2px);
 }
 
-.projectText {
-  border-bottom: 1px solid var(--h-border);
-  padding-bottom: 1px;
-  transition: border-color var(--duration-base) var(--ease-out);
-}
-
-.heroProject:hover .projectText {
-  border-color: var(--h-border-2);
-}
-
-/* Social links */
-.heroSocial {
+.socialGroup {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: 12px;
+  padding-left: 6px;
 }
 
 .socialLink {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-light);
-  letter-spacing: var(--tracking-widest);
-  color: var(--h-text-3);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(10px, 1vw, 11px);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  transition: color var(--duration-base) var(--ease-out);
+  color: rgba(240, 237, 232, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 4px 0;
 }
 
 .socialLink:hover {
-  color: var(--h-text-2);
+  color: rgba(255, 250, 240, 0.95);
 }
 
-.socialSep {
-  color: var(--h-border-2);
-  font-size: var(--text-xs);
-  user-select: none;
+.socialDot {
+  font-size: 8px;
+  color: rgba(240, 237, 232, 0.3);
 }
 
-/* ── Columna derecha ──────────────────────────────────────────────────── */
-
-.heroRight {
+.hudRight {
+  position: absolute;
+  right: clamp(16px, 3.5vw, 48px);
+  bottom: clamp(24px, 5vh, 48px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Se alinea al fondo de la columna */
-  padding-bottom: 1.5rem;
-  gap: var(--space-10);
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: auto;
 }
 
-/* ── Tagline ──────────────────────────────────────────────────────────── */
-
-.heroTagline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+.locationPill {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(9px, 1vw, 11px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.85);
+  background: rgba(14, 12, 24, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(240, 237, 232, 0.12);
+  white-space: nowrap;
 }
 
-.tagLine {
-  display: block;
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.8vw, 5.2rem);
-  font-weight: var(--weight-light);
-  letter-spacing: -0.025em;
-  line-height: 1.04;
-  color: var(--h-text-2);
-  will-change: transform, opacity;
-}
-
-/* ── Stack ────────────────────────────────────────────────────────────── */
-
-.heroStack {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-light);
-  letter-spacing: var(--tracking-wider);
-  color: var(--h-text-3);
-  line-height: var(--leading-relaxed);
-  will-change: transform, opacity;
-}
-
-/* ── CTA ──────────────────────────────────────────────────────────────── */
-
-.heroCta {
+.ctaPill {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
-  align-self: flex-start;
-  padding: var(--space-4) var(--space-8);
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-regular);
-  letter-spacing: var(--tracking-wide);
-  color: var(--h-text);
-  border: 1px solid var(--h-border);
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  will-change: transform, opacity;
-
-  transition:
-    background   var(--duration-base) var(--ease-out),
-    border-color var(--duration-base) var(--ease-out),
-    color        var(--duration-base) var(--ease-out);
+  justify-content: center;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0c0b12;
+  background: linear-gradient(135deg, #FFF9EB 0%, #E8D5A3 100%);
+  padding: 9px 20px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(232, 213, 163, 0.35);
+  transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
-.heroCta::after {
-  content: "↓";
-  font-size: 0.8em;
-  opacity: 0.55;
-  transition: transform var(--duration-base) var(--ease-out);
+.ctaPill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(232, 213, 163, 0.55);
 }
 
-.heroCta:hover {
-  background:   rgba(201, 184, 232, 0.08);
-  border-color: rgba(201, 184, 232, 0.35);
-  color:        rgba(240, 237, 232, 1);
-}
+/* ── Capa 6: Sutil & Angelical Scroll Hint ────────────────────────────── */
 
-.heroCta:hover::after {
-  transform: translateY(4px);
-}
-
-/* ── Scroll indicator ─────────────────────────────────────────────────── */
-
-.scrollIndicator {
+.scrollHint {
   position: absolute;
-  bottom: clamp(1.5rem, 4vh, 2.5rem);
   left: 50%;
+  bottom: clamp(16px, 3.8vh, 32px);
   transform: translateX(-50%);
-  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(232, 213, 163, 0.7);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 8;
 }
 
-.scrollLine {
-  display: block;
+.scrollLabel {
+  opacity: 0.8;
+  font-style: italic;
+  font-family: var(--font-display), "Cormorant", serif;
+  font-size: clamp(10px, 1.2vw, 12px);
+  letter-spacing: 0.22em;
+  text-transform: none;
+}
+
+.angelicLineContainer {
+  position: relative;
   width: 1px;
-  height: clamp(40px, 6vh, 64px);
+  height: 24px;
+  background: rgba(240, 237, 232, 0.15);
+  overflow: hidden;
+  border-radius: 99px;
+}
+
+.angelicPulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
   background: linear-gradient(
-    180deg,
-    rgba(201, 184, 232, 0.50) 0%,
-    rgba(201, 184, 232, 0.00) 100%
+    to bottom,
+    transparent 0%,
+    rgba(232, 213, 163, 0.9) 50%,
+    transparent 100%
   );
-  transform-origin: top center;
-  transform: scaleY(0);
-  opacity: 0;
+  animation: etherealFlow 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* ── Responsive ───────────────────────────────────────────────────────── */
-
-/* Tablet */
-@media (max-width: 1024px) {
-  .heroContent {
-    grid-template-columns: 56fr 44fr;
-    column-gap: clamp(2rem, 4vw, 4rem);
+@keyframes etherealFlow {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
   }
-  .nameWord {
-    font-size: clamp(4.8rem, 12vw, 10rem);
+  30% {
+    opacity: 1;
   }
-  .tagLine {
-    font-size: clamp(2rem, 4vw, 4.2rem);
+  100% {
+    transform: translateY(240%);
+    opacity: 0;
   }
 }
 
-/* Mobile: columna única */
-@media (max-width: 767px) {
-  .heroContent {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    padding-top: clamp(6rem, 18vh, 8rem);
-    row-gap: var(--space-12);
-  }
+/* ── Capa 7: Barra de Progreso ────────────────────────────────────────── */
 
-  .heroLeft {
-    gap: var(--space-6);
-  }
-
-  .heroRight {
-    justify-content: flex-start;
-    gap: var(--space-8);
-    padding-bottom: 0;
-  }
-
-  .nameWord {
-    font-size: clamp(5rem, 18vw, 7rem);
-  }
-
-  .tagLine {
-    font-size: clamp(1.8rem, 6vw, 2.8rem);
-  }
-
-  .heroHalo {
-    left: 50%;
-    top: 30%;
-    width: clamp(260px, 80vw, 380px);
-    height: clamp(260px, 80vw, 380px);
-  }
+.progressBarTrack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(240, 237, 232, 0.08);
+  z-index: 9;
 }
 
-/* ── Reduced motion ───────────────────────────────────────────────────── */
+.progressBarFill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(201, 184, 232, 0.3), rgba(232, 213, 163, 0.9));
+  transform: scaleX(0);
+  transformOrigin: left center;
+}
 
-@media (prefers-reduced-motion: reduce) {
-  .nameWord {
-    transform: none !important;
+/* ── Adaptaciones Móviles Específicas ─────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .hudLayer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 16px clamp(48px, 9vh, 68px);
+    pointer-events: none;
   }
-  .heroRule {
-    transform: none !important;
+
+  .hudLeft {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
   }
-  .tagLine,
-  .heroStack,
-  .heroCta,
-  .heroProject,
-  .heroSocial {
-    opacity: 1 !important;
-    transform: none !important;
+
+  .featuredBadge {
+    padding: 6px 14px;
+    font-size: 11px;
+    max-width: 85vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .scrollLine {
-    transform: scaleY(1) !important;
-    opacity: 1 !important;
+
+  .socialGroup {
+    padding-left: 0;
+    gap: 16px;
   }
-  .heroHalo,
-  .heroGrain {
-    animation: none;
+
+  .hudRight {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .locationPill {
+    display: none; /* Simplificar para pantallas compactas */
+  }
+
+  .ctaPill {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+
+  .scrollHint {
+    bottom: 12px;
   }
 }

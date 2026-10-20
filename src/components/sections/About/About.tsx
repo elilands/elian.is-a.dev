@@ -9,93 +9,11 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import { useLanguage } from "@/context/LanguageContext";
 import styles from "./About.module.css";
 
-const STATEMENT = [
-  "I design systems",
-  "with business context,",
-  "critical thinking,",
-  "and execution discipline.",
-];
-
-const INTRO =
-  "I am a full-stack product engineer based in Mexico City, and my profile combines technology with business discipline. " +
-  "I am majoring in International Commerce and Business at Escuela Bancaria y Comercial (EBC), " +
-  "which gave me a stronger lens for supply chains, global operations, and decision-making under real market constraints. " +
-  "That background shapes how I work with people: listen first, organize complexity, and move teams forward with clarity, empathy, and accountability.";
-
-const ACTS = [
-  {
-    id: "01",
-    title: "Perspective first",
-    body:
-      "I read context before reacting. I ask better questions, identify what is actually blocking progress, " +
-      "and align teams around decisions that are realistic, shared, and business-aware.",
-  },
-  {
-    id: "02",
-    title: "Communication that reduces friction",
-    body:
-      "I communicate in a direct and calm way, especially under pressure. " +
-      "I translate complexity into clear priorities so technical and non-technical people can move together across operations, product, and leadership.",
-  },
-  {
-    id: "03",
-    title: "Execution with trust",
-    body:
-      "I am consistent with commitments, transparent about tradeoffs, and comfortable owning outcomes. " +
-      "People can rely on me to keep momentum without losing quality, strategic direction, or respect for the team.",
-  },
-];
-
-const EVIDENCE = [
-  {
-    title: "Academic foundation",
-    detail:
-      "At EBC, my major in International Commerce and Business strengthened my view of operations, negotiation, and global business dynamics.",
-  },
-  {
-    title: "Critical thinking",
-    detail:
-      "I break complex situations into clear steps and prioritize based on impact, not noise.",
-  },
-  {
-    title: "Empathy & active listening",
-    detail:
-      "I pay attention to what people need, not only to what they request, and that improves collaboration fast.",
-  },
-  {
-    title: "Adaptability",
-    detail:
-      "I adapt quickly to changing priorities and still keep structure, quality, and calm communication.",
-  },
-  {
-    title: "International mindset",
-    detail:
-      "I work with multicultural context in mind, balancing different communication styles and expectations.",
-  },
-];
-
-const SIGNAL_ROWS = [
-  ["International commerce mindset", "Business reasoning", "Critical thinking", "Active listening", "Decision clarity"],
-  ["Accountability", "Adaptability", "Conflict resolution", "Cross-functional communication", "Global perspective"],
-];
-
-const VALUES = [
-  "Clear communication before assumptions",
-  "Business context and market awareness in every decision",
-  "Structured reasoning under pressure",
-  "Respectful collaboration across roles",
-  "Ownership with consistency and follow-through",
-];
-
-const PROFILE_POINTS = [
-  ["Academic focus", "International Commerce and Business (EBC)"],
-  ["Location", "Mexico City (CST)"],
-  ["Working style", "Business-aware, human-centered, execution-driven"],
-];
-
 export default function About() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const tagRef = useRef<HTMLSpanElement>(null);
   const ruleTopRef = useRef<HTMLDivElement>(null);
@@ -201,13 +119,13 @@ export default function About() {
       className={styles.about}
       id="about"
       data-theme="about"
-      aria-label="About section: Who is Elian Mejia and his work philosophy"
+      aria-label={t.about.sectionAria}
       role="region"
     >
 
       {/* ── Tag + regla superior ──────────────────────────────── */}
       <div className={styles.aboutHeader}>
-        <span ref={tagRef} className={styles.aboutTag} aria-hidden="true">01</span>
+        <span ref={tagRef} className={styles.aboutTag} aria-hidden="true">{t.about.tag}</span>
         <div ref={ruleTopRef} className={styles.rule} aria-hidden="true" />
       </div>
 
@@ -216,9 +134,9 @@ export default function About() {
         className={styles.statementBlock}
         role="heading"
         aria-level={2}
-        aria-label="Professional statement about digital products"
+        aria-label={t.about.statementAria}
       >
-        {STATEMENT.map((line, i) => (
+        {t.about.statement.map((line, i) => (
           <div key={i} className={styles.lineMask}>
             <span
               ref={(el) => { lineRefs.current[i] = el; }}
@@ -238,11 +156,11 @@ export default function About() {
 
         <div className={styles.aboutCopy}>
           <p ref={introRef} className={styles.aboutBio}>
-            {INTRO}
+            {t.about.intro}
           </p>
 
           <ul className={styles.signalList} aria-label="Three-act professional narrative">
-            {ACTS.map((item, i) => (
+            {t.about.acts.map((item, i) => (
               <li
                 key={item.id}
                 ref={(el) => { actRefs.current[i] = el; }}
@@ -258,7 +176,7 @@ export default function About() {
           </ul>
 
           <ul className={styles.profileList} aria-label="Professional profile highlights">
-            {PROFILE_POINTS.map(([label, value]) => (
+            {t.about.profilePoints.map(([label, value]) => (
               <li key={label} className={styles.profileItem}>
                 <span className={styles.profileLabel}>{label}</span>
                 <span className={styles.profileValue}>{value}</span>
@@ -269,7 +187,7 @@ export default function About() {
 
         <div className={styles.aboutAside}>
           <div className={styles.skillsStripWrap}>
-            {SIGNAL_ROWS.map((row, rowIdx) => (
+            {t.about.signalRows.map((row, rowIdx) => (
               <div
                 key={rowIdx}
                 ref={(el) => { stripRefs.current[rowIdx] = el; }}
@@ -289,7 +207,7 @@ export default function About() {
           </div>
 
           <ul className={styles.evidenceList} aria-label="Soft skills and working traits">
-            {EVIDENCE.map((item, i) => (
+            {t.about.evidence.map((item, i) => (
               <li
                 key={item.title}
                 ref={(el) => { evidenceRefs.current[i] = el; }}
@@ -302,7 +220,7 @@ export default function About() {
           </ul>
 
           <ul className={styles.valuesList} aria-label="Professional operating principles">
-            {VALUES.map((val, i) => (
+            {t.about.values.map((val, i) => (
               <li
                 key={val}
                 ref={(el) => { valueRefs.current[i] = el; }}
