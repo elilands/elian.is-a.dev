@@ -87,13 +87,11 @@ export default function Hero() {
         setHasStarted(true);
       }
 
-      // Transición suave: cuando llega al final y el usuario sigue scrolleando hacia abajo,
-      // desbloqueamos e iniciamos un scroll suave con Lenis hacia #about sin saltos violentos
+      // Desbloqueo suave y natural:
+      // Cuando la animación del hero termina y el usuario continúa haciendo scroll hacia abajo,
+      // liberamos el lock del body para que el scroll nativo/Lenis fluya de forma continua hacia About
       if (next >= 1) {
         releaseLock();
-        if (deltaY > 0) {
-          scrollToTarget("#about", { duration: 1.2, offset: -68 });
-        }
       } else if (!locked) {
         engageLock();
       }
@@ -104,7 +102,7 @@ export default function Hero() {
       if (locked) {
         addDelta(e.deltaY);
         e.preventDefault();
-      } else if (window.scrollY <= 10 && e.deltaY < 0) {
+      } else if (window.scrollY <= 12 && e.deltaY < 0) {
         engageLock();
         addDelta(e.deltaY);
         e.preventDefault();
@@ -226,6 +224,7 @@ export default function Hero() {
       {/* Capa 3: Nubes fotorrealistas recortadas al frente */}
       <div ref={cloudsRef} className={styles.cloudsCutoutLayer} aria-hidden="true" />
       <div className={styles.bottomShadowFade} aria-hidden="true" />
+      <div className={styles.heroBottomTransition} aria-hidden="true" />
 
       {/* Capa 4: Intro principal perfectamente visible y centrada bajo el Navbar */}
       <div ref={introRef} className={styles.introLayer}>

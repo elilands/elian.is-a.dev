@@ -42,6 +42,24 @@
   z-index: 2;
 }
 
+/* Niebla etérea y degradado de transición al pie del Hero hacia About */
+.heroBottomTransition {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(140px, 24vh, 260px);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(8, 7, 13, 0.25) 30%,
+    rgba(8, 7, 13, 0.75) 65%,
+    #08070d 100%
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
 /* ── Capa 2: Marca / Nombre monumental revelado detrás de las nubes ─ */
 
 .brandMarkLayer {
@@ -123,7 +141,7 @@
     to bottom,
     transparent 0%,
     rgba(8, 7, 13, 0.65) 60%,
-    #08080B 100%
+    #08070d 100%
   );
   pointer-events: none;
   z-index: 5;
@@ -208,12 +226,12 @@
   letter-spacing: 0.08em;
   color: rgba(255, 250, 240, 0.85);
   text-decoration: none;
-  background: rgba(18, 16, 28, 0.6);
+  background: rgba(18, 16, 28, 0.65);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(232, 213, 163, 0.2);
-  padding: 8px 16px;
-  border-radius: 9999px;
+  padding: 8px 14px;
+  border-radius: 4px;
   transition: all 0.25s ease;
   white-space: nowrap;
 }
@@ -278,12 +296,15 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(232, 213, 163, 0.85);
-  background: rgba(14, 12, 24, 0.55);
+  background: rgba(14, 12, 24, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 6px 14px;
-  border-radius: 9999px;
-  border: 1px solid rgba(240, 237, 232, 0.12);
+  padding: 6px 12px;
+  border-radius: 4px;
+  border-left: 2px solid rgba(232, 213, 163, 0.6);
+  border-top: 1px solid rgba(240, 237, 232, 0.08);
+  border-right: 1px solid rgba(240, 237, 232, 0.08);
+  border-bottom: 1px solid rgba(240, 237, 232, 0.08);
   white-space: nowrap;
 }
 
@@ -298,8 +319,8 @@
   text-transform: uppercase;
   color: #0c0b12;
   background: linear-gradient(135deg, #FFF9EB 0%, #E8D5A3 100%);
-  padding: 9px 20px;
-  border-radius: 9999px;
+  padding: 9px 18px;
+  border-radius: 4px;
   text-decoration: none;
   box-shadow: 0 4px 20px rgba(232, 213, 163, 0.35);
   transition: all 0.25s ease;

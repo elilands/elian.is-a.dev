@@ -133,7 +133,6 @@ export default function RootLayout({
           ClientProviders contiene:
           - Navbar (Client Component con scroll suave)
           - SmoothScrollProvider (Lenis + GSAP)
-          - CustomCursor (RAF, window APIs)
         */}
         <ClientProviders>
           {children}

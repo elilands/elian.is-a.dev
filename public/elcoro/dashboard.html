@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Resultados de Campaña | El Coro de Jorge Patiño</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-ivory: #F8F6F0;
+      --surface-stone: #EFECE6;
+      --surface-hover: #E8E4DC;
+      --card-white: #FFFFFF;
+      --border-stone: #DDD7CD;
+      --border-dark: #1F1D1A;
+      --text-charcoal: #141414;
+      --text-muted: #4F4A42;
+      --text-subtle: #756F65;
+      --accent-gold: #B89758;
+      --accent-gold-dark: #7A5F28;
+      --emerald-dark: #144832;
+      --emerald-bg: #E3EFE7;
+      --crimson-dark: #802222;
+      --crimson-bg: #F8E5E5;
+      --amber-dark: #7D4F0E;
+      --amber-bg: #FAF0DC;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-ivory);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── 1. TOP APP BAR (STICKY ROW 1) ─── */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      background: rgba(248, 246, 240, 0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-stone);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-crest {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--border-stone);
+      background: #FFFFFF;
+      flex-shrink: 0;
+    }
+
+    .brand-crest img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--text-charcoal);
+    }
+
+    .brand-badge {
+      font-family: var(--font-sans);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--surface-stone);
+      color: var(--text-charcoal);
+      border: 1px solid var(--border-stone);
+      padding: 3px 8px;
+      margin-left: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav-link {
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.15s ease;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-charcoal);
+    }
+
+    .nav-link.active {
+      font-weight: 600;
+      border-bottom: 2px solid var(--text-charcoal);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-action {
+      height: 34px;
+      padding: 0 14px;
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 0;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--text-charcoal);
+      color: #FFFFFF;
+      border-color: var(--text-charcoal);
+    }
+
+    .btn-action svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    /* ─── 2. STICKY FILTER TOOLBAR (STICKY ROW 2) ─── */
+    .sticky-filter-wrapper {
+      position: sticky;
+      top: 60px;
+      z-index: 250;
+      background: rgba(248, 246, 240, 0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-stone);
+      box-shadow: 0 4px 18px -6px rgba(20, 20, 20, 0.05);
+      padding: 10px 32px;
+      transition: all 0.2s ease;
+    }
+
+    .toolbar-bar {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .toolbar-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-charcoal);
+      margin-right: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .toolbar-label svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .filter-chip {
+      height: 32px;
+      padding: 0 13px;
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 0;
+      transition: all 0.15s ease;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--text-charcoal);
+      color: var(--text-charcoal);
+      background: #FAFAFA;
+    }
+
+    .filter-chip.active {
+      background: var(--text-charcoal);
+      border-color: var(--text-charcoal);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .filter-chip .chip-count {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 5px;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 2px;
+    }
+
+    .filter-chip.active .chip-count {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .select-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .quick-dropdown {
+      height: 32px;
+      padding: 0 28px 0 12px;
+      border: 1px solid var(--border-stone);
+      background: var(--card-white);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-charcoal);
+      outline: none;
+      border-radius: 0;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .quick-dropdown:focus, .quick-dropdown:hover {
+      border-color: var(--text-charcoal);
+    }
+
+    .select-wrap svg {
+      position: absolute;
+      right: 9px;
+      pointer-events: none;
+      width: 12px;
+      height: 12px;
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .filter-toggle-btn {
+      height: 32px;
+      padding: 0 12px;
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 0;
+      transition: all 0.15s ease;
+    }
+
+    .filter-toggle-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .filter-toggle-btn.active {
+      background: var(--emerald-dark);
+      border-color: var(--emerald-dark);
+      color: #FFFFFF;
+    }
+
+    .filter-toggle-btn:hover:not(.active) {
+      border-color: var(--text-charcoal);
+    }
+
+    /* ─── WORKSPACE CONTAINER ─── */
+    .dashboard-workspace {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 32px 70px 32px;
+    }
+
+    /* ─── LIVE TICKER KPI BAR (COMPACT & BOLD) ─── */
+    .kpi-ticker-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--text-charcoal);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .kpi-card.selected {
+      border: 2px solid var(--text-charcoal);
+      background: #FFFFFF;
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .kpi-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-subtle);
+    }
+
+    .kpi-pill {
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pill-green { background: var(--emerald-bg); color: var(--emerald-dark); }
+    .pill-gold { background: var(--amber-bg); color: var(--amber-dark); }
+    .pill-neutral { background: var(--surface-stone); color: var(--text-charcoal); }
+
+    .kpi-val {
+      font-family: var(--font-serif);
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .kpi-sub strong {
+      color: var(--text-charcoal);
+      font-weight: 600;
+    }
+
+    /* ─── CANVAS GRID: DRAGGABLE & INTERACTIVE CARDS ─── */
+    .canvas-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+      align-items: stretch;
+    }
+
+    .grid-widget {
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .grid-widget:hover {
+      border-color: #BDB7AB;
+      box-shadow: 0 8px 24px -10px rgba(20, 20, 20, 0.08);
+    }
+
+    .grid-widget.dragging {
+      opacity: 0.45;
+      border: 2px dashed var(--text-charcoal);
+    }
+
+    .grid-widget.drag-over {
+      border-color: var(--accent-gold);
+      outline: 2px solid var(--accent-gold);
+      transform: scale(0.995);
+    }
+
+    /* Spans */
+    .col-span-8 { grid-column: span 8; }
+    .col-span-4 { grid-column: span 4; }
+    .col-span-6 { grid-column: span 6; }
+    .col-span-12 { grid-column: span 12; }
+
+    /* Widget Header with Drag Handle */
+    .widget-header {
+      padding: 13px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-stone);
+      background: #FAF8F4;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .widget-header:active {
+      cursor: grabbing;
+    }
+
+    .widget-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drag-handle-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5px;
+      opacity: 0.4;
+      transition: opacity 0.15s ease;
+      cursor: grab;
+    }
+
+    .widget-header:hover .drag-handle-dots {
+      opacity: 0.85;
+    }
+
+    .drag-handle-dots span {
+      display: flex;
+      gap: 2.5px;
+    }
+
+    .drag-handle-dots i {
+      width: 3px;
+      height: 3px;
+      background: var(--text-charcoal);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .widget-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      letter-spacing: 0.01em;
+    }
+
+    .widget-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .widget-btn {
+      height: 28px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 0;
+      transition: all 0.15s ease;
+    }
+
+    .widget-btn:hover {
+      background: var(--text-charcoal);
+      color: #FFFFFF;
+      border-color: var(--text-charcoal);
+    }
+
+    .widget-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .widget-body {
+      padding: 18px 20px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .chart-container-fluid {
+      position: relative;
+      width: 100%;
+      min-height: 280px;
+      flex: 1;
+    }
+
+    /* Floating Metric Highlight */
+    .metric-badge-strip {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .metric-chip {
+      background: var(--surface-stone);
+      border: 1px solid var(--border-stone);
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--text-charcoal);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .metric-chip strong {
+      font-weight: 700;
+      color: var(--text-charcoal);
+    }
+
+    /* ─── COLLAPSIBLE EXPLORER & METHODOLOGY (BELOW THE CHARTS) ─── */
+    .accordion-section {
+      background: var(--card-white);
+      border: 1px solid var(--border-stone);
+      margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .accordion-header {
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      background: #FAF8F4;
+      user-select: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .accordion-header:hover {
+      background: var(--surface-stone);
+    }
+
+    .accordion-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .accordion-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+    }
+
+    .accordion-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      padding: 3px 8px;
+      background: var(--surface-stone);
+      border: 1px solid var(--border-stone);
+    }
+
+    .accordion-chevron {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-charcoal);
+      transition: transform 0.25s ease;
+    }
+
+    .accordion-section.open .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 22px;
+      border-top: 1px solid var(--border-stone);
+    }
+
+    .accordion-section.open .accordion-content {
+      display: block;
+    }
+
+    /* Insights Grid inside Accordion */
+    .insights-subgrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .insight-box {
+      background: var(--surface-stone);
+      border-left: 4px solid var(--text-charcoal);
+      border: 1px solid var(--border-stone);
+      border-left-width: 4px;
+      padding: 18px;
+    }
+
+    .insight-box.gold { border-left-color: var(--accent-gold-dark); }
+    .insight-box.emerald { border-left-color: var(--emerald-dark); }
+    .insight-box.crimson { border-left-color: var(--crimson-dark); }
+
+    .insight-box-tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .insight-box.gold .insight-box-tag { color: var(--accent-gold-dark); }
+    .insight-box.emerald .insight-box-tag { color: var(--emerald-dark); }
+    .insight-box.crimson .insight-box-tag { color: var(--crimson-dark); }
+
+    .insight-box-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      color: var(--text-charcoal);
+    }
+
+    .insight-box-p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .insight-box-p strong {
+      color: var(--text-charcoal);
+    }
+
+    /* ─── DATA TABLE TIKER ─── */
+    .table-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-box-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .search-box-wrap svg {
+      position: absolute;
+      left: 10px;
+      width: 14px;
+      height: 14px;
+      stroke: var(--text-subtle);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .search-box {
+      height: 34px;
+      border: 1px solid var(--border-stone);
+      padding: 0 12px 0 32px;
+      font-size: 12px;
+      outline: none;
+      width: 280px;
+      background: #FFFFFF;
+      color: var(--text-charcoal);
+      transition: border-color 0.15s ease;
+    }
+
+    .search-box:focus {
+      border-color: var(--text-charcoal);
+    }
+
+    .table-scroll {
+      max-height: 380px;
+      overflow: auto;
+      border: 1px solid var(--border-stone);
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    table.data-table thead th {
+      position: sticky;
+      top: 0;
+      background: #EAE5DC;
+      color: var(--text-charcoal);
+      font-weight: 700;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-stone);
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    table.data-table tbody tr {
+      border-bottom: 1px solid var(--border-stone);
+      transition: background-color 0.1s ease;
+    }
+
+    table.data-table tbody tr:hover {
+      background-color: #F3EFE7;
+    }
+
+    table.data-table td {
+      padding: 9px 12px;
+      white-space: nowrap;
+      color: var(--text-charcoal);
+    }
+
+    .tag-stage {
+      display: inline-block;
+      padding: 3px 7px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--surface-stone);
+      border: 1px solid var(--border-stone);
+    }
+
+    .tag-stage.conversion { background: #E3EFE7; color: var(--emerald-dark); border-color: #B2D8C0; }
+    .tag-stage.fidelizacion { background: #E4ECF7; color: #153A6B; border-color: #B5CCE8; }
+    .tag-stage.consideracion { background: #FAF0DC; color: var(--amber-dark); border-color: #F4D79F; }
+    .tag-stage.descubrimiento { background: #ECE8E0; color: var(--text-muted); border-color: #DBD4C7; }
+
+    /* ─── FOOTER ─── */
+    .studio-footer {
+      border-top: 1px solid var(--border-stone);
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .studio-footer strong {
+      color: var(--text-charcoal);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .kpi-ticker-grid { grid-template-columns: repeat(3, 1fr); }
+      .col-span-8 { grid-column: span 12; }
+      .col-span-4 { grid-column: span 12; }
+      .col-span-6 { grid-column: span 12; }
+      .insights-subgrid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .top-header { padding: 0 16px; height: 54px; }
+      .sticky-filter-wrapper { top: 54px; padding: 10px 16px; }
+      .nav-links { display: none; }
+      .dashboard-workspace { padding: 16px 16px 60px 16px; }
+      .kpi-ticker-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HEADER NAVEGACIÓN (STICKY) -->
+  <header class="top-header">
+    <a href="/elcoro" class="brand-group">
+      <div class="brand-crest">
+        <img src="/elcoro/crest.jpg" alt="El Coro">
+      </div>
+      <div class="brand-title">El Coro de Jorge Patiño</div>
+      <span class="brand-badge">Resultados</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/elcoro" class="nav-link">Inicio</a>
+      <a href="/elcoro/producto" class="nav-link">Colección</a>
+      <a href="/elcoro/closet" class="nav-link">Mi Clóset</a>
+      <a href="/elcoro/checkout" class="nav-link">Bolsa (1)</a>
+      <a href="/elcoro/perfil" class="nav-link">Perfil</a>
+      <a href="/elcoro/dashboard" class="nav-link active">Resultados</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn-action" id="btn-export-csv" title="Descargar datos en CSV">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Descargar datos</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. BARRA STICKY DE FILTROS EN TIEMPO REAL -->
+  <div class="sticky-filter-wrapper">
+    <div class="toolbar-bar">
+      <div class="toolbar-left">
+        <span class="toolbar-label">
+          <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Canal:
+        </span>
+        <button class="filter-chip active" data-filter="canal" data-val="ALL">Todos <span class="chip-count">150</span></button>
+        <button class="filter-chip" data-filter="canal" data-val="Influencer">Influencer <span class="chip-count">21</span></button>
+        <button class="filter-chip" data-filter="canal" data-val="Instagram">Instagram <span class="chip-count">49</span></button>
+        <button class="filter-chip" data-filter="canal" data-val="Tiktok">TikTok <span class="chip-count">51</span></button>
+        <button class="filter-chip" data-filter="canal" data-val="Seo/sem">Búsqueda directa <span class="chip-count">17</span></button>
+        <button class="filter-chip" data-filter="canal" data-val="Email">Correo <span class="chip-count">12</span></button>
+      </div>
+
+      <div class="toolbar-right">
+        <div class="select-wrap">
+          <select id="select-etapa" class="quick-dropdown" title="Filtrar por etapa del cliente">
+            <option value="ALL">Paso del cliente (Todos)</option>
+            <option value="Descubrimiento">Descubrimiento</option>
+            <option value="Consideración">Consideración</option>
+            <option value="Conversión">Compra</option>
+            <option value="Fidelización">Recompra</option>
+          </select>
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+
+        <div class="select-wrap">
+          <select id="select-ciudad" class="quick-dropdown" title="Filtrar por ciudad">
+            <option value="ALL">Ciudad (Todas)</option>
+            <option value="Cdmx">Ciudad de México</option>
+            <option value="Mty">Monterrey</option>
+            <option value="Gdl">Guadalajara</option>
+            <option value="Qro">Querétaro</option>
+            <option value="Puebla">Puebla</option>
+          </select>
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+
+        <button class="filter-toggle-btn" id="chip-guia-only" data-active="false" title="Filtrar compradores que consultaron medidas">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Con consulta de medidas</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="dashboard-workspace">
+
+    <!-- 5 MÉTRICAS CLAVE -->
+    <section class="kpi-ticker-grid" aria-label="Métricas de Impacto">
+      
+      <!-- a. ALCANCE -->
+      <div class="kpi-card" data-metric="reach">
+        <div class="kpi-top">
+          <span class="kpi-title">Personas alcanzadas</span>
+          <span class="kpi-pill pill-neutral">Muestra total</span>
+        </div>
+        <div class="kpi-val" id="val-reach">150</div>
+        <div class="kpi-sub">Visitas registradas</div>
+      </div>
+
+      <!-- b. ENGAGEMENT -->
+      <div class="kpi-card" data-metric="engagement">
+        <div class="kpi-top">
+          <span class="kpi-title">Tiempo en la tienda</span>
+          <span class="kpi-pill pill-gold">Interés alto</span>
+        </div>
+        <div class="kpi-val" id="val-session">4.97<span style="font-size:16px;">m</span></div>
+        <div class="kpi-sub">Promedio de navegación</div>
+      </div>
+
+      <!-- c. CONVERSIÓN -->
+      <div class="kpi-card" data-metric="conversion">
+        <div class="kpi-top">
+          <span class="kpi-title">Ventas concretadas</span>
+          <span class="kpi-pill pill-green" id="val-buyers-count">31 pedidos</span>
+        </div>
+        <div class="kpi-val" id="val-cvr">20.7<span style="font-size:16px;">%</span></div>
+        <div class="kpi-sub">Facturación: <strong id="val-revenue" style="color:var(--text-charcoal);">$112,551 MXN</strong></div>
+      </div>
+
+      <!-- d. RETENCIÓN -->
+      <div class="kpi-card" data-metric="retention">
+        <div class="kpi-top">
+          <span class="kpi-title">Clientes que volvieron</span>
+          <span class="kpi-pill pill-green">8 recompras</span>
+        </div>
+        <div class="kpi-val" id="val-retention">25.8<span style="font-size:16px;">%</span></div>
+        <div class="kpi-sub">Fidelidad en 30 días</div>
+      </div>
+
+      <!-- e. RETORNO DE INVERSIÓN -->
+      <div class="kpi-card" data-metric="roi">
+        <div class="kpi-top">
+          <span class="kpi-title">Retorno de inversión</span>
+          <span class="kpi-pill pill-green">14.9x retorno</span>
+        </div>
+        <div class="kpi-val" id="val-roi" style="color:var(--emerald-dark);">1,393<span style="font-size:16px;">%</span></div>
+        <div class="kpi-sub">Gasto en difusión: <strong id="val-spend">$7,539 MXN</strong></div>
+      </div>
+
+    </section>
+
+    <!-- ─── REORDENABLE & DRAGGABLE CANVAS GRID ─── -->
+    <section class="canvas-grid" id="main-canvas-grid" aria-label="Visualizaciones">
+      
+      <!-- WIDGET 1: VENTAS VS INVERSIÓN POR CANAL -->
+      <div class="grid-widget col-span-8" draggable="true" id="widget-finance">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="drag-handle-dots" title="Mueve esta tarjeta arrastrándola">
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+            </div>
+            <h2 class="widget-title">Ventas e inversión por cada medio de difusión</h2>
+          </div>
+          <div class="widget-controls">
+            <button class="widget-btn" data-action="toggle-chart-type" title="Cambiar a gráfica de líneas o barras">
+              <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <span>Vista</span>
+            </button>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="metric-badge-strip">
+            <span class="metric-chip">Mayor venta: <strong>Influencers ($66,650 MXN)</strong></span>
+            <span class="metric-chip">Costo promedio por visitante: <strong>$50.26 MXN</strong></span>
+            <span class="metric-chip">Ganancia global: <strong>14.9 pesos por cada peso invertido</strong></span>
+          </div>
+          <div class="chart-container-fluid">
+            <canvas id="chart-finance"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIDGET 2: RECORRIDO DEL CLIENTE -->
+      <div class="grid-widget col-span-4" draggable="true" id="widget-funnel">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="drag-handle-dots" title="Mueve esta tarjeta arrastrándola">
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+            </div>
+            <h2 class="widget-title">¿En qué paso van los visitantes?</h2>
+          </div>
+          <div class="widget-controls">
+            <button class="widget-btn" id="btn-toggle-funnel-mode" title="Cambiar entre gráfica de aro y circular">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+              <span>Vista</span>
+            </button>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="metric-badge-strip">
+            <span class="metric-chip">Conociendo la marca: <strong>54.7%</strong></span>
+            <span class="metric-chip">Compraron: <strong>15.3%</strong></span>
+          </div>
+          <div class="chart-container-fluid">
+            <canvas id="chart-funnel"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIDGET 3: VENTAS POR CIUDAD -->
+      <div class="grid-widget col-span-4" draggable="true" id="widget-geo">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="drag-handle-dots" title="Mueve esta tarjeta arrastrándola">
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+            </div>
+            <h2 class="widget-title">Ventas en cada ciudad</h2>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="chart-container-fluid">
+            <canvas id="chart-geo"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIDGET 4: EDAD DE LOS VISITANTES -->
+      <div class="grid-widget col-span-4" draggable="true" id="widget-age">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="drag-handle-dots" title="Mueve esta tarjeta arrastrándola">
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+            </div>
+            <h2 class="widget-title">Edades y compradores</h2>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="chart-container-fluid">
+            <canvas id="chart-age"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIDGET 5: FORMAS DE PAGO -->
+      <div class="grid-widget col-span-4" draggable="true" id="widget-payment">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="drag-handle-dots" title="Mueve esta tarjeta arrastrándola">
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+              <span><i></i><i></i></span>
+            </div>
+            <h2 class="widget-title">Formas de pago elegidas</h2>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="chart-container-fluid">
+            <canvas id="chart-payment"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── SECCIÓN COLAPSIBLE: APUNTES Y CONCLUSIONES ─── -->
+    <div class="accordion-section open" id="accordion-insights">
+      <div class="accordion-header">
+        <div class="accordion-title-group">
+          <h3 class="accordion-title">Conclusiones y observaciones de la campaña</h3>
+          <span class="accordion-badge">3 notas importantes</span>
+        </div>
+        <div class="accordion-chevron">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="insights-subgrid">
+          <div class="insight-box emerald">
+            <span class="insight-box-tag">Mayor impacto en compras</span>
+            <h4 class="insight-box-title">La guía de medidas multiplica las ventas</h4>
+            <p class="insight-box-p">Quienes revisaron sus medidas antes de comprar tuvieron una tasa de compra del <strong>50.0%</strong> (25 de 50 personas), contra apenas un <strong>6.0%</strong> de quienes no la abrieron. Esto representó el <strong>83.3%</strong> de todos los ingresos ($93,767 MXN).</p>
+          </div>
+
+          <div class="insight-box gold">
+            <span class="insight-box-tag">Medios más efectivos</span>
+            <h4 class="insight-box-title">Influencers e Instagram atraen al cliente ideal</h4>
+            <p class="insight-box-p">Las menciones con <strong>influencers</strong> generaron el mayor volumen de venta ($66,650 MXN con compras promedio de $5,127 MXN). Por su parte, <strong>Instagram</strong> logró que 5 de cada 8 clientes volvieran a comprar en el mes.</p>
+          </div>
+
+          <div class="insight-box crimson">
+            <span class="insight-box-tag">Oportunidad de mejora</span>
+            <h4 class="insight-box-title">TikTok atrae mucho interés, pero pocas compras</h4>
+            <p class="insight-box-p">TikTok trajo a 51 personas con un costo muy accesible ($31.28 MXN por persona), pero solo 2 terminaron comprando ($5,676 MXN). Conviene recibirlos con una sugerencia guiada de prendas para facilitar su decisión.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECCIÓN COLAPSIBLE: LISTA DE VISITAS ─── -->
+    <div class="accordion-section" id="accordion-table">
+      <div class="accordion-header">
+        <div class="accordion-title-group">
+          <h3 class="accordion-title">Registro detallado de visitantes</h3>
+          <span class="accordion-badge" id="badge-total-rows">150 filas</span>
+        </div>
+        <div class="accordion-chevron">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="table-tools">
+          <div class="search-box-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="inp-search-table" class="search-box" placeholder="Buscar por código, medio, ciudad...">
+          </div>
+          <span style="font-size:11.5px; color:var(--text-muted); font-weight:500;">Búsqueda instantánea en todos los registros</span>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table" id="dataset-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Medio</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+                <th>Dispositivo</th>
+                <th>Paso</th>
+                <th>Acción realizada</th>
+                <th>Tiempo</th>
+                <th>Guía medidas</th>
+                <th>Compra (MXN)</th>
+                <th>Forma de pago</th>
+                <th>Costo atracción</th>
+                <th>Volvió a comprar</th>
+              </tr>
+            </thead>
+            <tbody id="dataset-tbody">
+              <!-- Carga dinámica -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="studio-footer">
+      <div><strong>El Coro de Jorge Patiño</strong> · Colección y sastrería de autor.</div>
+      <div>Información de campaña organizada para consulta interna.</div>
+    </footer>
+
+  </main>
+
+  <!-- LÓGICA INTERACTIVA, DRAG & DROP Y CHART.JS -->
+  <script>
+    let rawData = [];
+    let activeData = [];
+    let currentChannel = 'ALL';
+    let currentStage = 'ALL';
+    let currentCity = 'ALL';
+    let onlyGuide = false;
+    let financeChartType = 'bar';
+    let funnelChartType = 'doughnut';
+
+    // Chart instances
+    let chartFinance = null;
+    let chartFunnel = null;
+    let chartGeo = null;
+    let chartAge = null;
+    let chartPayment = null;
+
+    const brandColors = {
+      charcoal: '#1A1A1A',
+      charcoalMuted: '#3D3934',
+      stone: '#E2DDD5',
+      stoneLight: '#EDE9E1',
+      gold: '#C2A675',
+      goldDark: '#8C703D',
+      emerald: '#1E543B',
+      amber: '#C58C36',
+      crimson: '#8A2C2C'
+    };
+
+    // ─── 1. FETCH DATOS ───
+    fetch('/elcoro/dashboard_data.json')
+      .then(res => res.json())
+      .then(data => {
+        rawData = data;
+        activeData = [...rawData];
+        initApp();
+      })
+      .catch(err => console.error('Error al cargar datos:', err));
+
+    function initApp() {
+      setupFilters();
+      setupDragAndDrop();
+      setupAccordions();
+      setupExport();
+      renderAll();
+    }
+
+    // ─── 2. FILTROS EN TIEMPO REAL ───
+    function setupFilters() {
+      // Channel chips
+      document.querySelectorAll('.filter-chip[data-filter="canal"]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip[data-filter="canal"]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          currentChannel = chip.dataset.val;
+          applyFiltering();
+        });
+      });
+
+      // Stage dropdown
+      const selectEtapa = document.getElementById('select-etapa');
+      selectEtapa.addEventListener('change', () => {
+        currentStage = selectEtapa.value;
+        applyFiltering();
+      });
+
+      // City dropdown
+      const selectCiudad = document.getElementById('select-ciudad');
+      selectCiudad.addEventListener('change', () => {
+        currentCity = selectCiudad.value;
+        applyFiltering();
+      });
+
+      // Toggle Guía
+      const chipGuia = document.getElementById('chip-guia-only');
+      chipGuia.addEventListener('click', () => {
+        onlyGuide = !onlyGuide;
+        chipGuia.classList.toggle('active', onlyGuide);
+        applyFiltering();
+      });
+
+      // Table search
+      const searchInp = document.getElementById('inp-search-table');
+      searchInp.addEventListener('input', () => {
+        renderTableRows(searchInp.value.toLowerCase().trim());
+      });
+    }
+
+    function applyFiltering() {
+      activeData = rawData.filter(r => {
+        if (currentChannel !== 'ALL' && r.canal !== currentChannel) return false;
+        if (currentStage !== 'ALL' && r.etapa !== currentStage) return false;
+        if (currentCity !== 'ALL' && r.ubicacion !== currentCity) return false;
+        if (onlyGuide && r.guia !== 'Sí') return false;
+        return true;
+      });
+
+      renderAll();
+    }
+
+    // ─── 3. RENDER ALL ───
+    function renderAll() {
+      renderKPIs();
+      renderCharts();
+      renderTableRows();
+    }
+
+    function renderKPIs() {
+      const count = activeData.length;
+      const totalRev = activeData.reduce((s, r) => s + r.gasto, 0);
+      const totalSpend = activeData.reduce((s, r) => s + r.cpa, 0);
+      const buyers = activeData.filter(r => r.gasto > 0);
+      const retained = activeData.filter(r => r.retenido === 'Sí');
+      const avgSession = count > 0 ? (activeData.reduce((s, r) => s + r.tiempo, 0) / count) : 0;
+      
+      const cvr = count > 0 ? ((buyers.length / count) * 100).toFixed(1) : '0.0';
+      const retRate = buyers.length > 0 ? ((retained.length / buyers.length) * 100).toFixed(1) : '0.0';
+      const roi = totalSpend > 0 ? (((totalRev - totalSpend) / totalSpend) * 100).toFixed(0) : '0';
+
+      document.getElementById('val-reach').textContent = count;
+      document.getElementById('val-session').innerHTML = `${avgSession.toFixed(2)}<span style="font-size:16px;">m</span>`;
+      document.getElementById('val-cvr').innerHTML = `${cvr}<span style="font-size:16px;">%</span>`;
+      document.getElementById('val-buyers-count').textContent = `${buyers.length} compras`;
+      document.getElementById('val-revenue').textContent = `$${Math.round(totalRev).toLocaleString('es-MX')} MXN`;
+      document.getElementById('val-retention').innerHTML = `${retRate}<span style="font-size:16px;">%</span>`;
+      document.getElementById('val-roi').innerHTML = `${Number(roi).toLocaleString('es-MX')}<span style="font-size:16px;">%</span>`;
+      document.getElementById('val-spend').textContent = `$${Math.round(totalSpend).toLocaleString('es-MX')} MXN`;
+
+      document.getElementById('badge-total-rows').textContent = `${count} de ${rawData.length} registros`;
+    }
+
+    // ─── 4. GRÁFICAS CHART.JS DINÁMICAS ───
+    function renderCharts() {
+      Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, sans-serif";
+      Chart.defaults.font.size = 11.5;
+      Chart.defaults.font.weight = 500;
+      Chart.defaults.color = '#3D3934';
+      Chart.defaults.plugins.tooltip.padding = 10;
+      Chart.defaults.plugins.tooltip.cornerRadius = 0;
+      Chart.defaults.plugins.tooltip.backgroundColor = '#141414';
+      Chart.defaults.plugins.tooltip.titleFont = { size: 12, weight: '700' };
+      Chart.defaults.plugins.tooltip.bodyFont = { size: 12 };
+
+      renderFinanceChart();
+      renderFunnelChart();
+      renderGeoChart();
+      renderAgeChart();
+      renderPaymentChart();
+    }
+
+    function renderFinanceChart() {
+      const ctx = document.getElementById('chart-finance');
+      if (!ctx) return;
+
+      const channels = ['Influencer', 'Instagram', 'Tiktok', 'Seo/sem', 'Email'];
+      const revData = channels.map(c => activeData.filter(r => r.canal === c).reduce((s, r) => s + r.gasto, 0));
+      const spendData = channels.map(c => activeData.filter(r => r.canal === c).reduce((s, r) => s + r.cpa, 0));
+
+      if (chartFinance) chartFinance.destroy();
+
+      chartFinance = new Chart(ctx, {
+        type: financeChartType,
+        data: {
+          labels: channels,
+          datasets: [
+            {
+              label: 'Ventas (MXN)',
+              data: revData,
+              backgroundColor: brandColors.charcoal,
+              borderColor: brandColors.charcoal,
+              borderWidth: 1.5,
+              borderRadius: 0,
+              tension: 0.2
+            },
+            {
+              label: 'CPA Pauta (MXN)',
+              data: spendData,
+              backgroundColor: brandColors.gold,
+              borderColor: brandColors.gold,
+              borderWidth: 1.5,
+              borderRadius: 0,
+              tension: 0.2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top', align: 'end', labels: { boxWidth: 12, font: { size: 10.5 } } },
+            tooltip: {
+              callbacks: {
+                label: c => ` ${c.dataset.label}: $${Math.round(c.raw).toLocaleString('es-MX')} MXN`
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false } },
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(226, 221, 213, 0.6)' },
+              ticks: { callback: v => '$' + (v >= 1000 ? (v / 1000) + 'k' : v) }
+            }
+          }
+        }
+      });
+    }
+
+    function renderFunnelChart() {
+      const ctx = document.getElementById('chart-funnel');
+      if (!ctx) return;
+
+      const stages = ['Descubrimiento', 'Consideración', 'Conversión', 'Fidelización'];
+      const counts = stages.map(s => activeData.filter(r => r.etapa === s).length);
+
+      if (chartFunnel) chartFunnel.destroy();
+
+      chartFunnel = new Chart(ctx, {
+        type: funnelChartType,
+        data: {
+          labels: stages,
+          datasets: [{
+            data: counts,
+            backgroundColor: ['#D8D3C8', brandColors.gold, brandColors.charcoal, brandColors.emerald],
+            borderColor: '#FFFFFF',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: funnelChartType === 'doughnut' ? '68%' : '0%',
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10.5 } } },
+            tooltip: {
+              callbacks: {
+                label: c => ` ${c.label}: ${c.raw} visitantes (${((c.raw / (counts.reduce((a,b)=>a+b,0) || 1))*100).toFixed(1)}%)`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderGeoChart() {
+      const ctx = document.getElementById('chart-geo');
+      if (!ctx) return;
+
+      const cities = ['Cdmx', 'Mty', 'Gdl', 'Qro', 'Puebla'];
+      const revData = cities.map(c => activeData.filter(r => r.ubicacion === c).reduce((s, r) => s + r.gasto, 0));
+
+      if (chartGeo) chartGeo.destroy();
+
+      chartGeo = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['CDMX', 'Monterrey', 'Guadalajara', 'Querétaro', 'Puebla'],
+          datasets: [{
+            label: 'Ingresos',
+            data: revData,
+            backgroundColor: brandColors.charcoal,
+            borderRadius: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => ` $${Math.round(c.raw).toLocaleString('es-MX')} MXN` } }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              grid: { color: 'rgba(226, 221, 213, 0.6)' },
+              ticks: { callback: v => '$' + (v / 1000) + 'k' }
+            },
+            y: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function renderAgeChart() {
+      const ctx = document.getElementById('chart-age');
+      if (!ctx) return;
+
+      const counts = [
+        activeData.filter(r => r.edad >= 18 && r.edad <= 24).length,
+        activeData.filter(r => r.edad >= 25 && r.edad <= 29).length,
+        activeData.filter(r => r.edad >= 30).length
+      ];
+      const buyers = [
+        activeData.filter(r => r.edad >= 18 && r.edad <= 24 && r.gasto > 0).length,
+        activeData.filter(r => r.edad >= 25 && r.edad <= 29 && r.gasto > 0).length,
+        activeData.filter(r => r.edad >= 30 && r.gasto > 0).length
+      ];
+
+      if (chartAge) chartAge.destroy();
+
+      chartAge = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['18-24 años', '25-29 años', '30-35 años'],
+          datasets: [
+            { label: 'Usuarios', data: counts, backgroundColor: '#D8D3C8' },
+            { label: 'Compradores', data: buyers, backgroundColor: brandColors.charcoal }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top', align: 'end', labels: { boxWidth: 10, font: { size: 10 } } }
+          },
+          scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, grid: { color: 'rgba(226, 221, 213, 0.6)' } }
+          }
+        }
+      });
+    }
+
+    function renderPaymentChart() {
+      const ctx = document.getElementById('chart-payment');
+      if (!ctx) return;
+
+      const methods = ['Apple pay', 'Spei', 'Tarjeta'];
+      const totals = methods.map(m => {
+        return activeData.filter(r => (r.pago || '').toLowerCase() === m.toLowerCase()).reduce((s, r) => s + r.gasto, 0);
+      });
+
+      if (chartPayment) chartPayment.destroy();
+
+      chartPayment = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Apple Pay', 'SPEI / Transf.', 'Tarjeta'],
+          datasets: [{
+            data: totals,
+            backgroundColor: [brandColors.charcoal, brandColors.gold, brandColors.emerald],
+            borderColor: '#FFFFFF',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
+            tooltip: { callbacks: { label: c => ` $${Math.round(c.raw).toLocaleString('es-MX')} MXN` } }
+          }
+        }
+      });
+    }
+
+    // Alternar tipo de gráfico
+    document.querySelectorAll('[data-action="toggle-chart-type"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        financeChartType = financeChartType === 'bar' ? 'line' : 'bar';
+        renderFinanceChart();
+      });
+    });
+
+    const toggleFunnelBtn = document.getElementById('btn-toggle-funnel-mode');
+    if (toggleFunnelBtn) {
+      toggleFunnelBtn.addEventListener('click', () => {
+        funnelChartType = funnelChartType === 'doughnut' ? 'pie' : 'doughnut';
+        renderFunnelChart();
+      });
+    }
+
+    // ─── 5. TABLA DE REGISTROS ───
+    function renderTableRows(searchQuery = '') {
+      const tbody = document.getElementById('dataset-tbody');
+      tbody.innerHTML = '';
+
+      let rows = activeData;
+      if (searchQuery) {
+        rows = rows.filter(r => {
+          return r.id.toLowerCase().includes(searchQuery) ||
+                 r.canal.toLowerCase().includes(searchQuery) ||
+                 r.ubicacion.toLowerCase().includes(searchQuery) ||
+                 r.accion.toLowerCase().includes(searchQuery) ||
+                 r.etapa.toLowerCase().includes(searchQuery);
+        });
+      }
+
+      if (rows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="14" style="text-align:center; padding:24px; color:var(--text-muted);">Sin registros coincidentes.</td></tr>`;
+        return;
+      }
+
+      rows.slice(0, 100).forEach(r => {
+        const tr = document.createElement('tr');
+        let stageClass = 'descubrimiento';
+        if (r.etapa === 'Conversión') stageClass = 'conversion';
+        else if (r.etapa === 'Consideración') stageClass = 'consideracion';
+        else if (r.etapa === 'Fidelización') stageClass = 'fidelizacion';
+
+        tr.innerHTML = `
+          <td><strong>${r.id}</strong></td>
+          <td>${r.fecha}</td>
+          <td>${r.canal}</td>
+          <td>${r.edad}a</td>
+          <td>${r.ubicacion.toUpperCase()}</td>
+          <td>${r.dispositivo}</td>
+          <td><span class="tag-stage ${stageClass}">${r.etapa}</span></td>
+          <td>${r.accion}</td>
+          <td>${r.tiempo.toFixed(1)}m</td>
+          <td>${r.guia === 'Sí' ? '<span style="color:var(--emerald-dark); font-weight:700;">Sí</span>' : 'No'}</td>
+          <td>${r.gasto > 0 ? '<strong>$' + r.gasto.toLocaleString('es-MX') + '</strong>' : '-'}</td>
+          <td>${r.pago}</td>
+          <td>$${r.cpa.toFixed(1)}</td>
+          <td>${r.retenido === 'Sí' ? '<span style="color:var(--emerald-dark); font-weight:700;">Sí</span>' : 'No'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ─── 6. DRAG AND DROP REORDENABLE DE WIDGETS ───
+    function setupDragAndDrop() {
+      const grid = document.getElementById('main-canvas-grid');
+      let draggedWidget = null;
+
+      grid.addEventListener('dragstart', (e) => {
+        const target = e.target.closest('.grid-widget');
+        if (!target) return;
+        draggedWidget = target;
+        target.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      grid.addEventListener('dragend', (e) => {
+        const target = e.target.closest('.grid-widget');
+        if (target) target.classList.remove('dragging');
+        document.querySelectorAll('.grid-widget').forEach(w => w.classList.remove('drag-over'));
+      });
+
+      grid.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const overWidget = e.target.closest('.grid-widget');
+        if (overWidget && overWidget !== draggedWidget) {
+          overWidget.classList.add('drag-over');
+        }
+      });
+
+      grid.addEventListener('dragleave', (e) => {
+        const overWidget = e.target.closest('.grid-widget');
+        if (overWidget) overWidget.classList.remove('drag-over');
+      });
+
+      grid.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const dropWidget = e.target.closest('.grid-widget');
+        if (dropWidget && draggedWidget && dropWidget !== draggedWidget) {
+          dropWidget.classList.remove('drag-over');
+          
+          // Reubicar en el DOM
+          const allWidgets = Array.from(grid.querySelectorAll('.grid-widget'));
+          const fromIndex = allWidgets.indexOf(draggedWidget);
+          const toIndex = allWidgets.indexOf(dropWidget);
+
+          if (fromIndex < toIndex) {
+            grid.insertBefore(draggedWidget, dropWidget.nextSibling);
+          } else {
+            grid.insertBefore(draggedWidget, dropWidget);
+          }
+
+          // Redimensionar gráficos tras cambio de posición
+          setTimeout(() => {
+            if (chartFinance) chartFinance.resize();
+            if (chartFunnel) chartFunnel.resize();
+            if (chartGeo) chartGeo.resize();
+            if (chartAge) chartAge.resize();
+            if (chartPayment) chartPayment.resize();
+          }, 60);
+        }
+      });
+    }
+
+    // ─── 7. ACCORDIONS COLLAPSIBLE ───
+    function setupAccordions() {
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const section = header.parentElement;
+          section.classList.toggle('open');
+        });
+      });
+    }
+
+    // ─── 8. EXPORTAR CSV ───
+    function setupExport() {
+      const btn = document.getElementById('btn-export-csv');
+      btn.addEventListener('click', () => {
+        if (!activeData.length) return;
+        const keys = Object.keys(activeData[0]);
+        let csvContent = 'data:text/csv;charset=utf-8,' + keys.join(',') + '\n';
+        activeData.forEach(r => {
+          csvContent += keys.map(k => `"${r[k]}"`).join(',') + '\n';
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `elcoro_metricas_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
+  </script>
+
+</body>
+</html>

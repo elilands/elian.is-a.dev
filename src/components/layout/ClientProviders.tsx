@@ -11,11 +11,6 @@ const SmoothScrollProvider = dynamic(
   { ssr: false }
 );
 
-const CustomCursor = dynamic(
-  () => import("@/components/ui/CustomCursor/CustomCursor"),
-  { ssr: false }
-);
-
 export default function ClientProviders({ children }: { children: ReactNode }) {
   return (
     // LanguageProvider y PreloaderProvider envuelven todo
@@ -24,7 +19,6 @@ export default function ClientProviders({ children }: { children: ReactNode }) {
         <SmoothScrollProvider>
           <Navbar />
           {children}
-          <CustomCursor />
         </SmoothScrollProvider>
       </PreloaderProvider>
     </LanguageProvider>

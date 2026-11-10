@@ -30,8 +30,6 @@ body {
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* El cursor nativo se oculta: CustomCursor lo reemplaza */
-  cursor: none;
 }
 
 img,
@@ -55,7 +53,7 @@ select {
 }
 
 button {
-  cursor: none;
+  cursor: pointer;
   border: none;
   background: none;
 }
@@ -63,7 +61,7 @@ button {
 a {
   color: inherit;
   text-decoration: none;
-  cursor: none;
+  cursor: pointer;
 }
 
 /* ── Variables: modo claro ────────────────────────────────────────────── */

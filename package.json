@@ -20,7 +20,7 @@
     "postprocessing": "^6.39.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.5",
     "three": "^0.183.2",
     "zustand": "^5.0.12"
   },
@@ -39,6 +39,7 @@
   "overrides": {
     "next": {
       "postcss": "^8.5.15"
-    }
+    },
+    "braces": "npm:@cekrem/braces@3.0.4"
   }
 }
